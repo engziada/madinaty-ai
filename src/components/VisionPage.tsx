@@ -19,7 +19,7 @@ export function VisionPage({ locale }: VisionPageProps) {
       <div className="site-bg" />
       <NavBar locale={locale} content={content} />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* ── VISION HERO ───────────────────────────────────── */}
         <section className="hero-vision-wrap container" id="platform">
           <div className="reveal">
@@ -119,7 +119,7 @@ export function VisionPage({ locale }: VisionPageProps) {
             <div className="ai-pulse" style={{ margin: "0 auto 1.25rem" }} />
             <h2>{content.vision.ctaTitle}</h2>
             <p>{content.vision.ctaText}</p>
-            <a className="btn btn-primary" href={locale === "ar" ? "/ar" : "/"}>
+            <a className="btn btn-primary" href={locale === "ar" ? "/ar" : "/en"}>
               {content.vision.ctaButton}
             </a>
           </div>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
 import { NavBar } from "@/components/NavBar";
@@ -6,6 +9,9 @@ import { MapPanel } from "@/components/MapPanel";
 import { Footer } from "@/components/Footer";
 import { PageShell } from "@/components/PageShell";
 import { ValueStrip } from "@/components/ValueStrip";
+import { EnrollmentModal } from "@/components/EnrollmentModal";
+import { AiArticleWidget } from "@/components/AiArticleWidget";
+import { AiToolsSection } from "@/components/AiToolsSection";
 
 interface LandingPageProps {
   locale: LocaleCode;
@@ -16,6 +22,7 @@ interface LandingPageProps {
  */
 export function LandingPage({ locale }: LandingPageProps) {
   const content = getSiteContent(locale);
+  const [isEnrollmentOpen, setEnrollmentOpen] = useState(false);
 
   const isAr = locale === "ar";
 
@@ -38,10 +45,17 @@ export function LandingPage({ locale }: LandingPageProps) {
       <div className="site-bg" />
       <NavBar locale={locale} content={content} />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* ── HERO ──────────────────────────────────────────── */}
         <section className="hero-wrap" id="platform">
-          <div className="hero-backdrop" aria-hidden="true" />
+          <img
+            src="/hero-bg1.webp"
+            alt=""
+            aria-hidden="true"
+            className="hero-skyline-art"
+            loading="eager"
+            decoding="async"
+          />
           <div className="hero-backdrop-overlay" aria-hidden="true" />
           <div className="container hero-inner">
             <div className="hero-copy reveal">
@@ -71,6 +85,8 @@ export function LandingPage({ locale }: LandingPageProps) {
                   {content.hero.secondaryAction}
                 </a>
               </div>
+
+              <AiArticleWidget locale={locale} />
             </div>
 
             <div className="hero-visual reveal">
@@ -199,13 +215,16 @@ export function LandingPage({ locale }: LandingPageProps) {
           </div>
         </section>
 
-        {/* ── CHAT ──────────────────────────────────────────── */}
+        {/* ── AI TOOLS ────────────────────────────────── */}
+        <AiToolsSection locale={locale} />
+
+        {/* ── CHAT ─────────────────────────────────────── */}
         <section className="section container" id="chat">
           <div className="section-head center reveal">
             <p className="overline">{content.sections.chatOverline}</p>
             <h2>{content.sections.chatTitle}</h2>
           </div>
-          <ChatPanel content={content} />
+          <ChatPanel content={content} locale={locale} />
         </section>
 
         {/* ── UPCOMING EVENT ────────────────────────────────── */}
@@ -213,21 +232,45 @@ export function LandingPage({ locale }: LandingPageProps) {
           <div className="container reveal">
             <div className="upcoming-shell">
               <div className="upcoming-overlay" aria-hidden="true" />
-              <div className="upcoming-event-photo" aria-hidden="true" />
+              <img
+                src="/ad-1.webp"
+                alt=""
+                aria-hidden="true"
+                className="upcoming-event-art"
+                loading="lazy"
+                decoding="async"
+              />
               <div className="upcoming-content">
                 <div>
                   <p className="overline overline-light">{content.event.overline}</p>
                   <div className="upcoming-pill">{content.event.subtitle}</div>
-                  <h2 className="upcoming-title">{content.event.title}</h2>
+                  <h2 className="upcoming-title">
+                    {content.event.title}
+                    {content.event.titleHighlight && (
+                      <span className="highlight">{content.event.titleHighlight}</span>
+                    )}
+                  </h2>
                   <p>{content.event.description}</p>
+
+                  {content.event.safetyBadges && content.event.safetyBadges.length > 0 && (
+                    <div className="safety-badges" aria-label="Safety commitments">
+                      {content.event.safetyBadges.map((badge) => (
+                        <span key={badge.label} className="safety-badge">
+                          <span className="safety-badge-icon" aria-hidden="true">{badge.icon}</span>
+                          {badge.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
                   <div className="promo-box">
                     <small>{content.event.promoLabel}</small>
                     <h3>{content.event.promoTitle}</h3>
                     <p>{content.event.promoDescription}</p>
                   </div>
-                  <a className="btn btn-primary" href="#">
+                  <button className="btn btn-primary" type="button" onClick={() => setEnrollmentOpen(true)}>
                     {content.event.cta}
-                  </a>
+                  </button>
                 </div>
 
                 <div className="upcoming-stats-panel">
@@ -263,6 +306,7 @@ export function LandingPage({ locale }: LandingPageProps) {
       </main>
 
       <Footer content={content} />
+      <EnrollmentModal locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
     </PageShell>
   );
 }

@@ -76,14 +76,24 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
     return () => clearInterval(id);
   }, []);
 
-  /* ── Particle canvas ── */
+  /* ── Particle canvas — throttled for mobile + respects reduced-motion ── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animId: number;
+    const reduceMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Scale particle count by viewport — mobile gets 40 instead of 120.
+    const w0 = window.innerWidth;
+    const BASE = w0 < 600 ? 40 : w0 < 1024 ? 80 : 120;
+    const CONNECT_DIST = w0 < 600 ? 70 : 100;
+
+    let animId: number | null = null;
+    let paused = false;
     const particles: Array<{ x: number; y: number; vx: number; vy: number; r: number; a: number; da: number }> = [];
 
     function resize() {
@@ -94,7 +104,7 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
     resize();
     window.addEventListener("resize", resize);
 
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < BASE; i++) {
       particles.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
@@ -107,7 +117,10 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
     }
 
     function draw() {
-      if (!ctx || !canvas) return;
+      if (!ctx || !canvas || paused) {
+        animId = requestAnimationFrame(draw);
+        return;
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const p of particles) {
         p.x += p.vx;
@@ -123,17 +136,16 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
         ctx.fillStyle = `rgba(0, 210, 210, ${p.a})`;
         ctx.fill();
       }
-      /* Connect nearby particles */
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
+          if (dist < CONNECT_DIST) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 210, 210, ${0.06 * (1 - dist / 100)})`;
+            ctx.strokeStyle = `rgba(0, 210, 210, ${0.06 * (1 - dist / CONNECT_DIST)})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
           }
@@ -141,10 +153,31 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
       }
       animId = requestAnimationFrame(draw);
     }
-    draw();
+
+    // Reduced-motion: draw a single static frame and stop.
+    if (reduceMotion) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 210, 210, ${p.a})`;
+        ctx.fill();
+      }
+      return () => {
+        window.removeEventListener("resize", resize);
+      };
+    }
+
+    function onVisibility() {
+      paused = document.hidden;
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+
+    animId = requestAnimationFrame(draw);
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId !== null) cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
@@ -153,7 +186,7 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
     if (email.trim()) setSubmitted(true);
   }
 
-  const homeHref = locale === "ar" ? "/ar" : "/";
+  const homeHref = locale === "ar" ? "/ar" : "/en";
 
   return (
     <div className="cs-root" dir={isRtl ? "rtl" : "ltr"} lang={locale}>
@@ -171,7 +204,7 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
         <div className="cs-overline-tag">{t.overline}</div>
       </header>
 
-      <main className="cs-main">
+      <main className="cs-main" id="main-content" tabIndex={-1}>
         <div className="cs-content">
           <p className="cs-eye">{t.headline}</p>
           <h1 className="cs-title gradient-text">{t.highlight}</h1>

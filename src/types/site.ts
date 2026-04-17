@@ -10,6 +10,11 @@ export interface MapLocation {
   title: string;
   details: string;
   dotClassName: string;
+  latitude: number;
+  longitude: number;
+  category: string;
+  status: string;
+  highlight?: string;
 }
 
 export interface SiteContent {
@@ -58,6 +63,8 @@ export interface SiteContent {
     systemOnline: string;
     placeholder: string;
     send: string;
+    loadingLabel: string;
+    fallback: string;
     messages: ChatMessage[];
   };
   map: {
@@ -67,6 +74,7 @@ export interface SiteContent {
   event: {
     overline: string;
     title: string;
+    titleHighlight?: string;
     subtitle: string;
     description: string;
     promoLabel: string;
@@ -76,6 +84,7 @@ export interface SiteContent {
     labSubtitle: string;
     cta: string;
     stats: Array<{ value: string; label: string }>;
+    safetyBadges?: Array<{ icon: string; label: string }>;
   };
   footer: {
     copy: string;

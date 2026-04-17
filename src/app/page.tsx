@@ -1,8 +1,9 @@
-import { LandingPage } from "@/components/LandingPage";
+import { redirect } from "next/navigation";
 
 /**
- * English home route.
+ * Root route — Arabic is the default landing language.
+ * Visitors who want the English interface can navigate to /en.
  */
-export default function Page() {
-  return <LandingPage locale="en" />;
+export default function RootPage(): never {
+  redirect("/ar");
 }

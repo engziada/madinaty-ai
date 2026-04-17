@@ -1,41 +1,76 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { ChatMessage, SiteContent } from "@/types/site";
+import { useEffect, useRef, useState } from "react";
+import type { ChatMessage, LocaleCode, SiteContent } from "@/types/site";
 
 interface ChatPanelProps {
   content: SiteContent;
+  locale: LocaleCode;
 }
 
 /**
- * Interactive AI chat panel with local simulated responses.
+ * Interactive AI chat panel.
+ *
+ * UX/a11y:
+ *   • Input is disabled while waiting for the AI so users cannot double-send.
+ *   • A "typing…" bubble with animated dots appears as a live region while
+ *     the request is in flight.
+ *   • Focus returns to the input once a response arrives.
+ *   • Auto-scroll to the latest message.
  */
-export function ChatPanel({ content }: ChatPanelProps) {
+export function ChatPanel({ content, locale }: ChatPanelProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(content.chat.messages);
   const [inputValue, setInputValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
-  const cannedReply = useMemo<string>(() => {
-    if (content.chat.send === "إرسال") {
-      return "تلقيت رسالتك. سيقوم مساعد مدينتي بالرد التفصيلي خلال لحظات.";
-    }
-    return "Got your message. Madinaty Assistant will provide a detailed response shortly.";
-  }, [content.chat.send]);
+  // Auto-scroll the chat body to the bottom on new messages / typing state.
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+  }, [messages, isLoading]);
 
-  function handleSend(): void {
+  async function handleSend(): Promise<void> {
     const trimmedInput = inputValue.trim();
-    if (!trimmedInput) {
+    if (!trimmedInput || isLoading) {
       return;
     }
 
-    const nextMessages: ChatMessage[] = [
-      ...messages,
-      { role: "user", content: trimmedInput },
-      { role: "ai", content: cannedReply }
-    ];
-
-    setMessages(nextMessages);
+    const userMessage: ChatMessage = { role: "user", content: trimmedInput };
+    const history = [...messages, userMessage].slice(-10);
+    setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
+    setErrorMessage("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmedInput, history, locale })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to reach Madinaty AI");
+      }
+
+      const payload = await response.json();
+      const aiText = (payload?.reply as string | undefined) ?? content.chat.fallback;
+      setMessages((prev) => [...prev, { role: "ai", content: aiText }]);
+    } catch {
+      setErrorMessage(content.chat.fallback);
+      setMessages((prev) => [...prev, { role: "ai", content: content.chat.fallback }]);
+    } finally {
+      setIsLoading(false);
+      // Focus the input after response settles, so keyboard users can keep typing.
+      window.requestAnimationFrame(() => inputRef.current?.focus());
+    }
   }
+
+  const liveLabel = locale === "ar" ? "مباشر" : "Live";
 
   return (
     <div className="chat-wrap reveal">
@@ -50,32 +85,65 @@ export function ChatPanel({ content }: ChatPanelProps) {
           </div>
           <div className="status-row">
             <span className="ai-pulse" />
-            Live
+            {liveLabel}
           </div>
         </div>
 
-        <div className="chat-body">
+        <div
+          className="chat-body"
+          ref={bodyRef}
+          aria-live="polite"
+          aria-busy={isLoading}
+          aria-label="Conversation"
+        >
           {messages.map((message, index) => (
-            <div key={`${message.role}-${index}`} className={`msg ${message.role === "ai" ? "msg-ai" : "msg-user"}`}>
+            <div
+              key={`${message.role}-${index}`}
+              className={`msg ${message.role === "ai" ? "msg-ai" : "msg-user"}`}
+            >
               {message.content}
             </div>
           ))}
+          {isLoading && (
+            <div className="msg msg-ai msg-typing" aria-label={content.chat.loadingLabel}>
+              <span className="typing-dot" />
+              <span className="typing-dot" />
+              <span className="typing-dot" />
+              <span className="visually-hidden">{content.chat.loadingLabel}</span>
+            </div>
+          )}
         </div>
+        {errorMessage ? <p className="chat-error" role="status">{errorMessage}</p> : null}
 
         <div className="chat-input">
           <input
+            ref={inputRef}
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
             placeholder={content.chat.placeholder}
             aria-label={content.chat.placeholder}
+            disabled={isLoading}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
                 handleSend();
               }
             }}
           />
-          <button className="btn btn-primary" type="button" onClick={handleSend}>
-            {content.chat.send}
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={handleSend}
+            disabled={isLoading || !inputValue.trim()}
+            aria-live="polite"
+          >
+            {isLoading ? (
+              <span className="btn-loading">
+                <span className="btn-spinner" aria-hidden="true" />
+                {content.chat.loadingLabel}
+              </span>
+            ) : (
+              content.chat.send
+            )}
           </button>
         </div>
       </div>

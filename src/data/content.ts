@@ -1,15 +1,26 @@
 import type { LocaleCode, SiteContent } from "@/types/site";
 
-const sharedMapImage =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuDmMkBSzP2fTT6TjeSpX3ylG57fyH6xG6EKr7cnz_QGW364SbNUyun7M1mj-6g4PVunqqSfvBTgpD94JrLK6_xdSmXuz2-yeRr_9XsWTgnd-OaDpuUSoN0uLHS7IqQunKeyqKF67AE_-YaQBBIIaIvvSrKdiQX-DHQBA6ovioJ8OeEbTDqua5_bB2fpx6tXIet_vmrScDx3izv_wcxtf0UT7NMZlxkpVtA5YT098S59q6d_XSSFNJHmdtCStJOhPzsypZ9gu9_qc64";
-
+/**
+ * Shared stock imagery — curated from Unsplash (free license). Keeping these
+ * as named exports so any page can reuse them, and swapping URLs here ripples
+ * through the whole site without component edits.
+ */
 export const heroImage =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuC2zZgFs2DTCtmud3GZRvzcjBfY1UYMrbKLC1dwi3w6M1M4Vn-OfuOYb55bgAjrAtrKLKSkwvfjibyRiApCxfjyh0FkXUh-K4lBQlxucZxFncfuczNmKfEiSLtHouvYu-J9_k7bO3gfwCCzCJrzZLdhlk81EozPGAF1sVLu611vxcitFrhpLWGyGjBf6uifckq-iJnQgaZaEtIYZSHYIcOlVWdz5RSg3wgUjk0b-NYpagTpRwzSb-6hAT3Y2KUGJ4rcmepLQpqtEGQ";
+  "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1800&q=80"; // bright sunrise skyline
 
 export const genesisImages = [
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuA90lQAoCHryaEL9vfJL-Ey4Sn_To5PMyFORTAQVeAiLVLbse1YbeG9UTZ_705ipUFEjA3gJQNpUPCFxHxz4dvS1N7iaus9tRk-Mups7sUZIGsAXL0NWa4Xajxj2Fzy6cUwlE2j3DPO70pjaf9qJkmujO_qa8Hx_spvcOfGza6xYgOS6_K1G4XGaJwkHyF7LWlwnYFrjSaJFqdhBcxfTy4V-a7uflOh-9BYTP_fE8XZt0-9kyaSovjfF2lG23v6CtT54kPUA4zy6tM",
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuD4XD2nrkQ4dIHcp3E3XttlxK6rEEWPqmsdT7LazTCis2h383TcOZ1uWtx73teEvbu2R0zZCva4C0CZvy3EmDup6qbhwIYLVUoSZCBybx2kGRbGnZyi5R_Khw7nDhFO4k9r_-l-OHxAx9Y4ImKH5UPgFBIa_mtsuz05So2ynHhxm67qgdH7RP4maYbUALxvrNF6E7xdx0vXYKLgi1VZ7uQ02iHm5aZtWdB6OTE5YYgpgX843U-u95hM4r9W8j0mH9VgEBTUGd4Q4Vg"
+  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80", // kids learning / family
+  "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1200&q=80"  // hands on tech / circuit
 ];
+
+/** Sunlit community / smart-city imagery, reusable across sections. */
+export const sectionImages = {
+  about:    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80", // modern campus
+  services: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1400&q=80", // smart transit
+  chat:     "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1400&q=80", // kid + laptop
+  map:      "https://images.unsplash.com/photo-1529670760083-b0d6a8d6d36c?w=1400&q=80", // aerial city
+  event:    "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=1400&q=80"  // kids workshop
+};
 
 const contentEn: SiteContent = {
   nav: {
@@ -18,7 +29,7 @@ const contentEn: SiteContent = {
     map: "Map",
     roadmap: "Roadmap",
     cta: "Launch Portal",
-    localeSwitch: "العربية"
+    localeSwitch: "ع"
   },
   hero: {
     overline: "New Cairo · 8,000 Acres · Egypt",
@@ -62,6 +73,8 @@ const contentEn: SiteContent = {
     systemOnline: "System Online",
     placeholder: "Ask about Madinaty services, events, transport...",
     send: "Send",
+    loadingLabel: "Thinking...",
+    fallback: "Madinaty Assistant is having trouble. Try again in a moment.",
     messages: [
       { role: "ai", content: "Hello! I'm your Madinaty AI assistant. I can help with shuttle routes, workshops, community events, and live city updates across all 23 districts." },
       { role: "user", content: "Where is the next AI workshop for kids?" },
@@ -75,33 +88,94 @@ const contentEn: SiteContent = {
         id: "innovation",
         title: "Innovation Hub · District B5",
         details: "Status: Active · 42 AI Labs Online",
-        dotClassName: "dot-1"
+        dotClassName: "dot-1",
+        latitude: 30.0402,
+        longitude: 31.7018,
+        category: "Innovation & Learning",
+        status: "Live Workshops Today",
+        highlight: "Next AI for Kids session: Saturday at 10:00 AM"
       },
       {
         id: "logistics",
         title: "Central Bus Hub",
         details: "Fleet: 100% Charged · 12 Shuttles Active",
-        dotClassName: "dot-2"
+        dotClassName: "dot-2",
+        latitude: 30.0468,
+        longitude: 31.6578,
+        category: "Mobility",
+        status: "Zero-delay departures",
+        highlight: "New shuttle lane open to Districts C & D"
+      },
+      {
+        id: "wellness",
+        title: "Health & Wellness Center",
+        details: "Clinics: 6 · AI triage online",
+        dotClassName: "dot-3",
+        latitude: 30.0561,
+        longitude: 31.6472,
+        category: "Wellness",
+        status: "Telemedicine active",
+        highlight: "Family check-up appointments re-opening"
+      },
+      {
+        id: "solar",
+        title: "Solar R&D Campus",
+        details: "Microgrid: 98% autonomy · 2.6 MW",
+        dotClassName: "dot-4",
+        latitude: 30.0399,
+        longitude: 31.6725,
+        category: "Energy",
+        status: "Testing neighborhood-scale storage",
+        highlight: "New battery swap station live"
+      },
+      {
+        id: "vineyard",
+        title: "Community Green Spine",
+        details: "Parks: 14 · Citizen events nightly",
+        dotClassName: "dot-5",
+        latitude: 30.0339,
+        longitude: 31.6595,
+        category: "Public Realm",
+        status: "Ambient music program",
+        highlight: "Sunset cycling meet-up at 6:00 PM"
+      },
+      {
+        id: "gateway",
+        title: "North Gate Plaza",
+        details: "Security: AI watchtower · Guest entry",
+        dotClassName: "dot-6",
+        latitude: 30.0586,
+        longitude: 31.6773,
+        category: "Entry",
+        status: "Visitor screening 30s",
+        highlight: "Drone deliveries arrive through Gate 1"
       }
     ]
   },
   event: {
-    overline: "Upcoming Events",
-    title: "AI for Kids: Build the Future",
-    subtitle: "Community First Edition",
+    overline: "Free Family Workshop",
+    title: "Teach Kids to Use AI—",
+    titleHighlight: "Safely & Joyfully",
+    subtitle: "Parents Welcome · Ages 8–14",
     description:
-      "A free, limited-seat workshop for ages 8–14 held at Madinaty's Community Innovation Hub. Kids explore robotics, neural networks, and creative coding in a hands-on environment.",
-    promoLabel: "Promotion · Free Offer",
-    promoTitle: "Free: First 42 Seats Fully Sponsored",
+      "A 100% free, parent-approved workshop where children learn what AI is, how to talk to it responsibly, and how to spot when it's wrong. No personal data. No black boxes. Just curious kids building safely under certified mentors at Madinaty's Innovation Hub.",
+    promoLabel: "Limited · Fully Sponsored",
+    promoTitle: "First 42 kids learn free—parents join any session.",
     promoDescription:
-      "Madinaty families register at no cost in this launch edition. Priority given to early signups and active community members from any sub-compound.",
-    labTitle: "Interactive Robotics Lab",
-    labSubtitle: "Hands-on · District B5",
-    cta: "Enroll My Child",
+      "Sponsored by the Madinaty community for the launch edition. No credit card. No strings. Priority for active residents from any sub-compound across the 23 districts.",
+    labTitle: "Parent Dashboard Included",
+    labSubtitle: "See everything your child learns · Live",
+    cta: "Reserve My Child's Seat",
     stats: [
-      { value: "12", label: "Modules" },
-      { value: "Free", label: "Tuition" },
-      { value: "42", label: "Seats" }
+      { value: "12", label: "Safe Modules" },
+      { value: "Free", label: "Zero Cost" },
+      { value: "42", label: "Seats Left" }
+    ],
+    safetyBadges: [
+      { icon: "👩‍💼", label: "Parent Approved" },
+      { icon: "🔒", label: "No Data Collected" },
+      { icon: "🎓", label: "Certified Mentors" },
+      { icon: "👫", label: "Small Groups" }
     ]
   },
   footer: {
@@ -135,7 +209,7 @@ const contentAr: SiteContent = {
     map: "الخريطة",
     roadmap: "خارطة الطريق",
     cta: "بوابة الإطلاق",
-    localeSwitch: "English"
+    localeSwitch: "E"
   },
   hero: {
     overline: "القاهرة الجديدة · ٨٠٠٠ فدان · مصر",
@@ -179,6 +253,8 @@ const contentAr: SiteContent = {
     systemOnline: "النظام متصل",
     placeholder: "اسأل عن خدمات مدينتي، الفعاليات، النقل...",
     send: "إرسال",
+    loadingLabel: "جارٍ المعالجة...",
+    fallback: "مساعد مدينتي غير متصل حالياً. أعد المحاولة لاحقاً.",
     messages: [
       { role: "ai", content: "مرحباً! أنا مساعد Madinaty AI. أستطيع مساعدتك في خطوط الحافلات والورش والفعاليات وتحديثات المدينة الحية عبر جميع الـ٢٣ حياً." },
       { role: "user", content: "أين تقام ورشة الذكاء الاصطناعي القادمة للأطفال؟" },
@@ -192,31 +268,94 @@ const contentAr: SiteContent = {
         id: "innovation",
         title: "مركز الابتكار · حي B5",
         details: "الحالة: نشط · ٤٢ مختبر ذكاء اصطناعي",
-        dotClassName: "dot-1"
+        dotClassName: "dot-1",
+        latitude: 30.0402,
+        longitude: 31.7018,
+        category: "ابتكار وتعليم",
+        status: "ورش حية اليوم",
+        highlight: "ورشة الأطفال القادمة: السبت ١٠ صباحاً"
       },
       {
         id: "logistics",
         title: "محطة الحافلات المركزية",
         details: "الأسطول: مشحون ١٠٠٪ · ١٢ حافلة نشطة",
-        dotClassName: "dot-2"
+        dotClassName: "dot-2",
+        latitude: 30.0468,
+        longitude: 31.6578,
+        category: "التنقل",
+        status: "مغادرات بدون تأخير",
+        highlight: "حارة خاصة إلى الحيّين C وD"
+      },
+      {
+        id: "wellness",
+        title: "مركز الصحة والرفاهية",
+        details: "العيادات: ٦ · التشخيص بالذكاء الاصطناعي",
+        dotClassName: "dot-3",
+        latitude: 30.0561,
+        longitude: 31.6472,
+        category: "الرفاهية",
+        status: "الطب عن بعد متاح",
+        highlight: "فتح حجوزات الفحص العائلي"
+      },
+      {
+        id: "solar",
+        title: "حرم أبحاث الطاقة الشمسية",
+        details: "الشبكة: ٩٨٪ ذاتية · ٢٫٦ ميجاوات",
+        dotClassName: "dot-4",
+        latitude: 30.0399,
+        longitude: 31.6725,
+        category: "الطاقة",
+        status: "اختبار تخزين حيّ",
+        highlight: "محطة تبديل بطاريات جديدة"
+      },
+      {
+        id: "vineyard",
+        title: "المسار الأخضر المجتمعي",
+        details: "الحدائق: ١٤ · فعاليات ليلية",
+        dotClassName: "dot-5",
+        latitude: 30.0339,
+        longitude: 31.6595,
+        category: "الفضاء العام",
+        status: "برنامج موسيقى محيطي",
+        highlight: "تجمع ركوب الدراجات عند ٦ مساءً"
+      },
+      {
+        id: "gateway",
+        title: "ساحة البوابة الشمالية",
+        details: "الأمن: برج مراقبة ذكاء اصطناعي · دخول الزوار",
+        dotClassName: "dot-6",
+        latitude: 30.0586,
+        longitude: 31.6773,
+        category: "الدخول",
+        status: "فرز الزوار ٣٠ ثانية",
+        highlight: "وصول الطرود عبر البوابة ١"
       }
     ]
   },
   event: {
-    overline: "الفعاليات القادمة",
-    title: "الذكاء الاصطناعي للأطفال: ابنِ المستقبل",
-    subtitle: "نسخة المجتمع الأولى",
-    description: "ورشة مجانية محدودة المقاعد لأعمار ٨–١٤ في مركز الابتكار بمدينتي. يستكشف الأطفال الروبوتات والشبكات العصبية والبرمجة الإبداعية.",
-    promoLabel: "عرض ترويجي · مجاني",
-    promoTitle: "مجاني: أول ٤٢ مقعد برعاية كاملة",
-    promoDescription: "يتسجّل سكان مدينتي مجاناً في النسخة الأولى، مع أولوية للحجز المبكر والأعضاء النشطين من أي حي.",
-    labTitle: "مختبر الروبوتات التفاعلي",
-    labSubtitle: "عملي · حي B5",
-    cta: "سجّل طفلي",
+    overline: "ورشة عائلية مجانية",
+    title: "علّم طفلك الذكاء الاصطناعي—",
+    titleHighlight: "بأمان ومتعة",
+    subtitle: "بحضور الأهل · أعمار ٨–١٤",
+    description:
+      "ورشة مجانية مائة بالمائة، معتمدة من الأهالي، يتعلّم فيها الأطفال ما هو الذكاء الاصطناعي، وكيف يتحدثون معه بمسؤولية، وكيف يكتشفون أخطاءه. بلا جمع بيانات، وبلا صناديق سوداء—فقط تعلّم آمن تحت إشراف مدربين معتمدين في مركز الابتكار بمدينتي.",
+    promoLabel: "محدود · برعاية كاملة",
+    promoTitle: "أول ٤٢ طفل يتعلّم مجاناً—والأهل مدعوّون.",
+    promoDescription:
+      "برعاية كاملة من مجتمع مدينتي للنسخة الأولى. بلا بطاقة ائتمان وبلا التزامات. الأولوية لسكان الأحياء النشطين من الـ٢٣ حياً.",
+    labTitle: "لوحة متابعة للأهل",
+    labSubtitle: "تابع كل ما يتعلمه طفلك · لحظيّاً",
+    cta: "احجز مقعد طفلي",
     stats: [
-      { value: "١٢", label: "وحدة" },
-      { value: "مجاناً", label: "الرسوم" },
-      { value: "٤٢", label: "مقعد" }
+      { value: "١٢", label: "وحدة آمنة" },
+      { value: "مجاني", label: "بلا رسوم" },
+      { value: "٤٢", label: "مقعد متاح" }
+    ],
+    safetyBadges: [
+      { icon: "👩‍💼", label: "معتمد من الأهل" },
+      { icon: "🔒", label: "بلا جمع بيانات" },
+      { icon: "🎓", label: "مدربون معتمدون" },
+      { icon: "👫", label: "مجموعات صغيرة" }
     ]
   },
   footer: {
@@ -255,9 +394,3 @@ export function getSiteContent(locale: LocaleCode): SiteContent {
   return contentByLocale[locale];
 }
 
-/**
- * Returns shared map background image URL.
- */
-export function getMapImageUrl(): string {
-  return sharedMapImage;
-}
