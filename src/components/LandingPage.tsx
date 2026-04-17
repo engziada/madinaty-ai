@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
 import { NavBar } from "@/components/NavBar";
@@ -216,7 +216,12 @@ export function LandingPage({ locale }: LandingPageProps) {
         </section>
 
         {/* ── AI TOOLS ────────────────────────────────── */}
-        <AiToolsSection locale={locale} />
+        {/* Suspense is required: AiToolsSection calls useSearchParams
+            for URL-based category persistence. Without a boundary,
+            Next.js bails out of static generation on /ar and /en. */}
+        <Suspense fallback={null}>
+          <AiToolsSection locale={locale} />
+        </Suspense>
 
         {/* ── CHAT ─────────────────────────────────────── */}
         <section className="section container" id="chat">
