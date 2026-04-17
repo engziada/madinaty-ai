@@ -14,36 +14,43 @@ interface NewsItem {
 
 interface Props {
   locale?: LocaleCode;
+  initialItems?: NewsItem[];
 }
 
-const POLL_INTERVAL_MS = 60_000;
+const POLL_INTERVAL_MS = 5 * 60 * 1000; // 5 min — server already caches 10 min
 const DISMISS_KEY = "madinaty.marquee.dismissed";
-const SCROLL_HIDE_THRESHOLD = 60; // hide when user scrolls past this
+/**
+ * Per-item scroll time (seconds). Higher = slower. With an average headline
+ * length ~60 chars, 5s/item gives ~12 chars/s — comfortable reading pace.
+ */
+const SECONDS_PER_ITEM = 5;
+const MIN_DURATION_S = 40;
 
 /**
- * Top marquee bar streaming Madinaty community news.
+ * Top marquee bar streaming Egypt news (Google News RSS).
  *
- * Design rules:
- *   • Positioned relatively — it scrolls AWAY on page scroll, so the
- *     sticky NavBar below takes its place at top=0. The marquee never
- *     covers the NavBar.
- *   • Extra protection: hides itself the moment the user starts scrolling
- *     down. Reappears only when scrolling back to the very top.
- *   • Dismissed state is persisted in sessionStorage so it stays hidden
- *     within a session but returns on next visit.
+ * Design:
+ *   • Positioned relatively — scrolls away naturally with the page. The
+ *     sticky NavBar below takes over at top=0. The bar does NOT auto-hide
+ *     on scroll (that caused a jarring "vanish" the moment you nudged the
+ *     page).
+ *   • Dismissed state is persisted in sessionStorage so a user who closes
+ *     the bar doesn't see it again this session.
+ *   • Animation duration scales with content width: more headlines = longer
+ *     duration so the *visual* speed stays constant regardless of item
+ *     count.
  *   • Reduced motion: animation pauses; content becomes a static list.
- *   • ARIA: live region but polite, so screen readers don't get spammed.
+ *   • Initial items are SSR-provided so the bar never renders blank.
  */
-export function NewsMarquee({ locale: explicitLocale }: Props = {}) {
+export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props = {}) {
   const pathname = usePathname();
   const locale: LocaleCode = useMemo(() => {
     if (explicitLocale) return explicitLocale;
     return pathname?.startsWith("/ar") ? "ar" : "en";
   }, [pathname, explicitLocale]);
 
-  const [items, setItems] = useState<NewsItem[]>([]);
+  const [items, setItems] = useState<NewsItem[]>(initialItems);
   const [dismissed, setDismissed] = useState(false);
-  const [scrolledAway, setScrolledAway] = useState(false);
 
   // Restore dismissed state from sessionStorage (per tab / session).
   useEffect(() => {
@@ -56,44 +63,32 @@ export function NewsMarquee({ locale: explicitLocale }: Props = {}) {
     }
   }, []);
 
-  // Hide on scroll-down, show again only at very top.
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        setScrolledAway(window.scrollY > SCROLL_HIDE_THRESHOLD);
-        ticking = false;
-      });
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Fetch + poll.
+  // Fetch + poll (skip first fetch if we already have SSR items in the
+  // current locale — avoids an immediate refetch flicker).
   useEffect(() => {
     let alive = true;
     async function load() {
       try {
-        const res = await fetch("/api/news?limit=20", { cache: "no-store" });
+        const res = await fetch(`/api/news?limit=20&locale=${locale}`, { cache: "no-store" });
         if (!res.ok) return;
         const data = (await res.json()) as { items: NewsItem[] };
-        if (alive && Array.isArray(data.items)) {
+        if (alive && Array.isArray(data.items) && data.items.length > 0) {
           setItems(data.items);
         }
       } catch {
         /* ignore */
       }
     }
+    // Only skip the initial load when SSR items are present AND the
+    // visitor's locale matches the SSR locale. Hard to detect the latter
+    // reliably, so we always refresh once — cheap due to server cache.
     load();
     const id = window.setInterval(load, POLL_INTERVAL_MS);
     return () => {
       alive = false;
       window.clearInterval(id);
     };
-  }, []);
+  }, [locale]);
 
   function handleDismiss(): void {
     setDismissed(true);
@@ -111,13 +106,13 @@ export function NewsMarquee({ locale: explicitLocale }: Props = {}) {
   const label = locale === "ar" ? "آخر الأخبار" : "Live News";
   const closeLabel = locale === "ar" ? "إغلاق شريط الأخبار" : "Dismiss news bar";
   const loop = [...items, ...items]; // duplicate for seamless loop
+  const durationS = Math.max(MIN_DURATION_S, items.length * SECONDS_PER_ITEM);
 
   return (
     <aside
-      className={`marquee-bar ${scrolledAway ? "is-hidden" : ""}`}
+      className="marquee-bar"
       role="complementary"
       aria-label={label}
-      aria-hidden={scrolledAway ? "true" : undefined}
     >
       <span className="marquee-badge" aria-hidden="true">
         <span className="marquee-dot" />
@@ -125,7 +120,11 @@ export function NewsMarquee({ locale: explicitLocale }: Props = {}) {
       </span>
 
       <div className="marquee-track-wrap">
-        <div className="marquee-track" aria-live="off">
+        <div
+          className="marquee-track"
+          aria-live="off"
+          style={{ animationDuration: `${durationS}s` }}
+        >
           {loop.map((item, idx) => {
             const inner = (
               <>

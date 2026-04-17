@@ -4,6 +4,8 @@ import { Cairo, Changa, Exo_2, Orbitron } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, themeInitScript } from "@/components/ThemeProvider";
 import { NewsMarquee } from "@/components/NewsMarquee";
+import { getEgyptNews } from "@/lib/egypt-news";
+import { getNews } from "@/lib/store";
 import { BackToTop } from "@/components/BackToTop";
 import { SkipToContent } from "@/components/SkipToContent";
 import { RouteProgress } from "@/components/RouteProgress";
@@ -129,7 +131,17 @@ export const metadata: Metadata = {
  * The theme-init script runs before hydration to prevent a flash of the
  * wrong palette on first paint.
  */
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  // SSR initial news items so the marquee is never blank on first paint.
+  // We render AR because it's the default locale (html[lang=ar]); client
+  // refetches with the correct locale after hydration.
+  let initialNews;
+  try {
+    initialNews = await getEgyptNews("ar", 20);
+  } catch {
+    initialNews = await getNews(20);
+  }
+
   return (
     <html lang="ar" dir="rtl" data-theme="light" suppressHydrationWarning>
       <head>
@@ -144,7 +156,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Suspense fallback={null}>
             <RouteProgress />
           </Suspense>
-          <NewsMarquee />
+          <NewsMarquee initialItems={initialNews} />
           {children}
           <BackToTop />
           <GlobalShortcuts />
