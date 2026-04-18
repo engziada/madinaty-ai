@@ -23,8 +23,8 @@ const DISMISS_KEY = "madinaty.marquee.dismissed";
  * Per-item scroll time (seconds). Higher = slower. With an average headline
  * length ~60 chars, 5s/item gives ~12 chars/s — comfortable reading pace.
  */
-const SECONDS_PER_ITEM = 5;
-const MIN_DURATION_S = 40;
+const SECONDS_PER_ITEM = 10;
+const MIN_DURATION_S = 60;
 
 /**
  * Top marquee bar streaming Egypt news (Google News RSS).

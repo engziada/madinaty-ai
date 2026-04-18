@@ -2489,7 +2489,8 @@ body:has(.cursor-dot) {
 }
 
 [dir="rtl"] .marquee-track {
-  animation-direction: reverse;
+  animation-name: marqueeScrollRTL;
+  animation-direction: normal;
 }
 
 .marquee-item {
@@ -2549,6 +2550,11 @@ body:has(.cursor-dot) {
 @keyframes marqueeScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+@keyframes marqueeScrollRTL {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
 }
 
 @media (max-width: 640px) {
