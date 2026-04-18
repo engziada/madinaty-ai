@@ -230,21 +230,28 @@ a {
 }
 
 .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-family: var(--font-headline), "Space Grotesk", sans-serif;
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  text-decoration: none;
+  position: relative;
+  width: 120px;
+  height: 5rem;
+  display: block;
 }
 
-.brand .brand-wordmark {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 60%, var(--coral) 120%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.nav-logo {
+  position: absolute;
+  top: 0.5rem;
+  inset-inline-start: 0;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: var(--shadow-card);
+  z-index: 50;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.brand:hover .nav-logo {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .nav {
@@ -255,16 +262,42 @@ a {
   font-weight: 500;
 }
 
-.nav a {
+.nav a:not(.btn):not(.locale-btn) {
+  position: relative;
   color: var(--text-soft);
   padding: 0.4rem 0.75rem;
-  border-radius: var(--r-sm);
-  transition: color 0.18s ease, background 0.18s ease;
+  transition: color 0.22s ease;
 }
 
-.nav a:hover {
+.nav a:not(.btn):not(.locale-btn)::after {
+  content: "";
+  position: absolute;
+  bottom: 0.2rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background: var(--teal);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[dir="rtl"] .nav a:not(.btn):not(.locale-btn)::after {
+  transform-origin: left;
+}
+
+.nav a:not(.btn):not(.locale-btn):hover {
   color: var(--teal);
-  background: rgba(0, 210, 210, 0.08);
+}
+
+.nav a:not(.btn):not(.locale-btn):hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+[dir="rtl"] .nav a:not(.btn):not(.locale-btn):hover::after {
+  transform-origin: right;
 }
 
 .nav .btn-primary {
@@ -3200,7 +3233,6 @@ body:has(.cursor-dot) {
 /* Light mode: the lite logo is a JPEG on white — blend it into the white topbar */
 [data-theme="light"] .nav-logo {
   mix-blend-mode: multiply;
-  border-radius: 6px;
 }
 
 /* Hidden state (is-hidden) — slide up & collapse so layout reflows. */
@@ -3219,11 +3251,7 @@ body:has(.cursor-dot) {
 }
 
 /* Nav item base colors — rely on tokens so both themes work */
-.nav a {
-  color: var(--text-soft);
-}
-
-.nav a:hover {
+[data-theme="dark"] .nav a:not(.btn):not(.locale-btn):hover {
   color: var(--text);
 }
 

@@ -13,11 +13,11 @@ Legend:
 
 ## 1. News Marquee Bar
 Files: `src/components/NewsMarquee.tsx`, `src/app/api/news/route.ts`, `src/lib/egypt-news.ts` (new)
-- Need action: yes
+- Need action: no
 - Type of action: content (live data source) + behavior (locale-aware fetch)
-- Progress: 100% (pending Ziada review)
-- Committed: no
-- Notes: Replaced static/webhook-only feed with Google News RSS (Egypt, locale-aware EN/AR). 10-min in-memory cache. Falls back to stored/seed items on fetch failure.
+- Progress: 100% (completed)
+- Committed: yes
+- Notes: Replaced static/webhook-only feed with Google News RSS. Fixed RTL animation issues and speed. 10-min in-memory cache. Falls back to stored/seed items on fetch failure.
 
 ## 2. Nav Bar
 File: `src/components/NavBar.tsx`
@@ -92,4 +92,4 @@ File: `src/components/Footer.tsx`
 ---
 
 ## Current Focus
-**Section 1 — News Marquee Bar** (awaiting goals from Ziada)
+**Section 2 — Nav Bar** (awaiting goals from Ziada)

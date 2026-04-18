@@ -65,16 +65,15 @@ export function NavBar({ locale, content }: NavBarProps) {
   return (
     <header className="topbar" ref={navRef}>
       <div className="container nav-wrap">
-        <Link className="brand" href={homeHref} onClick={closeMenu}>
+        <Link className="brand" href={homeHref} onClick={closeMenu} aria-label="Madinaty.AI Home">
           <img
             src={logoSrc}
-            alt="Madinaty.AI"
+            alt="Madinaty.AI Logo"
             className="nav-logo"
-            width={40}
-            height={40}
+            width={130}
+            height={130}
             decoding="async"
           />
-          <span className="brand-wordmark">Madinaty.AI</span>
         </Link>
 
         <button
