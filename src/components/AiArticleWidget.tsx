@@ -39,7 +39,7 @@ export function AiArticleWidget({ locale }: Props) {
     let alive = true;
     async function load() {
       try {
-        const res = await fetch("/api/ai-article", { cache: "no-store" });
+        const res = await fetch(`/api/ai-article?locale=${locale}`, { cache: "no-store" });
         if (!res.ok) return;
         const data = (await res.json()) as { article: Article | null };
         if (alive) setArticle(data.article);

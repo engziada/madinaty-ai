@@ -12,6 +12,7 @@ import { ValueStrip } from "@/components/ValueStrip";
 import { EnrollmentModal } from "@/components/EnrollmentModal";
 import { AiArticleWidget } from "@/components/AiArticleWidget";
 import { AiToolsSection } from "@/components/AiToolsSection";
+import { LiveFacebookFeed } from "@/components/LiveFacebookFeed";
 
 interface LandingPageProps {
   locale: LocaleCode;
@@ -59,16 +60,6 @@ export function LandingPage({ locale }: LandingPageProps) {
           <div className="hero-backdrop-overlay" aria-hidden="true" />
           <div className="container hero-inner">
             <div className="hero-copy reveal">
-              <div className="hero-logo-badge">
-                <div className="hero-logo-ring">
-                  <img src="/logo.png" alt="Madinaty AI logo" />
-                </div>
-                <div className="hero-badge-text">
-                  <strong>{content.hero.overline}</strong>
-                  Madinaty Community
-                </div>
-              </div>
-
               <h1 className="hero-title">
                 {content.hero.titlePrefix}{" "}
                 <span className="gradient-text">{content.hero.titleHighlight}</span>
@@ -81,7 +72,7 @@ export function LandingPage({ locale }: LandingPageProps) {
                 <a className="btn btn-primary" href="#chat">
                   {content.hero.primaryAction}
                 </a>
-                <a className="btn btn-outline" href={locale === "ar" ? "/ar/vision-future" : "/vision-future"}>
+                <a className="btn btn-outline" href="#events">
                   {content.hero.secondaryAction}
                 </a>
               </div>
@@ -95,44 +86,20 @@ export function LandingPage({ locale }: LandingPageProps) {
                   <span className="panel-dot" />
                   <span className="panel-dot" />
                   <span className="panel-dot" />
-                  <span className="panel-title-bar">Madinaty.AI · Live Dashboard</span>
+                  <span className="panel-title-bar">{content.hero.dashboardTitle}</span>
                 </div>
                 <div className="hero-panel-body">
                   <div className="hero-stat-row">
-                    <div className="hero-stat">
-                      <strong>4.2K</strong>
-                      <small>Residents</small>
-                    </div>
-                    <div className="hero-stat">
-                      <strong>42</strong>
-                      <small>AI Labs</small>
-                    </div>
-                    <div className="hero-stat">
-                      <strong>99%</strong>
-                      <small>Uptime</small>
-                    </div>
+                    {content.hero.dashboardStats.map((stat, i) => (
+                      <div className="hero-stat" key={`stat-${i}`}>
+                        <strong>{stat.value}</strong>
+                        <small>{stat.label}</small>
+                      </div>
+                    ))}
                   </div>
-                  <div className="hero-activity">
-                    <div className="hero-activity-icon">🚌</div>
-                    <div className="hero-activity-text">
-                      Smart shuttle dispatched — District 5
-                      <small>2 minutes ago · autonomous</small>
-                    </div>
-                  </div>
-                  <div className="hero-activity">
-                    <div className="hero-activity-icon">🎓</div>
-                    <div className="hero-activity-text">
-                      Workshop registered — AI for Kids
-                      <small>Just now · 42 seats available</small>
-                    </div>
-                  </div>
-                  <div className="hero-activity">
-                    <div className="hero-activity-icon">🏠</div>
-                    <div className="hero-activity-text">
-                      Home energy optimized — Block C-7
-                      <small>5 minutes ago · 18% savings</small>
-                    </div>
-                  </div>
+                  <Suspense fallback={<div className="hero-activity">Loading live feed...</div>}>
+                    <LiveFacebookFeed locale={locale} />
+                  </Suspense>
                 </div>
               </div>
             </div>
@@ -233,7 +200,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </section>
 
         {/* ── UPCOMING EVENT ────────────────────────────────── */}
-        <section className="section section-alt">
+        <section className="section section-alt" id="events">
           <div className="container reveal">
             <div className="upcoming-shell">
               <div className="upcoming-overlay" aria-hidden="true" />

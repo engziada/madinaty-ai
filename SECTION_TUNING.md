@@ -20,18 +20,19 @@ Files: `src/components/NewsMarquee.tsx`, `src/app/api/news/route.ts`, `src/lib/e
 - Notes: Replaced static/webhook-only feed with Google News RSS. Fixed RTL animation issues and speed. 10-min in-memory cache. Falls back to stored/seed items on fetch failure.
 
 ## 2. Nav Bar
-File: `src/components/NavBar.tsx`
-- Need action: TBD
-- Type of action: TBD
-- Progress: 0%
-- Committed: no
-
+File: `src/components/NavBar.tsx`, `src/app/globals.css`
+- Need action: no
+- Type of action: layout / styling
+- Progress: 100% (completed)
+- Committed: yes
+- Notes: Removed brand wordmark, enlarged logo to overlap main page with a circular shape (50%). Replaced background hover box with animated underline matching the accent color for both themes.
 ## 3. Hero
 File: `src/components/LandingPage.tsx` (hero-wrap) + `AiArticleWidget.tsx`
-- Need action: TBD
-- Type of action: TBD
-- Progress: 0%
-- Committed: no
+- Need action: no
+- Type of action: styling / content / behavior
+- Progress: 100% (completed)
+- Committed: yes
+- Notes: Removed logo badge, styled dashboard and AI news feed as translucent glass components with bottom alignment. Handled AI News RSS via Google News and created Facebook mockup integration for LiveFeed. Re-routed secondary Action to point to #events.
 
 ## 4. Value Strip (Stats)
 File: `src/components/ValueStrip.tsx`
@@ -92,4 +93,4 @@ File: `src/components/Footer.tsx`
 ---
 
 ## Current Focus
-**Section 2 — Nav Bar** (awaiting goals from Ziada)
+**Section 3 — Hero** (awaiting goals from Ziada)

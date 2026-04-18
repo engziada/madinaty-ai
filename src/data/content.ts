@@ -38,7 +38,13 @@ const contentEn: SiteContent = {
     titleSuffix: "Awakens",
     text: "Madinaty — Egypt's largest integrated city housing 700,000+ residents across 23 districts — is getting its own AI layer. Built by the community, for the community.",
     primaryAction: "Madinaty Bot",
-    secondaryAction: "View Roadmap"
+    secondaryAction: "Current Offers",
+    dashboardTitle: "Madinaty.AI · Live Dashboard",
+    dashboardStats: [
+      { value: "4.2K", label: "Members" },
+      { value: "42", label: "Services" },
+      { value: "99.9%", label: "Uptime" }
+    ]
   },
   about: {
     overline: "Why Madinaty AI",
@@ -218,7 +224,13 @@ const contentAr: SiteContent = {
     titleSuffix: "يبدأ الآن",
     text: "مدينتي — أكبر مدينة متكاملة في مصر بأكثر من ٧٠٠ ألف ساكن في ٢٣ حياً — تحصل على طبقتها الذكية. بناها المجتمع، وللمجتمع.",
     primaryAction: "مدينتي بوت",
-    secondaryAction: "عرض خارطة الطريق"
+    secondaryAction: "أحدث العروض",
+    dashboardTitle: "مدينتي.AI · لوحة التحكم المباشرة",
+    dashboardStats: [
+      { value: "٤٫٢ ألف", label: "عضو" },
+      { value: "٤٢", label: "خدمة ذكية" },
+      { value: "٩٩٫٩٪", label: "جاهزية" }
+    ]
   },
   about: {
     overline: "لماذا مدينتي AI",

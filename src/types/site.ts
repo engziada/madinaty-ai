@@ -34,6 +34,8 @@ export interface SiteContent {
     text: string;
     primaryAction: string;
     secondaryAction: string;
+    dashboardTitle: string;
+    dashboardStats: Array<{ value: string; label: string }>;
   };
   about: {
     overline: string;
