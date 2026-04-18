@@ -108,6 +108,12 @@ export function AiToolsSection({ locale }: Props) {
         <p className="overline">{copy.overline}</p>
         <h2 id="ai-tools-heading">{copy.title}</h2>
         <p className="section-head-sub">{copy.subtitle}</p>
+        <div className="ai-tools-count-badge">
+          {copy.categories.reduce((sum, c) => sum + c.tools.length, 0)}
+          &nbsp;{locale === "ar" ? "أداة في" : "tools across"}&nbsp;
+          {copy.categories.length}
+          &nbsp;{locale === "ar" ? "فئات" : "categories"}
+        </div>
       </div>
 
       <div className="ai-tools-toolbar reveal">

@@ -42,6 +42,11 @@ export interface SiteContent {
     title: string;
     summary: string;
     highlights: string[];
+    cards: Array<{
+      icon: string;
+      title: string;
+      text: string;
+    }>;
   };
   sections: {
     servicesOverline: string;
@@ -51,16 +56,15 @@ export interface SiteContent {
     mapOverline: string;
     mapTitle: string;
   };
-  cards: {
-    transportTitle: string;
-    transportText: string;
-    insightsTitle: string;
-    insightsText: string;
-    homeTitle: string;
-    homeText: string;
-    safetyTitle: string;
-    safetyText: string;
-  };
+  services: Array<{
+    icon: string;
+    title: string;
+    text: string;
+    badge: string;
+    badgeType: "live" | "soon" | "beta";
+    size?: "wide" | "tall" | "normal";
+    category?: "core" | "community" | "economy" | "education" | "lifestyle";
+  }>;
   chat: {
     systemOnline: string;
     placeholder: string;

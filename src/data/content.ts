@@ -47,34 +47,162 @@ const contentEn: SiteContent = {
     ]
   },
   about: {
-    overline: "Why Madinaty AI",
-    title: "From Technology Consumption to Technology Creation",
+    overline: "The Smart City Layer",
+    title: "The AI Operating System for Modern Living",
     summary:
-      "Madinaty spans 8,000 acres in New Cairo, developed by Talaat Moustafa Group (TMG). With Advanced Metering Infrastructure (AMI) already in place for water and electricity, Madinaty.AI layers intelligent services on top — from shuttle routing to community analytics.",
+      "Madinaty isn't just an 8,000-acre city; it's a dynamic, living ecosystem. By seamlessly integrating the Madinaty.AI layer with existing infrastructure, we are transforming everyday routines into hyper-personalized, ultra-efficient experiences for over 700,000 residents.",
     highlights: [
-      "Hands-on AI workshops across Madinaty's 23 districts",
-      "Smart services for property, transport, safety, and city insights",
-      "Open builder community: developers, students, and entrepreneurs"
+      "Local-First Models: Ensuring zero-latency operations completely offline",
+      "Bank-Grade Privacy: Your living data stays strictly within the community bounds",
+      "Open Sandbox: Built natively with seamless API integrations for smart homelabs"
+    ],
+    cards: [
+      {
+        icon: "🧠",
+        title: "Resident-Centric AI",
+        text: "Predictive algorithms that anticipate your needs, from smart transit to predictive facility booking."
+      },
+      {
+        icon: "🔐",
+        title: "Uncompromised Privacy",
+        text: "An architecture built on zero-knowledge principles. The city learns, but your identity remains strictly yours."
+      },
+      {
+        icon: "⚡",
+        title: "Developer Sandbox",
+        text: "Open API access enabling tech innovators and residents to build the next generation of urban applications."
+      }
     ]
   },
   sections: {
-    servicesOverline: "Neural Infrastructure",
-    servicesTitle: "AI Services Built for Real City Needs",
+    servicesOverline: "Our Platform",
+    servicesTitle: "One AI Layer. Fourteen Services. One Community.",
     chatOverline: "Ask Madinaty.AI",
     chatTitle: "Your Intelligent Community Companion",
     mapOverline: "Navigate Your Future",
     mapTitle: "Interactive Madinaty Map"
   },
-  cards: {
-    transportTitle: "Smart Transportation",
-    transportText: "Predictive routing and autonomous shuttle orchestration across Madinaty's 23 districts — connected to the central bus hub for zero-friction mobility.",
-    insightsTitle: "Community Insights",
-    insightsText: "Hyper-local sentiment, events, and service health surfaced through real-time intelligence across all sub-compounds.",
-    homeTitle: "AI Home Management",
-    homeText: "Energy, safety, and climate optimization for apartments and villas, building on Madinaty's AMI smart metering infrastructure.",
-    safetyTitle: "Predictive Safety",
-    safetyText: "Continuous monitoring with privacy-first design and preventive response automation across all residential clusters citywide."
-  },
+  services: [
+    // ── CORE PLATFORM ──
+    {
+      icon: "🤖",
+      title: "Madinaty AI Bot",
+      text: "Your always-on local guide. Ask for restaurant picks, best spots for an outing, or let the bot find you a flat, villa, or shop — plus live prices for any good or service inside Madinaty.",
+      badge: "Live Now",
+      badgeType: "live",
+      size: "wide",
+      category: "core",
+    },
+    {
+      icon: "🎓",
+      title: "AI Flash Courses for Kids",
+      text: "Free, certified courses for ages 6–8, 9–12, and 13–15. Kids learn AI basics, prompt writing, safe tool usage, and digital critical thinking at Madinaty's Innovation Hub.",
+      badge: "Free · Enrolling",
+      badgeType: "live",
+      category: "education",
+    },
+    {
+      icon: "🏢",
+      title: "Summer Business Training",
+      text: "Bridging Madinaty youth (16–18) with local business owners for real hands-on internships and apprenticeships every summer inside the city.",
+      badge: "Summer 2026",
+      badgeType: "soon",
+      category: "education",
+    },
+    {
+      icon: "🏠",
+      title: "Rental Portal",
+      text: "A transparent, AI-powered marketplace connecting Madinaty tenants directly with owners — streamlining listings, viewings, contracts, and payments all in one place.",
+      badge: "Beta Soon",
+      badgeType: "soon",
+      category: "core",
+    },
+    {
+      icon: "👥",
+      title: "Community Interest Club",
+      text: "Find your people. Match with Madinaty residents who share your hobbies, sports, or passions and organize group outings, meetups, and local events together.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "community",
+    },
+    // ── COMMUNITY ──
+    {
+      icon: "🗳️",
+      title: "Poll Board",
+      text: "Vote on urgent community topics. When enough residents agree, your collective voice is automatically escalated as an official request to Madinaty's city managers.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "community",
+    },
+    {
+      icon: "⏱️",
+      title: "Skill Exchange Network",
+      text: "Trade skills with neighbors using hours — not money. Offer tutoring, design, coding, or cooking; earn time credits you can spend on any skill you need. We manage the balance.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "community",
+    },
+    // ── RESIDENTIAL LIFE ──
+    {
+      icon: "🔧",
+      title: "Trusted Services Directory",
+      text: "A curated, resident-rated directory of verified plumbers, electricians, cleaners, and handymen who operate inside Madinaty — no more random Facebook recommendations.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "lifestyle",
+    },
+    {
+      icon: "🌙",
+      title: "Short-Stay Hosting",
+      text: "List your spare room or unit for short-term stays by verified guests and visiting families. Compliant with Madinaty's community guidelines and fully managed through the platform.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "economy",
+    },
+    // ── EDUCATION & LIFESTYLE ──
+    {
+      icon: "📖",
+      title: "Madinaty Tutoring Board",
+      text: "Connect students with qualified resident-tutors for affordable, in-community private lessons across all subjects and grade levels.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "education",
+    },
+    {
+      icon: "🏃",
+      title: "Activity Finder",
+      text: "Find and join running groups, yoga sessions, football matches, and more — organized by residents in Madinaty's parks and sports facilities.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "lifestyle",
+    },
+    // ── LOCAL ECONOMY ──
+    {
+      icon: "🛍️",
+      title: "Madinaty Marketplace",
+      text: "A hyper-local buy, sell, and swap platform exclusively for Madinaty residents — fast, trusted, and no platform fees for community members.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "economy",
+    },
+    {
+      icon: "🍽️",
+      title: "Ghost Kitchen Incubator",
+      text: "Turn your home kitchen into a micro-business. Sell verified, home-cooked meals to your neighbors through a legally structured, community-first food platform.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      category: "economy",
+    },
+    {
+      icon: "🚀",
+      title: "Local Business Booster",
+      text: "Give any Madinaty business an online presence in under 48 hours — starting with a free landing page, then a full e-commerce store, CRM, and ERP system as they grow.",
+      badge: "Coming Soon",
+      badgeType: "soon",
+      size: "wide",
+      category: "economy",
+    },
+  ],
   chat: {
     systemOnline: "System Online",
     placeholder: "Ask about Madinaty services, events, transport...",
@@ -233,34 +361,162 @@ const contentAr: SiteContent = {
     ]
   },
   about: {
-    overline: "لماذا مدينتي AI",
-    title: "من استهلاك التكنولوجيا إلى صناعتها",
+    overline: "الطبقة الذكية للمدينة",
+    title: "نظام التشغيل الذكي لحياة عصرية",
     summary:
-      "مدينتي تمتد على ٨٠٠٠ فدان في القاهرة الجديدة، طوّرتها مجموعة طلعت مصطفى (TMG). مع بنية AMI الذكية للمياه والكهرباء، تُضيف Madinaty.AI طبقة ذكاء فوق هذه البنية — من توزيع الحافلات إلى تحليل المجتمع.",
+      "مدينتي ليست مجرد مدينة تمتد على ٨٠٠٠ فدان، بل هي بيئة حية تتنفس. من خلال دمج طبقة Madinaty.AI مع البنية التحتية، نحول الروتين اليومي إلى تجارب فائقة الذكاء ومخصصة لأكثر من ٧٠٠ ألف ساكن.",
     highlights: [
-      "ورش ذكاء اصطناعي عملية في أحياء مدينتي الـ٢٣",
-      "خدمات ذكية للعقارات والنقل والسلامة ورؤى المدينة",
-      "مجتمع مبنيّ على الانفتاح: مطورون وطلاب ورواد أعمال"
-    ]
+      "نماذج محلية بالكامل: تضمن استجابة فورية دون تأخير أو حاجة للإنترنت",
+      "خصوصية مطلقة: بياناتك الحياتية لا تغادر يوماً حدود المجتمع الموثوق",
+      "بيئة مفتوحة: واجهات برمجية تدعم الربط السلس مع مختبرات المنازل الذكية",
+    ],
+    cards: [
+      {
+        icon: "🧠",
+        title: "ذكاء محوره الساكن",
+        text: "خوارزميات تطورية تتوقع احتياجاتك أينما كنت، من تتبع الحافلات وحتى الحجز الذكي للمرافق.",
+      },
+      {
+        icon: "🔐",
+        title: "خصوصية لا مساومة فيها",
+        text: "نظام مبني على مبادئ المعرفة الصفرية. المدينة تتعلم وتتطور، وهويتك تبقى محمية بالكامل.",
+      },
+      {
+        icon: "⚡",
+        title: "حاضنة للمبتكرين",
+        text: "واجهات برمجية مفتوحة تتيح للمبدعين والمطورين بناء الجيل القادم من تقنيات المدن.",
+      },
+    ],
   },
   sections: {
-    servicesOverline: "البنية العصبية",
-    servicesTitle: "خدمات ذكاء اصطناعي لحاجات المدينة الحقيقية",
+    servicesOverline: "منصتنا",
+    servicesTitle: "طبقة ذكاء واحدة. أربعة عشر خدمة تُغيّر الحياة.",
     chatOverline: "اسأل Madinaty.AI",
     chatTitle: "مساعدك الذكي للمجتمع",
     mapOverline: "تنقّل نحو المستقبل",
     mapTitle: "خريطة مدينتي التفاعلية"
   },
-  cards: {
-    transportTitle: "النقل الذكي",
-    transportText: "توجيه تنبؤي وتنظيم حافلات ذاتية عبر ٢٣ حياً في مدينتي — متصل بمحطة الحافلات المركزية.",
-    insightsTitle: "رؤى المجتمع",
-    insightsText: "تحليلات آنية للمشاعر والأحداث وصحة الخدمات على مستوى جميع المجمعات السكنية.",
-    homeTitle: "إدارة المنزل بالذكاء الاصطناعي",
-    homeText: "تحسين الطاقة والسلامة والمناخ داخل الشقق والفيلات بالتكامل مع بنية AMI الذكية.",
-    safetyTitle: "سلامة تنبؤية",
-    safetyText: "مراقبة مستمرة بتصميم يحافظ على الخصوصية واستجابة وقائية عبر كل المجمعات السكنية."
-  },
+  services: [
+    // ── الخدمات الأساسية ──
+    {
+      icon: "🤖",
+      title: "مساعد مدينتي الذكي",
+      text: "دليلك المحلي المتاح دائماً. اسأله عن أفضل المطاعم أو أماكن الترفيه، أو اطلب منه إيجاد شقة أو فيلا أو محل — مع أسعار حية لأي منتج أو خدمة داخل مدينتي.",
+      badge: "متاح الآن",
+      badgeType: "live",
+      size: "wide",
+      category: "core",
+    },
+    {
+      icon: "🎓",
+      title: "كورسات ذكاء اصطناعي للأطفال",
+      text: "كورسات مجانية معتمدة للأعمار ٦–٨ و٩–١٢ و١٣–١٥ سنة. أساسيات الذكاء الاصطناعي، كتابة البرومبت، الأدوات الآمنة، والتفكير النقدي الرقمي — في مركز الابتكار بمدينتي.",
+      badge: "مجاناً · التسجيل مفتوح",
+      badgeType: "live",
+      category: "education",
+    },
+    {
+      icon: "🏢",
+      title: "تدريب صيفي للشباب",
+      text: "ربط شباب مدينتي (١٦–١٨ سنة) بأصحاب الأعمال المحليين لتدريب عملي حقيقي داخل المدينة كل صيف.",
+      badge: "صيف ٢٠٢٦",
+      badgeType: "soon",
+      category: "education",
+    },
+    {
+      icon: "🏠",
+      title: "بوابة الإيجار الذكية",
+      text: "سوق شفاف مدعوم بالذكاء الاصطناعي يربط المستأجرين بالملاك مباشرةً — تسهيل الإعلانات والمعاينات والعقود والمدفوعات في مكان واحد.",
+      badge: "قريباً",
+      badgeType: "soon",
+      category: "core",
+    },
+    {
+      icon: "👥",
+      title: "نادي الاهتمامات المجتمعي",
+      text: "ابحث عن سكان يشاركونك اهتماماتك وهواياتك — ورتّب معهم نزهات جماعية وفعاليات ولقاءات محلية داخل مدينتي.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "community",
+    },
+    // ── المجتمع ──
+    {
+      icon: "🗳️",
+      title: "لوحة التصويت المجتمعي",
+      text: "صوّت على أهم القضايا المجتمعية. عند تجاوز نسبة التصويت المتفق عليها مع إدارة المدينة، يُحوَّل تلقائياً إلى طلب رسمي معتمد.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "community",
+    },
+    {
+      icon: "⏱️",
+      title: "شبكة تبادل المهارات",
+      text: "تبادل المهارات مع الجيران بالساعات لا بالمال. قدّم ما تُجيده واكسب رصيداً زمنياً تصرفه على ما تحتاجه — ونحن ندير التوازن.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "community",
+    },
+    // ── الحياة السكنية ──
+    {
+      icon: "🔧",
+      title: "دليل الخدمات الموثوقة",
+      text: "دليل منتقى ومُقيَّم من السكان لسباكين وكهربائيين وعمال نظافة وصيانة يعملون داخل مدينتي — لا مزيد من التوصيات العشوائية.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "lifestyle",
+    },
+    {
+      icon: "🌙",
+      title: "إيجار الإقامة القصيرة",
+      text: "أجّر غرفتك أو وحدتك لزوار موثَّقين وعائلاتهم لفترات قصيرة — متوافق مع لائحة مدينتي ومُدار بالكامل من المنصة.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "economy",
+    },
+    // ── التعليم والنمط الحياتي ──
+    {
+      icon: "📖",
+      title: "لوحة الدروس الخصوصية",
+      text: "ربط الطلاب بمعلمين من سكان مدينتي للدروس الخصوصية بأسعار مناسبة في جميع المواد والمراحل الدراسية.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "education",
+    },
+    {
+      icon: "🏃",
+      title: "مكتشف الأنشطة",
+      text: "انضم لمجموعات الجري واليوغا وكرة القدم وغيرها — مُنظَّمة من السكان في حدائق مدينتي ومرافق الرياضة.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "lifestyle",
+    },
+    // ── الاقتصاد المحلي ──
+    {
+      icon: "🛍️",
+      title: "سوق مدينتي",
+      text: "منصة بيع وشراء ومقايضة حصرية لسكان مدينتي — سريعة وموثوقة وبدون رسوم للأعضاء.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "economy",
+    },
+    {
+      icon: "🍽️",
+      title: "حاضنة المطابخ المنزلية",
+      text: "حوّل مطبخك إلى مشروع صغير. بِع وجبات منزلية موثَّقة لجيرانك من خلال منصة طعام مجتمعية منظَّمة قانونياً.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      category: "economy",
+    },
+    {
+      icon: "🚀",
+      title: "معزز الأعمال المحلية",
+      text: "أعطِ أي نشاط تجاري في مدينتي حضوراً رقمياً في أقل من ٤٨ ساعة — يبدأ بصفحة هبوط مجانية ويتطور إلى متجر إلكتروني متكامل مع CRM وERP.",
+      badge: "قادم قريباً",
+      badgeType: "soon",
+      size: "wide",
+      category: "economy",
+    },
+  ],
   chat: {
     systemOnline: "النظام متصل",
     placeholder: "اسأل عن خدمات مدينتي، الفعاليات، النقل...",

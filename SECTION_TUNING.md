@@ -36,24 +36,19 @@ File: `src/components/LandingPage.tsx` (hero-wrap) + `AiArticleWidget.tsx`
 
 ## 4. Value Strip (Stats)
 File: `src/components/ValueStrip.tsx`
-- Need action: TBD
-- Type of action: TBD
-- Progress: 0%
-- Committed: no
+- Need action: no
+- Type of action: none
+- Progress: 100% (skipped/approved)
+- Committed: no changes needed
+- Notes: Evaluated and approved as is by user.
 
-## 5. About
-File: `src/components/LandingPage.tsx` (#about)
-- Need action: TBD
-- Type of action: TBD
-- Progress: 0%
-- Committed: no
-
-## 6. Services (Bento Grid)
-File: `src/components/LandingPage.tsx` (#services)
-- Need action: TBD
-- Type of action: TBD
-- Progress: 0%
-- Committed: no
+## 5+6. About + Services (Platform — Merged)
+Files: `src/components/LandingPage.tsx` (#platform), `src/data/content.ts`, `src/types/site.ts`, `src/app/globals.css`
+- Need action: no
+- Type of action: content / styling / layout / i18n / refactor
+- Progress: 100% (completed)
+- Committed: yes
+- Notes: User requested merge of sections 5 and 6 into a single `#platform` section. Left column: sticky About narrative with pillar cards and highlight checks. Right column: 5-service bento grid with wide (AI Bot), tall (Kids Courses), and normal cards for Summer Training, Rental Portal, Community Club. All cards use glassmorphism with badge labels (Live / Coming Soon). Replaced old generic `cards` object in SiteContent with structured `services[]` array. VisionPage updated to use new services map. Full EN+AR i18n. Responsive to single column at 900px.
 
 ## 7. AI Tools Section
 File: `src/components/AiToolsSection.tsx`

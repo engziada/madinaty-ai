@@ -109,75 +109,78 @@ export function LandingPage({ locale }: LandingPageProps) {
         {/* ── VALUE STRIP ───────────────────────────────────── */}
         <ValueStrip items={stats} />
 
-        {/* ── ABOUT ─────────────────────────────────────────── */}
-        <section className="section container" id="about">
-          <div className="about-grid reveal">
-            <div className="about-text">
-              <p className="overline">{content.about.overline}</p>
-              <h2>{content.about.title}</h2>
-              <p>{content.about.summary}</p>
-              <div className="about-checks">
-                {content.about.highlights.map((highlight) => (
-                  <div key={highlight} className="check-item">
-                    <div className="check-icon" aria-hidden="true">✓</div>
-                    <p>{highlight}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="about-visual">
-              <div className="about-card">
-                <div className="about-card-icon">🧠</div>
-                <h4>AI-First Community</h4>
-                <p>Every service is powered by adaptive intelligence built for residents.</p>
-              </div>
-              <div className="about-card">
-                <div className="about-card-icon">🔒</div>
-                <h4>Privacy by Design</h4>
-                <p>Data stays local. Insights go city-wide without compromising identity.</p>
-              </div>
-              <div className="about-card">
-                <div className="about-card-icon">🌐</div>
-                <h4>Open Ecosystem</h4>
-                <p>Built by developers, for residents. Open to builders and entrepreneurs.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── SERVICES ──────────────────────────────────────── */}
-        <section className="section section-alt" id="services">
+        {/* ── PLATFORM (About + Services merged) ─────────────────── */}
+        <section className="section" id="platform">
           <div className="container">
+            {/* Section header */}
             <div className="section-head reveal">
               <p className="overline">{content.sections.servicesOverline}</p>
               <h2>{content.sections.servicesTitle}</h2>
             </div>
 
-            <div className="bento reveal">
-              <article className="tile tile-lg">
-                <div className="tile-icon">🚌</div>
-                <h3>{content.cards.transportTitle}</h3>
-                <p>{content.cards.transportText}</p>
-              </article>
+            <div className="platform-grid reveal">
+              {/* Left: About narrative */}
+              <div className="platform-narrative">
+                <p className="overline accent-overline">{content.about.overline}</p>
+                <h3>{content.about.title}</h3>
+                <p className="platform-summary">{content.about.summary}</p>
+                <div className="platform-pillars">
+                  {content.about.cards.map((card, idx) => (
+                    <div className="platform-pillar" key={`pillar-${idx}`}>
+                      <span className="pillar-icon" aria-hidden="true">{card.icon}</span>
+                      <div>
+                        <strong>{card.title}</strong>
+                        <p>{card.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="platform-highlights">
+                  {content.about.highlights.map((h) => (
+                    <div key={h} className="check-item">
+                      <div className="check-icon" aria-hidden="true">✓</div>
+                      <p>{h}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-              <article className="tile tile-sm tile-accent">
-                <div className="tile-icon">📊</div>
-                <h3>{content.cards.insightsTitle}</h3>
-                <p>{content.cards.insightsText}</p>
-              </article>
-
-              <article className="tile tile-narrow">
-                <div className="tile-icon">🏠</div>
-                <h3>{content.cards.homeTitle}</h3>
-                <p>{content.cards.homeText}</p>
-              </article>
-
-              <article className="tile tile-wide">
-                <div className="tile-icon">🛡️</div>
-                <h3>{content.cards.safetyTitle}</h3>
-                <p>{content.cards.safetyText}</p>
-              </article>
+              {/* Right: Service bento grid (scrollable) */}
+              <div className="service-bento-wrap">
+                <div className="service-bento">
+                  {content.services.map((svc, idx) => {
+                    const prevCategory = idx > 0 ? content.services[idx - 1].category : null;
+                    const showGroupLabel = svc.category && svc.category !== prevCategory;
+                    const categoryLabels: Record<string, string> = {
+                      core: locale === "ar" ? "الخدمات الأساسية" : "Core Platform",
+                      community: locale === "ar" ? "المجتمع" : "Community",
+                      economy: locale === "ar" ? "الاقتصاد المحلي" : "Local Economy",
+                      education: locale === "ar" ? "التعليم" : "Education",
+                      lifestyle: locale === "ar" ? "الحياة اليومية" : "Lifestyle",
+                    };
+                    return (
+                      <>
+                        {showGroupLabel && (
+                          <div key={`label-${svc.category}`} className="svc-group-label">
+                            {categoryLabels[svc.category!] ?? svc.category}
+                          </div>
+                        )}
+                        <article
+                          key={`svc-${idx}`}
+                          className={`svc-card svc-${svc.size ?? "normal"} svc-${svc.badgeType}`}
+                        >
+                          <div className="svc-header">
+                            <span className="svc-icon" aria-hidden="true">{svc.icon}</span>
+                            <span className={`svc-badge badge-${svc.badgeType}`}>{svc.badge}</span>
+                          </div>
+                          <h4>{svc.title}</h4>
+                          <p>{svc.text}</p>
+                        </article>
+                      </>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </section>

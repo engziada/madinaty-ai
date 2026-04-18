@@ -59,29 +59,13 @@ export function VisionPage({ locale }: VisionPageProps) {
           </div>
 
           <div className="bento reveal">
-            <article className="tile tile-lg">
-              <div className="tile-icon">🚌</div>
-              <h3>{content.cards.transportTitle}</h3>
-              <p>{content.cards.transportText}</p>
-            </article>
-
-            <article className="tile tile-sm tile-accent">
-              <div className="tile-icon">📊</div>
-              <h3>{content.cards.insightsTitle}</h3>
-              <p>{content.cards.insightsText}</p>
-            </article>
-
-            <article className="tile tile-wide">
-              <div className="tile-icon">🏠</div>
-              <h3>{content.cards.homeTitle}</h3>
-              <p>{content.cards.homeText}</p>
-            </article>
-
-            <article className="tile tile-narrow">
-              <div className="tile-icon">🛡️</div>
-              <h3>{content.cards.safetyTitle}</h3>
-              <p>{content.cards.safetyText}</p>
-            </article>
+            {content.services.map((svc, idx) => (
+              <article key={`vision-svc-${idx}`} className={`tile ${svc.size === "wide" ? "tile-wide" : svc.size === "tall" ? "tile-lg" : "tile-half"}`}>
+                <div className="tile-icon">{svc.icon}</div>
+                <h3>{svc.title}</h3>
+                <p>{svc.text}</p>
+              </article>
+            ))}
           </div>
         </section>
 
