@@ -1,11 +1,11 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Fragment, Suspense, useState } from "react";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
 import { NavBar } from "@/components/NavBar";
 import { ChatPanel } from "@/components/ChatPanel";
-import { MapPanel } from "@/components/MapPanel";
+// import { MapPanel } from "@/components/MapPanel"; // Hidden for now - will work on later
 import { Footer } from "@/components/Footer";
 import { PageShell } from "@/components/PageShell";
 import { ValueStrip } from "@/components/ValueStrip";
@@ -110,7 +110,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         <ValueStrip items={stats} />
 
         {/* ── PLATFORM (About + Services merged) ─────────────────── */}
-        <section className="section" id="platform">
+        <section className="section" id="services">
           <div className="container">
             {/* Section header */}
             <div className="section-head reveal">
@@ -159,7 +159,7 @@ export function LandingPage({ locale }: LandingPageProps) {
                       lifestyle: locale === "ar" ? "الحياة اليومية" : "Lifestyle",
                     };
                     return (
-                      <>
+                      <Fragment key={`svc-fragment-${idx}`}>
                         {showGroupLabel && (
                           <div key={`label-${svc.category}`} className="svc-group-label">
                             {categoryLabels[svc.category!] ?? svc.category}
@@ -176,7 +176,7 @@ export function LandingPage({ locale }: LandingPageProps) {
                           <h4>{svc.title}</h4>
                           <p>{svc.text}</p>
                         </article>
-                      </>
+                      </Fragment>
                     );
                   })}
                 </div>
@@ -206,17 +206,8 @@ export function LandingPage({ locale }: LandingPageProps) {
         <section className="section section-alt" id="events">
           <div className="container reveal">
             <div className="upcoming-shell">
-              <div className="upcoming-overlay" aria-hidden="true" />
-              <img
-                src="/ad-1.webp"
-                alt=""
-                aria-hidden="true"
-                className="upcoming-event-art"
-                loading="lazy"
-                decoding="async"
-              />
               <div className="upcoming-content">
-                <div>
+                <div className="upcoming-main">
                   <p className="overline overline-light">{content.event.overline}</p>
                   <div className="upcoming-pill">{content.event.subtitle}</div>
                   <h2 className="upcoming-title">
@@ -225,7 +216,7 @@ export function LandingPage({ locale }: LandingPageProps) {
                       <span className="highlight">{content.event.titleHighlight}</span>
                     )}
                   </h2>
-                  <p>{content.event.description}</p>
+                  <p className="upcoming-description">{content.event.description}</p>
 
                   {content.event.safetyBadges && content.event.safetyBadges.length > 0 && (
                     <div className="safety-badges" aria-label="Safety commitments">
@@ -238,17 +229,35 @@ export function LandingPage({ locale }: LandingPageProps) {
                     </div>
                   )}
 
+                  <div className="upcoming-actions">
+                    <button className="btn btn-primary" type="button" onClick={() => setEnrollmentOpen(true)}>
+                      {content.event.cta}
+                    </button>
+                    <p className="upcoming-cta-note">{content.event.promoLabel}</p>
+                  </div>
+                </div>
+
+                <div className="upcoming-side">
+                  <figure className="upcoming-image-card">
+                    <img
+                      src="/ad-1.webp"
+                      alt={locale === "ar" ? "أطفال يتعلمون أدوات الذكاء الاصطناعي بأمان" : "Kids learning AI chat tools in a safe and guided environment"}
+                      className="upcoming-image"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <figcaption>
+                      {locale === "ar" ? "جلسة تفاعلية آمنة وممتعة" : "Interactive, safe, and fun learning session"}
+                    </figcaption>
+                  </figure>
+
                   <div className="promo-box">
                     <small>{content.event.promoLabel}</small>
                     <h3>{content.event.promoTitle}</h3>
                     <p>{content.event.promoDescription}</p>
                   </div>
-                  <button className="btn btn-primary" type="button" onClick={() => setEnrollmentOpen(true)}>
-                    {content.event.cta}
-                  </button>
-                </div>
 
-                <div className="upcoming-stats-panel">
+                  <div className="upcoming-stats-panel">
                   <div className="event-stats">
                     {content.event.stats.map((stat) => (
                       <div key={`${stat.value}-${stat.label}`}>
@@ -265,12 +274,13 @@ export function LandingPage({ locale }: LandingPageProps) {
                     <span>⚙️</span>
                   </div>
                 </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── MAP ───────────────────────────────────────────── */}
+        {/* ── MAP ─────────────────────────────────────────────
         <section className="section container" id="map">
           <div className="section-head center reveal">
             <p className="overline">{content.sections.mapOverline}</p>
@@ -278,9 +288,10 @@ export function LandingPage({ locale }: LandingPageProps) {
           </div>
           <MapPanel content={content} />
         </section>
+        */}
       </main>
 
-      <Footer content={content} />
+      <Footer content={content} locale={locale} />
       <EnrollmentModal locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
     </PageShell>
   );

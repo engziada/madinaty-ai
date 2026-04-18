@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -19,7 +19,7 @@ interface Options {
 /**
  * Trap focus inside a container while `active` is true.
  *
- * • Focuses the first focusable element when activated.
+ * • Focuses the first focusable element only on initial activation.
  * • Restores focus to the element that was focused prior to activation.
  * • Cycles Tab / Shift+Tab inside the container.
  * • Optionally calls `onEscape` when the user presses Escape.
@@ -28,24 +28,34 @@ export function useFocusTrap<T extends HTMLElement>(
   ref: RefObject<T | null>,
   { active, onEscape }: Options
 ): void {
+  const hasFocusedRef = useRef(false);
+  const onEscapeRef = useRef(onEscape);
+  onEscapeRef.current = onEscape;
+
   useEffect(() => {
-    if (!active) return;
+    if (!active) {
+      hasFocusedRef.current = false;
+      return;
+    }
 
     const container = ref.current;
     if (!container) return;
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
 
-    // Focus first focusable inside the container.
-    const focusables = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-    (focusables[0] ?? container).focus({ preventScroll: true });
+    // Focus first focusable inside the container only on initial activation.
+    if (!hasFocusedRef.current) {
+      const focusables = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      (focusables[0] ?? container).focus({ preventScroll: true });
+      hasFocusedRef.current = true;
+    }
 
     function onKey(event: KeyboardEvent) {
       if (!container) return;
 
-      if (event.key === "Escape" && onEscape) {
+      if (event.key === "Escape" && onEscapeRef.current) {
         event.preventDefault();
-        onEscape();
+        onEscapeRef.current();
         return;
       }
 
@@ -79,5 +89,5 @@ export function useFocusTrap<T extends HTMLElement>(
       document.removeEventListener("keydown", onKey);
       previouslyFocused?.focus?.({ preventScroll: true });
     };
-  }, [active, onEscape, ref]);
+  }, [active, ref]);
 }

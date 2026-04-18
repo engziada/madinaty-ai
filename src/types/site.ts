@@ -95,6 +95,9 @@ export interface SiteContent {
   footer: {
     copy: string;
     links: string[];
+    socialLinks: Array<{ icon: string; label: string; url: string }>;
+    whatsappNumber: string;
+    adminEmail: string;
   };
   vision: {
     overline: string;

@@ -287,34 +287,42 @@ const contentEn: SiteContent = {
     ]
   },
   event: {
-    overline: "Free Family Workshop",
-    title: "Teach Kids to Use AI—",
-    titleHighlight: "Safely & Joyfully",
-    subtitle: "Parents Welcome · Ages 8–14",
+    overline: "Free Kids AI Safety Session",
+    title: "AI Chat for Kids—",
+    titleHighlight: "Safe, Smart, Fun",
+    subtitle: "One-day session · 2 hours · Ages 7–10",
     description:
-      "A 100% free, parent-approved workshop where children learn what AI is, how to talk to it responsibly, and how to spot when it's wrong. No personal data. No black boxes. Just curious kids building safely under certified mentors at Madinaty's Innovation Hub.",
-    promoLabel: "Limited · Fully Sponsored",
-    promoTitle: "First 42 kids learn free—parents join any session.",
+      "A focused one-day session introducing kids to AI chat tools and how to use them safely. Each session runs for 2 hours with only 10 kids per group (without parents) to ensure attention and quality learning.",
+    promoLabel: "Completely Free · First 50 Kids",
+    promoTitle: "Date, time, and place are coming soon (TBD).",
     promoDescription:
-      "Sponsored by the Madinaty community for the launch edition. No credit card. No strings. Priority for active residents from any sub-compound across the 23 districts.",
-    labTitle: "Parent Dashboard Included",
-    labSubtitle: "See everything your child learns · Live",
-    cta: "Reserve My Child's Seat",
+      "Instructors are a group of highly educated and professional mentors from within the Madinaty community. Priority is for Madinaty residents, and registration is required.",
+    labTitle: "Small Cohort Format",
+    labSubtitle: "10 kids per session · no parents in class",
+    cta: "Register My Child",
     stats: [
-      { value: "12", label: "Safe Modules" },
-      { value: "Free", label: "Zero Cost" },
-      { value: "42", label: "Seats Left" }
+      { value: "2H", label: "Session Length" },
+      { value: "10", label: "Kids / Session" },
+      { value: "50", label: "Free Seats" }
     ],
     safetyBadges: [
-      { icon: "👩‍💼", label: "Parent Approved" },
-      { icon: "🔒", label: "No Data Collected" },
-      { icon: "🎓", label: "Certified Mentors" },
-      { icon: "👫", label: "Small Groups" }
+      { icon: "�️", label: "Safe AI Usage" },
+      { icon: "🎓", label: "Expert Community Instructors" },
+      { icon: "👦", label: "Ages 7–10" },
+      { icon: "�", label: "Madinaty Residents Priority" }
     ]
   },
   footer: {
     copy: "© 2026 Madinaty.AI · New Cairo, Egypt · Built by the Community.",
-    links: ["Privacy Policy", "System Status", "Terms of Use"]
+    links: ["Privacy Policy", "System Status", "Terms of Use"],
+    socialLinks: [
+      { icon: "facebook", label: "Facebook", url: "#" },
+      { icon: "instagram", label: "Instagram", url: "#" },
+      { icon: "twitter", label: "X (Twitter)", url: "#" },
+      { icon: "youtube", label: "YouTube", url: "#" }
+    ],
+    whatsappNumber: "+20 100 000 0000",
+    adminEmail: "admin@madinatyai.com"
   },
   vision: {
     overline: "Vision & Future",
@@ -601,34 +609,42 @@ const contentAr: SiteContent = {
     ]
   },
   event: {
-    overline: "ورشة عائلية مجانية",
-    title: "علّم طفلك الذكاء الاصطناعي—",
-    titleHighlight: "بأمان ومتعة",
-    subtitle: "بحضور الأهل · أعمار ٨–١٤",
+    overline: "جلسة مجانية للأطفال عن أمان الذكاء الاصطناعي",
+    title: "شات الذكاء الاصطناعي للأطفال—",
+    titleHighlight: "آمن وذكي وممتع",
+    subtitle: "جلسة يوم واحد · ساعتان · أعمار ٧–١٠",
     description:
-      "ورشة مجانية مائة بالمائة، معتمدة من الأهالي، يتعلّم فيها الأطفال ما هو الذكاء الاصطناعي، وكيف يتحدثون معه بمسؤولية، وكيف يكتشفون أخطاءه. بلا جمع بيانات، وبلا صناديق سوداء—فقط تعلّم آمن تحت إشراف مدربين معتمدين في مركز الابتكار بمدينتي.",
-    promoLabel: "محدود · برعاية كاملة",
-    promoTitle: "أول ٤٢ طفل يتعلّم مجاناً—والأهل مدعوّون.",
+      "جلسة تعريفية مركزة ليوم واحد لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ١٠ أطفال فقط بدون حضور الأهل داخل الجلسة لضمان جودة التفاعل.",
+    promoLabel: "مجاني بالكامل · لأول ٥٠ طفل",
+    promoTitle: "التاريخ والوقت والمكان سيُحددون قريباً (TBD).",
     promoDescription:
-      "برعاية كاملة من مجتمع مدينتي للنسخة الأولى. بلا بطاقة ائتمان وبلا التزامات. الأولوية لسكان الأحياء النشطين من الـ٢٣ حياً.",
-    labTitle: "لوحة متابعة للأهل",
-    labSubtitle: "تابع كل ما يتعلمه طفلك · لحظيّاً",
-    cta: "احجز مقعد طفلي",
+      "المدربون مجموعة من أشخاص محترفين وعاليي التعليم من داخل مجتمع مدينتي. الأولوية لسكان مدينتي، والتسجيل المسبق إلزامي.",
+    labTitle: "نظام مجموعات صغيرة",
+    labSubtitle: "١٠ أطفال لكل جلسة · بدون أولياء أمور",
+    cta: "سجّل طفلي الآن",
     stats: [
-      { value: "١٢", label: "وحدة آمنة" },
-      { value: "مجاني", label: "بلا رسوم" },
-      { value: "٤٢", label: "مقعد متاح" }
+      { value: "ساعتان", label: "مدة الجلسة" },
+      { value: "١٠", label: "طفل / جلسة" },
+      { value: "٥٠", label: "مقاعد مجانية" }
     ],
     safetyBadges: [
-      { icon: "👩‍💼", label: "معتمد من الأهل" },
-      { icon: "🔒", label: "بلا جمع بيانات" },
-      { icon: "🎓", label: "مدربون معتمدون" },
-      { icon: "👫", label: "مجموعات صغيرة" }
+      { icon: "�️", label: "استخدام آمن للذكاء الاصطناعي" },
+      { icon: "🎓", label: "مدربون محترفون من المجتمع" },
+      { icon: "👦", label: "للأعمار ٧–١٠" },
+      { icon: "�", label: "أولوية لسكان مدينتي" }
     ]
   },
   footer: {
     copy: "© ٢٠٢٦ Madinaty.AI · القاهرة الجديدة، مصر · بناه المجتمع.",
-    links: ["سياسة الخصوصية", "حالة النظام", "شروط الاستخدام"]
+    links: ["سياسة الخصوصية", "حالة النظام", "شروط الاستخدام"],
+    socialLinks: [
+      { icon: "facebook", label: "فيسبوك", url: "#" },
+      { icon: "instagram", label: "إنستغرام", url: "#" },
+      { icon: "twitter", label: "إكس (تويتر)", url: "#" },
+      { icon: "youtube", label: "يوتيوب", url: "#" }
+    ],
+    whatsappNumber: "+20 100 000 0000",
+    adminEmail: "admin@madinatyai.com"
   },
   vision: {
     overline: "الرؤية والمستقبل",

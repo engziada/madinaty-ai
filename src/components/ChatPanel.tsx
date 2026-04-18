@@ -1,7 +1,63 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import type { ChatMessage, LocaleCode, SiteContent } from "@/types/site";
+
+/**
+ * Minimal safe markdown renderer for AI messages.
+ * Supports: **bold**, [text](url) links (http/https only), and line breaks.
+ * Everything else is rendered as plain text (no HTML injection).
+ */
+function renderAiMarkdown(text: string): ReactNode {
+  const lines = text.split("\n");
+
+  const renderInline = (line: string, lineKey: number): ReactNode => {
+    const tokens: ReactNode[] = [];
+    const pattern = /\*\*([^*]+)\*\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+    let cursor = 0;
+    let tokenIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = pattern.exec(line)) !== null) {
+      if (match.index > cursor) {
+        tokens.push(line.slice(cursor, match.index));
+      }
+
+      if (match[1] !== undefined) {
+        tokens.push(
+          <strong key={`b-${lineKey}-${tokenIndex++}`}>{match[1]}</strong>
+        );
+      } else if (match[2] !== undefined && match[3] !== undefined) {
+        tokens.push(
+          <a
+            key={`a-${lineKey}-${tokenIndex++}`}
+            href={match[3]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {match[2]}
+          </a>
+        );
+      }
+
+      cursor = match.index + match[0].length;
+    }
+
+    if (cursor < line.length) {
+      tokens.push(line.slice(cursor));
+    }
+
+    return tokens;
+  };
+
+  return lines.map((line, index) => (
+    <Fragment key={`line-${index}`}>
+      {renderInline(line, index)}
+      {index < lines.length - 1 ? <br /> : null}
+    </Fragment>
+  ));
+}
 
 interface ChatPanelProps {
   content: SiteContent;
@@ -71,6 +127,7 @@ export function ChatPanel({ content, locale }: ChatPanelProps) {
   }
 
   const liveLabel = locale === "ar" ? "مباشر" : "Live";
+  const betaLabel = locale === "ar" ? "نسخة تجريبية قيد التطوير" : "Beta · Under Development";
 
   return (
     <div className="chat-wrap reveal">
@@ -79,7 +136,7 @@ export function ChatPanel({ content, locale }: ChatPanelProps) {
           <div className="chat-top-left">
             <span className="status-dot" />
             <div>
-              <div className="chat-top-name">Madinaty Assistant</div>
+              <div className="chat-top-name">Madinaty Assistant ({betaLabel})</div>
               <div className="chat-top-status">{content.chat.systemOnline}</div>
             </div>
           </div>
@@ -101,7 +158,7 @@ export function ChatPanel({ content, locale }: ChatPanelProps) {
               key={`${message.role}-${index}`}
               className={`msg ${message.role === "ai" ? "msg-ai" : "msg-user"}`}
             >
-              {message.content}
+              {message.role === "ai" ? renderAiMarkdown(message.content) : message.content}
             </div>
           ))}
           {isLoading && (

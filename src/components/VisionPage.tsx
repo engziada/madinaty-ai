@@ -110,7 +110,7 @@ export function VisionPage({ locale }: VisionPageProps) {
         </section>
       </main>
 
-      <Footer content={content} />
+      <Footer content={content} locale={locale} />
     </PageShell>
   );
 }

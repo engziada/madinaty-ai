@@ -93,19 +93,20 @@ export function NavBar({ locale, content }: NavBarProps) {
           className={`nav ${menuOpen ? "open" : ""}`}
           aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary navigation"}
         >
-          <a href="#chat" onClick={closeMenu}>{content.nav.platform}</a>
+          <a href="#platform" onClick={closeMenu}>{locale === "ar" ? "الرئيسية" : "Home"}</a>
           <a href="#services" onClick={closeMenu}>{content.nav.services}</a>
           <a href="#ai-tools" onClick={closeMenu}>{aiToolsLabel}</a>
-          <a href="#map" onClick={closeMenu}>{content.nav.map}</a>
+          <a href="#chat" onClick={closeMenu}>{content.nav.platform}</a>
+          <a href="#events" onClick={closeMenu}>{locale === "ar" ? "الفعاليات" : "Events"}</a>
           <Link
             href={locale === "ar" ? "/ar/vision-future" : "/vision-future"}
             onClick={closeMenu}
           >
             {content.nav.roadmap}
           </Link>
-          <Link href={comingSoonHref} className="btn btn-primary" onClick={closeMenu}>
-            {content.nav.cta}
-          </Link>
+          <a href="#events" className="btn btn-primary" onClick={closeMenu}>
+            {locale === "ar" ? "سجّل الآن" : "Register Now"}
+          </a>
           <ThemeToggle labelLight={toggleLight} labelDark={toggleDark} />
           <Link
             href={localePath}
