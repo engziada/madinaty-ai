@@ -6,7 +6,7 @@ const knowledgeBase: Record<LocaleCode, string[]> = {
     "More than 700,000 residents live across the city, which already has smart metering (AMI) for water and electricity.",
     "Transportation includes the Central Bus Hub, District-to-District shuttles, and last-mile e-bikes supported by AI routing.",
     "The Community Innovation Hub in District B5 hosts workshops, robotics labs, and AI-for-Kids programming each weekend.",
-    "Madinaty.AI monitors the community with predictive safety, energy optimization, and citizen services dashboards.",
+    "Madinaty AI monitors the community with predictive safety, energy optimization, and citizen services dashboards.",
     "Green spaces, solar campuses, wellness centers, and the North Gate Plaza are featured on the interactive map." 
   ],
   ar: [
@@ -14,13 +14,13 @@ const knowledgeBase: Record<LocaleCode, string[]> = {
     "يوجد أكثر من ٧٠٠ ألف ساكن مع بنية AMI الذكية للمياه والكهرباء في مدينتي.",
     "النقل يشمل المحطة المركزية، حافلات بين الأحياء، ودراجات قصيرة المدى مدعومة بتوجيه ذكي.",
     "مركز الابتكار في حي B5 يحتضن ورش الذكاء الاصطناعي، مختبرات الروبوتات، وورش الأطفال كل عطلة نهاية أسبوع.",
-    "Madinaty.AI تراقب الخدمات، الأمان التنبؤي، وكفاءة الطاقة عبر لوحات القيادة الخاصة بالمجتمع.",
+    "Madinaty AI تراقب الخدمات، الأمان التنبؤي، وكفاءة الطاقة عبر لوحات القيادة الخاصة بالمجتمع.",
     "المسارات الخضراء، مختبرات الطاقة الشمسية، مراكز الصحة، وساحة البوابة الشمالية مرئية في الخريطة التفاعلية."
   ]
 };
 
 const instructions: Record<LocaleCode, string> = {
-  en: `You are Madinaty.AI, a strict domain assistant for Madinaty (New Cairo, Egypt) only.
+  en: `You are Madinaty AI, a strict domain assistant for Madinaty (New Cairo, Egypt) only.
 
 Rules you must follow:
 1) Answer ONLY questions directly related to Madinaty: its districts, services, transport, events, facilities, food places, shopping, and community resources.
@@ -34,7 +34,7 @@ Rules you must follow:
 5) Do not invent names, numbers, policies, or contacts.
 6) Keep answers concise, practical, and action-oriented.
 7) Prefer facts from the knowledge list below; if a user statement conflicts with the facts, prioritize the facts.`,
-  ar: `أنت Madinaty.AI، مساعد نطاق صارم يختص فقط بمدينتي (القاهرة الجديدة).
+  ar: `أنت Madinaty AI، مساعد نطاق صارم يختص فقط بمدينتي (القاهرة الجديدة).
 
 قواعد إلزامية:
 1) أجب فقط عن الأسئلة المرتبطة مباشرة بمدينتي: الأحياء، الخدمات، النقل، الفعاليات، المرافق، أماكن الأكل، التسوّق، وموارد المجتمع.

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 /** Canonical site URL. Override in production via `NEXT_PUBLIC_SITE_URL`. */
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://madinaty.ai";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.madinatyai.com";
 
 /**
  * Sitemap including both locales and all known routes.

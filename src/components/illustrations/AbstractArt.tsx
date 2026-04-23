@@ -1,5 +1,5 @@
 /**
- * Abstract inline-SVG illustrations for Madinaty.AI.
+ * Abstract inline-SVG illustrations for Madinaty AI.
  *
  * Goals:
  *   • Minimal, geometric, smart-city + AI motifs.

@@ -152,7 +152,7 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
         title: "سجل طفلك في الدورة المجانية",
         description: "املأ البيانات المطلوبة وسيتواصل معك فريق مدينتي بعد مراجعة الطلب.",
         submit: "أرسل التسجيل",
-        success: "تم تسجيل طفلك! سنؤكد عبر الهاتف قريباً.",
+        success: "تم تسجيلك في قائمة الانتظار! سنرسل لك تاريخ الجلسة بمجرد تحديده.",
         validationError: "يرجى استكمال جميع الحقول المطلوبة بشكل صحيح.",
         submitting: "جارٍ إرسال البيانات...",
         close: "إغلاق",
@@ -186,7 +186,7 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
       title: "Register your child for the free course",
       description: "Complete the required details and our Madinaty team will contact you after review.",
       submit: "Submit registration",
-      success: "Thanks! We logged your request and will confirm via SMS shortly.",
+      success: "You're on the waitlist! We'll email you the session date as soon as it's set.",
       validationError: "Please complete all required fields correctly.",
       submitting: "Submitting your enrollment...",
       close: "Close",
@@ -575,7 +575,7 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
             <header className="enrollment-header success-header">
               <div className="success-icon">🎉</div>
               <h3 id="success-title">
-                {locale === "ar" ? "تم التسجيل بنجاح!" : "Registration Successful!"}
+                {locale === "ar" ? "أنت على قائمة الانتظار!" : "You're on the Waitlist!"}
               </h3>
               <button
                 className="modal-close"
@@ -591,13 +591,13 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
               <div className="success-content">
                 <p className="success-message">
                   {locale === "ar"
-                    ? `مرحباً ${form.childName || ""}، تم تسجيل طفلك بنجاح في نادي مدينتي للذكاء الاصطناعي.`
-                    : `Hi ${form.childName || ""}, your child has been successfully registered for Madinaty AI Club.`}
+                    ? `أهلاً ${form.childName || ""}، تم حجز مكان طفلك في قائمة انتظار نادي مدينتي للذكاء الاصطناعي.`
+                    : `Hi ${form.childName || ""}, your child's spot has been reserved on the Madinaty AI Club waitlist.`}
                 </p>
 
                 <div className="registration-number-box">
                   <p className="reg-label">
-                    {locale === "ar" ? "رقم التسجيل الخاص بك:" : "Your Registration Number:"}
+                    {locale === "ar" ? "رقم المرجع الخاص بك:" : "Your Waitlist Reference:"}
                   </p>
                   <p className="reg-number">{registrationNumber}</p>
                   <p className="reg-hint">
@@ -609,8 +609,8 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
 
                 <p className="success-followup">
                   {locale === "ar"
-                    ? "سنقوم بالتواصل معك عبر الهاتف أو البريد الإلكتروني لتأكيد موعد الجلسة. شكراً لانضمامك إلى نادي مدينتي!"
-                    : "We'll contact you via phone or email to confirm the session date. Thank you for joining Madinaty AI Club!"}
+                    ? "الجلسة لم يتم تحديد تاريخها بعد. سنرسل لك التاريخ والمكان بمجرد تحديدهما عبر الهاتف أو البريد الإلكتروني. شكراً لانضمامك!"
+                    : "The session date is not yet set. We'll email or call you with the date and location as soon as they're confirmed. Thanks for joining us!"}
                 </p>
 
                 <div className="enrollment-actions">

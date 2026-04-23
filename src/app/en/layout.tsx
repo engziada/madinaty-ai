@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Madinaty.AI — AI Intelligence Layer for Madinaty Smart City",
+  title: "Madinaty AI — AI Intelligence Layer for Madinaty Smart City",
   description:
-    "English portal for Madinaty.AI — the community-built AI layer serving Madinaty by TMG in New Cairo. Explore smart transport, community insights, live city map, and AI education for residents across 23 districts.",
+    "English portal for Madinaty AI — the community-built AI layer serving Madinaty by TMG in New Cairo. Explore smart transport, community insights, live city map, and AI education for residents across 23 districts.",
   alternates: {
     canonical: "/en",
     languages: {
@@ -20,7 +20,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * English layout — LTR direction, English copy.
+ * English layout — LTR direction only.
+ * NavBar and Footer are provided by root layout.
  */
 export default function EnglishLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <div lang="en" dir="ltr">{children}</div>;

@@ -1,8 +1,5 @@
 import { genesisImages, getSiteContent } from "@/data/content";
 import type { LocaleCode } from "@/types/site";
-import { Footer } from "@/components/Footer";
-import { NavBar } from "@/components/NavBar";
-import { PageShell } from "@/components/PageShell";
 
 interface VisionPageProps {
   locale: LocaleCode;
@@ -15,10 +12,7 @@ export function VisionPage({ locale }: VisionPageProps) {
   const content = getSiteContent(locale);
 
   return (
-    <PageShell>
-      <div className="site-bg" />
-      <NavBar locale={locale} content={content} />
-
+    <>
       <main id="main-content" tabIndex={-1}>
         {/* ── VISION HERO ───────────────────────────────────── */}
         <section className="hero-vision-wrap container" id="platform">
@@ -26,7 +20,7 @@ export function VisionPage({ locale }: VisionPageProps) {
             <p className="overline">{content.vision.overline}</p>
             <h1 className="hero-title">
               {content.vision.title}
-              <span className="gradient-text">Madinaty.AI</span>
+              <span className="gradient-text">Madinaty AI</span>
             </h1>
             <p className="hero-text">{content.vision.subtitle}</p>
           </div>
@@ -81,7 +75,7 @@ export function VisionPage({ locale }: VisionPageProps) {
               <article className="phase phase-primary">
                 <div className="phase-number">Phase 01</div>
                 <h3>Core</h3>
-                <p>Launch the central Madinaty.AI web and mobile interfaces for all residents.</p>
+                <p>Launch the central Madinaty AI web and mobile interfaces for all residents.</p>
               </article>
               <article className="phase phase-secondary">
                 <div className="phase-number">Phase 02</div>
@@ -110,7 +104,6 @@ export function VisionPage({ locale }: VisionPageProps) {
         </section>
       </main>
 
-      <Footer content={content} locale={locale} />
-    </PageShell>
+    </>
   );
 }

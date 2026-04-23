@@ -39,7 +39,7 @@ const contentEn: SiteContent = {
     text: "Madinaty — Egypt's largest integrated city housing 700,000+ residents across 23 districts — is getting its own AI layer. Built by the community, for the community.",
     primaryAction: "Madinaty Bot",
     secondaryAction: "Current Offers",
-    dashboardTitle: "Madinaty.AI · Live Dashboard",
+    dashboardTitle: "Madinaty AI · Live Dashboard",
     dashboardStats: [
       { value: "4.2K", label: "Members" },
       { value: "42", label: "Services" },
@@ -50,7 +50,7 @@ const contentEn: SiteContent = {
     overline: "The Smart City Layer",
     title: "The AI Operating System for Modern Living",
     summary:
-      "Madinaty isn't just an 8,000-acre city; it's a dynamic, living ecosystem. By seamlessly integrating the Madinaty.AI layer with existing infrastructure, we are transforming everyday routines into hyper-personalized, ultra-efficient experiences for over 700,000 residents.",
+      "Madinaty isn't just an 8,000-acre city; it's a dynamic, living ecosystem. By seamlessly integrating the Madinaty AI layer with existing infrastructure, we are transforming everyday routines into hyper-personalized, ultra-efficient experiences for over 700,000 residents.",
     highlights: [
       "Local-First Models: Ensuring zero-latency operations completely offline",
       "Bank-Grade Privacy: Your living data stays strictly within the community bounds",
@@ -77,7 +77,7 @@ const contentEn: SiteContent = {
   sections: {
     servicesOverline: "Our Platform",
     servicesTitle: "One AI Layer. Fourteen Services. One Community.",
-    chatOverline: "Ask Madinaty.AI",
+    chatOverline: "Ask Madinaty AI",
     chatTitle: "Your Intelligent Community Companion",
     mapOverline: "Navigate Your Future",
     mapTitle: "Interactive Madinaty Map"
@@ -97,7 +97,7 @@ const contentEn: SiteContent = {
       icon: "🎓",
       title: "AI Flash Courses for Kids",
       text: "Free, certified courses for ages 6–8, 9–12, and 13–15. Kids learn AI basics, prompt writing, safe tool usage, and digital critical thinking at Madinaty's Innovation Hub.",
-      badge: "Free · Enrolling",
+      badge: "Free · Waitlist Open",
       badgeType: "live",
       category: "education",
     },
@@ -112,7 +112,7 @@ const contentEn: SiteContent = {
     {
       icon: "🏠",
       title: "Rental Portal",
-      text: "A transparent, AI-powered marketplace connecting Madinaty tenants directly with owners — streamlining listings, viewings, contracts, and payments all in one place.",
+      text: "A transparent, AI-powered marketplace connecting Madinaty tenants directly with owners — streamlining listings, viewings, contracts, and payments all in one place. Includes Short-Stay Hosting for verified guests and visiting families. [Disclaimer: This is a community platform. All transactions are between parties. Please ensure legal compliance and proper documentation.]",
       badge: "Beta Soon",
       badgeType: "soon",
       category: "core",
@@ -146,18 +146,10 @@ const contentEn: SiteContent = {
     {
       icon: "🔧",
       title: "Trusted Services Directory",
-      text: "A curated, resident-rated directory of verified plumbers, electricians, cleaners, and handymen who operate inside Madinaty — no more random Facebook recommendations.",
+      text: "A curated, resident-rated directory of verified plumbers, electricians, cleaners, and handymen who operate inside Madinaty — no more random Facebook recommendations. [Disclaimer: We facilitate connections only. Verify credentials and establish proper service agreements independently.]",
       badge: "Coming Soon",
       badgeType: "soon",
       category: "lifestyle",
-    },
-    {
-      icon: "🌙",
-      title: "Short-Stay Hosting",
-      text: "List your spare room or unit for short-term stays by verified guests and visiting families. Compliant with Madinaty's community guidelines and fully managed through the platform.",
-      badge: "Coming Soon",
-      badgeType: "soon",
-      category: "economy",
     },
     // ── EDUCATION & LIFESTYLE ──
     {
@@ -188,7 +180,7 @@ const contentEn: SiteContent = {
     {
       icon: "🍽️",
       title: "Ghost Kitchen Incubator",
-      text: "Turn your home kitchen into a micro-business. Sell verified, home-cooked meals to your neighbors through a legally structured, community-first food platform.",
+      text: "Turn your home kitchen into a micro-business. Sell verified, home-cooked meals to your neighbors through a legally structured, community-first food platform. [Disclaimer: Compliance with food safety regulations and local business licensing is the seller's responsibility.]",
       badge: "Coming Soon",
       badgeType: "soon",
       category: "economy",
@@ -299,7 +291,7 @@ const contentEn: SiteContent = {
       "Instructors are a group of highly educated and professional mentors from within the Madinaty community. Priority is for Madinaty residents, and registration is required.",
     labTitle: "Small Cohort Format",
     labSubtitle: "10 kids per session · no parents in class",
-    cta: "Register My Child",
+    cta: "Join the Waitlist",
     stats: [
       { value: "2H", label: "Session Length" },
       { value: "10", label: "Kids / Session" },
@@ -313,7 +305,7 @@ const contentEn: SiteContent = {
     ]
   },
   footer: {
-    copy: "© 2026 Madinaty.AI · New Cairo, Egypt · Built by the Community.",
+    copy: "© 2026 Madinaty AI · New Cairo, Egypt · Built by the Community.",
     links: ["Privacy Policy", "System Status", "Terms of Use"],
     socialLinks: [
       { icon: "facebook", label: "Facebook", url: "#" },
@@ -327,12 +319,12 @@ const contentEn: SiteContent = {
   vision: {
     overline: "Vision & Future",
     title: "The Intelligence Layer Over",
-    subtitle: "Madinaty — 8,000 acres, 700,000 residents, 23 districts — deserves a city-brain. Madinaty.AI is that layer: connecting people, services, and infrastructure through adaptive intelligence.",
+    subtitle: "Madinaty — 8,000 acres, 700,000 residents, 23 districts — deserves a city-brain. Madinaty AI is that layer: connecting people, services, and infrastructure through adaptive intelligence.",
     genesisOverline: "The Genesis",
     genesisTitle: "Built by the Community, for the Community",
     genesisParagraphs: [
       "Madinaty was developed by Talaat Moustafa Group (TMG) starting in 2006, designed by American firms HHCP, SWA, and SASKI. Today it hosts 700,000+ residents across 23 sub-compounds with AMI smart metering and city-wide bus connectivity.",
-      "Madinaty.AI was born from this foundation — a community initiative by local founders, builders, and families who believe AI should enhance real daily life: commutes, education, safety, and local commerce."
+      "Madinaty AI was born from this foundation — a community initiative by local founders, builders, and families who believe AI should enhance real daily life: commutes, education, safety, and local commerce."
     ],
     pillarsOverline: "Strategic Pillars",
     pillarsTitle: "Foundations of Transformation",
@@ -361,7 +353,7 @@ const contentAr: SiteContent = {
     text: "مدينتي — أكبر مدينة متكاملة في مصر بأكثر من ٧٠٠ ألف ساكن في ٢٣ حياً — تحصل على طبقتها الذكية. بناها المجتمع، وللمجتمع.",
     primaryAction: "مدينتي بوت",
     secondaryAction: "أحدث العروض",
-    dashboardTitle: "مدينتي.AI · لوحة التحكم المباشرة",
+    dashboardTitle: "مدينتي AI · لوحة التحكم المباشرة",
     dashboardStats: [
       { value: "٤٫٢ ألف", label: "عضو" },
       { value: "٤٢", label: "خدمة ذكية" },
@@ -372,7 +364,7 @@ const contentAr: SiteContent = {
     overline: "الطبقة الذكية للمدينة",
     title: "نظام التشغيل الذكي لحياة عصرية",
     summary:
-      "مدينتي ليست مجرد مدينة تمتد على ٨٠٠٠ فدان، بل هي بيئة حية تتنفس. من خلال دمج طبقة Madinaty.AI مع البنية التحتية، نحول الروتين اليومي إلى تجارب فائقة الذكاء ومخصصة لأكثر من ٧٠٠ ألف ساكن.",
+      "مدينتي ليست مجرد مدينة تمتد على ٨٠٠٠ فدان، بل هي بيئة حية تتنفس. من خلال دمج طبقة Madinaty AI مع البنية التحتية، نحول الروتين اليومي إلى تجارب فائقة الذكاء ومخصصة لأكثر من ٧٠٠ ألف ساكن.",
     highlights: [
       "نماذج محلية بالكامل: تضمن استجابة فورية دون تأخير أو حاجة للإنترنت",
       "خصوصية مطلقة: بياناتك الحياتية لا تغادر يوماً حدود المجتمع الموثوق",
@@ -399,7 +391,7 @@ const contentAr: SiteContent = {
   sections: {
     servicesOverline: "منصتنا",
     servicesTitle: "طبقة ذكاء واحدة. أربعة عشر خدمة تُغيّر الحياة.",
-    chatOverline: "اسأل Madinaty.AI",
+    chatOverline: "اسأل Madinaty AI",
     chatTitle: "مساعدك الذكي للمجتمع",
     mapOverline: "تنقّل نحو المستقبل",
     mapTitle: "خريطة مدينتي التفاعلية"
@@ -419,7 +411,7 @@ const contentAr: SiteContent = {
       icon: "🎓",
       title: "كورسات ذكاء اصطناعي للأطفال",
       text: "كورسات مجانية معتمدة للأعمار ٦–٨ و٩–١٢ و١٣–١٥ سنة. أساسيات الذكاء الاصطناعي، كتابة البرومبت، الأدوات الآمنة، والتفكير النقدي الرقمي — في مركز الابتكار بمدينتي.",
-      badge: "مجاناً · التسجيل مفتوح",
+      badge: "مجاناً · قائمة الانتظار مفتوحة",
       badgeType: "live",
       category: "education",
     },
@@ -434,7 +426,7 @@ const contentAr: SiteContent = {
     {
       icon: "🏠",
       title: "بوابة الإيجار الذكية",
-      text: "سوق شفاف مدعوم بالذكاء الاصطناعي يربط المستأجرين بالملاك مباشرةً — تسهيل الإعلانات والمعاينات والعقود والمدفوعات في مكان واحد.",
+      text: "سوق شفاف مدعوم بالذكاء الاصطناعي يربط المستأجرين بالملاك مباشرةً — تسهيل الإعلانات والمعاينات والعقود والمدفوعات في مكان واحد. تشمل إيجار الإقامة القصيرة للضيوف والعائلات. [تنبيه: هذه منصة مجتمعية. جميع المعاملات بين الأطراف. يرجى ضمان الامتثال القانوني والتوثيق السليم.]",
       badge: "قريباً",
       badgeType: "soon",
       category: "core",
@@ -468,18 +460,10 @@ const contentAr: SiteContent = {
     {
       icon: "🔧",
       title: "دليل الخدمات الموثوقة",
-      text: "دليل منتقى ومُقيَّم من السكان لسباكين وكهربائيين وعمال نظافة وصيانة يعملون داخل مدينتي — لا مزيد من التوصيات العشوائية.",
+      text: "دليل منتقى ومُقيَّم من السكان لسباكين وكهربائيين وعمال نظافة وصيانة يعملون داخل مدينتي — لا مزيد من التوصيات العشوائية. [تنبيه: نسهل التواصل فقط. تحقق من الأهلية وحدد اتفاقيات الخدمة بشكل مستقل.]",
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "lifestyle",
-    },
-    {
-      icon: "🌙",
-      title: "إيجار الإقامة القصيرة",
-      text: "أجّر غرفتك أو وحدتك لزوار موثَّقين وعائلاتهم لفترات قصيرة — متوافق مع لائحة مدينتي ومُدار بالكامل من المنصة.",
-      badge: "قادم قريباً",
-      badgeType: "soon",
-      category: "economy",
     },
     // ── التعليم والنمط الحياتي ──
     {
@@ -510,7 +494,7 @@ const contentAr: SiteContent = {
     {
       icon: "🍽️",
       title: "حاضنة المطابخ المنزلية",
-      text: "حوّل مطبخك إلى مشروع صغير. بِع وجبات منزلية موثَّقة لجيرانك من خلال منصة طعام مجتمعية منظَّمة قانونياً.",
+      text: "حوّل مطبخك إلى مشروع صغير. بِع وجبات منزلية موثَّقة لجيرانك من خلال منصة طعام مجتمعية منظَّمة قانونياً. [تنبيه: الامتثال لأنظمة سلامة الغذاء والتراخيص التجارية المحلية مسؤولية البائع.]",
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "economy",
@@ -621,7 +605,7 @@ const contentAr: SiteContent = {
       "المدربون مجموعة من أشخاص محترفين وعاليي التعليم من داخل مجتمع مدينتي. الأولوية لسكان مدينتي، والتسجيل المسبق إلزامي.",
     labTitle: "نظام مجموعات صغيرة",
     labSubtitle: "١٠ أطفال لكل جلسة · بدون أولياء أمور",
-    cta: "سجّل طفلي الآن",
+    cta: "انضم إلى قائمة الانتظار",
     stats: [
       { value: "ساعتان", label: "مدة الجلسة" },
       { value: "١٠", label: "طفل / جلسة" },
@@ -635,7 +619,7 @@ const contentAr: SiteContent = {
     ]
   },
   footer: {
-    copy: "© ٢٠٢٦ Madinaty.AI · القاهرة الجديدة، مصر · بناه المجتمع.",
+    copy: "© ٢٠٢٦ Madinaty AI · القاهرة الجديدة، مصر · بناه المجتمع.",
     links: ["سياسة الخصوصية", "حالة النظام", "شروط الاستخدام"],
     socialLinks: [
       { icon: "facebook", label: "فيسبوك", url: "#" },
@@ -649,12 +633,12 @@ const contentAr: SiteContent = {
   vision: {
     overline: "الرؤية والمستقبل",
     title: "طبقة الذكاء فوق",
-    subtitle: "مدينتي — ٨٠٠٠ فدان، ٧٠٠ ألف ساكن، ٢٣ حياً — تستحق دماغاً رقمياً. Madinaty.AI هي تلك الطبقة: تربط الناس والخدمات والبنية التحتية بذكاء تكيّفي.",
+    subtitle: "مدينتي — ٨٠٠٠ فدان، ٧٠٠ ألف ساكن، ٢٣ حياً — تستحق دماغاً رقمياً. Madinaty AI هي تلك الطبقة: تربط الناس والخدمات والبنية التحتية بذكاء تكيّفي.",
     genesisOverline: "البداية",
     genesisTitle: "من المجتمع وإلى المجتمع",
     genesisParagraphs: [
       "طوّرت مجموعة طلعت مصطفى (TMG) مدينتي بدءاً من ٢٠٠٦، بتصميم شركات أمريكية (HHCP وSWA وSASKI). اليوم تستضيف أكثر من ٧٠٠ ألف ساكن في ٢٣ مجمعاً مع بنية AMI الذكية.",
-      "وُلدت Madinaty.AI من هذا الأساس — مبادرة مجتمعية من مؤسسين محليين وعائلات تؤمن بأن الذكاء الاصطناعي يجب أن يُحسّن الحياة اليومية: التنقل، التعليم، السلامة، والتجارة."
+      "وُلدت Madinaty AI من هذا الأساس — مبادرة مجتمعية من مؤسسين محليين وعائلات تؤمن بأن الذكاء الاصطناعي يجب أن يُحسّن الحياة اليومية: التنقل، التعليم، السلامة، والتجارة."
     ],
     pillarsOverline: "المرتكزات الاستراتيجية",
     pillarsTitle: "أسس التحول",

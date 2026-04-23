@@ -1,80 +1,60 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import type { LocaleCode } from "@/types/site";
+import { getCityBySlug, type CityInfo } from "@/data/cities";
 
 interface ComingSoonPageProps {
   locale: LocaleCode;
 }
 
-const copy = {
-  en: {
-    overline: "Madinaty.AI · Portal",
-    headline: "The Portal is",
-    highlight: "Coming Soon",
-    sub: "We're building the full Madinaty.AI portal — your gateway to smart city services, live community data, shuttle tracking, and AI-powered city intelligence. Launching soon for Madinaty residents.",
-    countdown: { days: "Days", hours: "Hours", mins: "Mins", secs: "Secs" },
-    notifyLabel: "Get notified when we launch",
+/**
+ * Build the headline / subtitle / trust copy for a given city in a given locale.
+ * The hero *title* is the city brand name (e.g. "AlShroukAI"), replacing the
+ * generic "Coming Soon" / "قريباً" per product direction.
+ */
+function getCopy(city: CityInfo, locale: LocaleCode) {
+  const isAr = locale === "ar";
+  const cityLabel = isAr ? city.nameAr : city.name;
+  return {
+    overline: isAr ? "بوابة مدينتي AI" : "Madinaty AI · Portal",
+    headline: isAr ? "البوابة قريباً" : "The Portal is",
+    // Hero title is always the city-branded product name.
+    highlight: city.brandName,
+    // Subtitle: exact AR template from product direction.
+    sub: isAr
+      ? `بوابتك لخدمات المدينة الذكية، بيانات المجتمع المباشرة، تتبع النقل، والذكاء الاصطناعي للمدينة. قريباً لسكان ${cityLabel}.`
+      : `Your gateway to smart city services, live community data, shuttle tracking, and AI-powered city intelligence. Coming soon for ${cityLabel} residents.`,
+    notifyLabel: isAr ? "أخبرني عند الإطلاق" : "Get notified when we launch",
     notifyPlaceholder: "your@email.com",
-    notifyBtn: "Notify Me",
-    notifySuccess: "You're on the list! We'll reach out soon.",
-    back: "← Back to Home",
-    stats: [
-      { value: "8,000", label: "Acres of Smart City" },
-      { value: "700K+", label: "Future Users" },
-      { value: "23", label: "Districts Covered" }
-    ],
-    features: ["Smart Transportation", "Community AI Bot", "Live City Map", "Events & Workshops", "Home Management", "Safety Dashboard"]
-  },
-  ar: {
-    overline: "Madinaty.AI · البوابة",
-    headline: "البوابة",
-    highlight: "قريباً",
-    sub: "نبني بوابة Madinaty.AI الكاملة — بوابتك لخدمات المدينة الذكية وبيانات المجتمع الحية وتتبع الحافلات وذكاء المدينة. الإطلاق قريباً لسكان مدينتي.",
-    countdown: { days: "يوم", hours: "ساعة", mins: "دقيقة", secs: "ثانية" },
-    notifyLabel: "أخبرني عند الإطلاق",
-    notifyPlaceholder: "بريدك@الإلكتروني",
-    notifyBtn: "أبلغني",
-    notifySuccess: "أنت في القائمة! سنتواصل معك قريباً.",
-    back: "→ العودة للرئيسية",
-    stats: [
-      { value: "٨٠٠٠", label: "فدان مدينة ذكية" },
-      { value: "+٧٠٠ألف", label: "مستخدم مستقبلي" },
-      { value: "٢٣", label: "حي مغطى" }
-    ],
-    features: ["النقل الذكي", "مدينتي بوت", "خريطة المدينة الحية", "الفعاليات والورش", "إدارة المنزل", "لوحة السلامة"]
-  }
-};
+    notifyBtn: isAr ? "أخبرني" : "Notify Me",
+    notifySuccess: isAr ? "تم التسجيل! سنتواصل معك قريباً." : "You're on the list! We'll reach out soon.",
+    back: isAr ? "← العودة للرئيسية" : "← Back to Home",
+    trust: isAr
+      ? ["خصوصية بالتصميم", "بريد واحد فقط · بدون إزعاج", "إشعار عند الإطلاق"]
+      : ["Private by design", "One email, no spam", "Notify on launch"],
+    features: isAr
+      ? ["النقل الذكي", "بوت مجتمعي AI", "خريطة المدينة المباشرة", "الفعاليات وورش العمل", "إدارة المنزل", "لوحة الأمان"]
+      : ["Smart Transportation", "Community AI Bot", "Live City Map", "Events & Workshops", "Home Management", "Safety Dashboard"],
+  };
+}
 
 /**
- * Futuristic Coming Soon page for the Madinaty.AI portal.
+ * Inner component. Split out so the `useSearchParams()` call can live
+ * inside a `<Suspense>` boundary (Next 15 requires this for any component
+ * that reads URL search params).
  */
-export function ComingSoonPage({ locale }: ComingSoonPageProps) {
-  const t = copy[locale];
+function ComingSoonInner({ locale }: ComingSoonPageProps) {
+  const searchParams = useSearchParams();
+  const city = useMemo(() => getCityBySlug(searchParams.get("c")), [searchParams]);
+  const t = getCopy(city, locale);
   const isRtl = locale === "ar";
 
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  /* ── Countdown to a fixed launch date ── */
-  useEffect(() => {
-    const target = new Date("2026-09-01T00:00:00");
-    function tick() {
-      const diff = target.getTime() - Date.now();
-      if (diff <= 0) return;
-      const days = Math.floor(diff / 86400000);
-      const hours = Math.floor((diff % 86400000) / 3600000);
-      const mins = Math.floor((diff % 3600000) / 60000);
-      const secs = Math.floor((diff % 60000) / 1000);
-      setTimeLeft({ days, hours, mins, secs });
-    }
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
 
   /* ── Particle canvas — throttled for mobile + respects reduced-motion ── */
   useEffect(() => {
@@ -87,7 +67,6 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Scale particle count by viewport — mobile gets 40 instead of 120.
     const w0 = window.innerWidth;
     const BASE = w0 < 600 ? 40 : w0 < 1024 ? 80 : 120;
     const CONNECT_DIST = w0 < 600 ? 70 : 100;
@@ -112,7 +91,7 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
         vy: (Math.random() - 0.5) * 0.35,
         r: Math.random() * 1.5 + 0.3,
         a: Math.random(),
-        da: (Math.random() - 0.5) * 0.008
+        da: (Math.random() - 0.5) * 0.008,
       });
     }
 
@@ -154,7 +133,6 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
       animId = requestAnimationFrame(draw);
     }
 
-    // Reduced-motion: draw a single static frame and stop.
     if (reduceMotion) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const p of particles) {
@@ -181,9 +159,23 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
     };
   }, []);
 
-  function handleNotify(e: React.FormEvent) {
+  async function handleNotify(e: React.FormEvent) {
     e.preventDefault();
-    if (email.trim()) setSubmitted(true);
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    try {
+      await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          city: city.name,
+          locale,
+        }),
+      });
+    } catch {
+      // Best-effort; don't block UI
+    }
+    setSubmitted(true);
   }
 
   const homeHref = locale === "ar" ? "/ar" : "/en";
@@ -191,18 +183,14 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
   return (
     <div className="cs-root" dir={isRtl ? "rtl" : "ltr"} lang={locale}>
       <canvas ref={canvasRef} className="cs-canvas" />
-
       <div className="cs-grid-overlay" aria-hidden="true" />
-
       <div className="cs-glow cs-glow-1" aria-hidden="true" />
       <div className="cs-glow cs-glow-2" aria-hidden="true" />
 
-      <header className="cs-header">
-        <Link href={homeHref} className="cs-brand">
-          Madinaty.AI
-        </Link>
-        <div className="cs-overline-tag">{t.overline}</div>
-      </header>
+      {/* NOTE: No in-page header bar here. The global NavBar (rendered by
+          RootNavFooter in the root layout) already provides branding,
+          navigation, and locale/theme controls. Adding a second header
+          on this page created a stacked duplicate. */}
 
       <main className="cs-main" id="main-content" tabIndex={-1}>
         <div className="cs-content">
@@ -210,25 +198,15 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
           <h1 className="cs-title gradient-text">{t.highlight}</h1>
           <p className="cs-sub">{t.sub}</p>
 
-          {/* Stats */}
-          <div className="cs-stats">
-            {t.stats.map((s) => (
-              <div key={s.label} className="cs-stat">
-                <strong>{s.value}</strong>
-                <span>{s.label}</span>
-              </div>
+          {/* Trust row — honest reassurance, no fake countdown */}
+          <ul className="cs-trust" aria-label={locale === "ar" ? "تعهداتنا" : "Our promises"}>
+            {t.trust.map((line) => (
+              <li key={line} className="cs-trust-item">
+                <span className="cs-trust-dot" aria-hidden="true" />
+                {line}
+              </li>
             ))}
-          </div>
-
-          {/* Countdown */}
-          <div className="cs-countdown">
-            {(["days", "hours", "mins", "secs"] as const).map((unit) => (
-              <div key={unit} className="cs-unit">
-                <strong>{String(timeLeft[unit]).padStart(2, "0")}</strong>
-                <span>{t.countdown[unit]}</span>
-              </div>
-            ))}
-          </div>
+          </ul>
 
           {/* Notify form */}
           {submitted ? (
@@ -268,5 +246,19 @@ export function ComingSoonPage({ locale }: ComingSoonPageProps) {
         </div>
       </main>
     </div>
+  );
+}
+
+/**
+ * Futuristic Coming Soon page for the Madinaty AI portal.
+ * Reads `?c=<slug>` to render city-specific branding & copy.
+ */
+export function ComingSoonPage({ locale }: ComingSoonPageProps) {
+  return (
+    // Next 15 requires useSearchParams to be inside a Suspense boundary
+    // or prerendering falls back to client-only rendering for the whole route.
+    <Suspense fallback={<div className="cs-root" />}>
+      <ComingSoonInner locale={locale} />
+    </Suspense>
   );
 }

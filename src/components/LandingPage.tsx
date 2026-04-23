@@ -3,11 +3,8 @@
 import { Fragment, Suspense, useState } from "react";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
-import { NavBar } from "@/components/NavBar";
 import { ChatPanel } from "@/components/ChatPanel";
 // import { MapPanel } from "@/components/MapPanel"; // Hidden for now - will work on later
-import { Footer } from "@/components/Footer";
-import { PageShell } from "@/components/PageShell";
 import { ValueStrip } from "@/components/ValueStrip";
 import { EnrollmentModal } from "@/components/EnrollmentModal";
 import { AiArticleWidget } from "@/components/AiArticleWidget";
@@ -42,15 +39,12 @@ export function LandingPage({ locale }: LandingPageProps) {
   const stats = isAr ? statsAr : statsEn;
 
   return (
-    <PageShell>
-      <div className="site-bg" />
-      <NavBar locale={locale} content={content} />
-
+    <>
       <main id="main-content" tabIndex={-1}>
         {/* ── HERO ──────────────────────────────────────────── */}
         <section className="hero-wrap" id="platform">
           <img
-            src="/hero-bg1.webp"
+            src="/hero-bg.png"
             alt=""
             aria-hidden="true"
             className="hero-skyline-art"
@@ -97,7 +91,14 @@ export function LandingPage({ locale }: LandingPageProps) {
                       </div>
                     ))}
                   </div>
-                  <Suspense fallback={<div className="hero-activity">Loading live feed...</div>}>
+                  <Suspense
+                    fallback={
+                      <div className="hero-activity hero-activity-skeleton" aria-hidden="true">
+                        <span className="skeleton-line" />
+                        <span className="skeleton-line short" />
+                      </div>
+                    }
+                  >
                     <LiveFacebookFeed locale={locale} />
                   </Suspense>
                 </div>
@@ -158,6 +159,32 @@ export function LandingPage({ locale }: LandingPageProps) {
                       education: locale === "ar" ? "التعليم" : "Education",
                       lifestyle: locale === "ar" ? "الحياة اليومية" : "Lifestyle",
                     };
+                    // Map service titles to anchor IDs (skip AI Club for Kids - it's the AI Bot)
+                    const serviceIdMap: Record<string, string> = {
+                      "Summer Business Training": "summer",
+                      "تدريب صيفي للشباب": "summer",
+                      "Rental Portal": "rental",
+                      "بوابة الإيجار الذكية": "rental",
+                      "Community Interest Club": "community-club",
+                      "نادي الاهتمامات المجتمعي": "community-club",
+                      "Poll Board": "poll",
+                      "لوحة التصويت المجتمعي": "poll",
+                      "Skill Exchange Network": "skills",
+                      "شبكة تبادل المهارات": "skills",
+                      "Trusted Services Directory": "services-dir",
+                      "دليل الخدمات الموثوقة": "services-dir",
+                      "Madinaty Tutoring Board": "tutoring",
+                      "لوحة الدروس الخصوصية": "tutoring",
+                      "Activity Finder": "activities",
+                      "مكتشف الأنشطة": "activities",
+                      "Madinaty Marketplace": "marketplace",
+                      "سوق مدينتي": "marketplace",
+                      "Ghost Kitchen Incubator": "kitchen",
+                      "حاضنة المطابخ المنزلية": "kitchen",
+                      "Local Business Booster": "business",
+                      "معزز الأعمال المحلية": "business",
+                    };
+                    const serviceId = serviceIdMap[svc.title];
                     return (
                       <Fragment key={`svc-fragment-${idx}`}>
                         {showGroupLabel && (
@@ -167,6 +194,7 @@ export function LandingPage({ locale }: LandingPageProps) {
                         )}
                         <article
                           key={`svc-${idx}`}
+                          id={serviceId ? `service-${serviceId}` : undefined}
                           className={`svc-card svc-${svc.size ?? "normal"} svc-${svc.badgeType}`}
                         >
                           <div className="svc-header">
@@ -291,8 +319,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         */}
       </main>
 
-      <Footer content={content} locale={locale} />
       <EnrollmentModal locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
-    </PageShell>
+    </>
   );
 }

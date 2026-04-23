@@ -11,13 +11,14 @@ import { SkipToContent } from "@/components/SkipToContent";
 import { RouteProgress } from "@/components/RouteProgress";
 import { GlobalShortcuts } from "@/components/GlobalShortcuts";
 import { JsonLd } from "@/components/JsonLd";
+import { RootNavFooter } from "@/components/RootNavFooter";
 
 const exoTwo = Exo_2({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-headline", display: "swap" });
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-body-ar", display: "swap" });
 const changa = Changa({ subsets: ["arabic"], variable: "--font-headline-ar", display: "swap" });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://madinaty.ai";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.madinatyai.com";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -33,19 +34,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Madinaty.AI — Smart City Intelligence for Madinaty by TMG",
-    template: "%s | Madinaty.AI"
+    default: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
+    template: "%s | Madinaty AI"
   },
   description:
-    "Madinaty.AI is the AI intelligence layer over Madinaty — Egypt's largest integrated city by Talaat Moustafa Group (TMG) in New Cairo. Smart transport, community insights, AI education, and live city services for 700,000+ residents across 23 districts.",
-  applicationName: "Madinaty.AI",
+    "Madinaty AI is the AI intelligence layer over Madinaty — Egypt's largest integrated city by Talaat Moustafa Group (TMG) in New Cairo. Smart transport, community insights, AI education, and live city services for 700,000+ residents across 23 districts.",
+  applicationName: "Madinaty AI",
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
   keywords: [
     "Madinaty",
     "مدينتي",
     "Madinaty AI",
-    "Madinaty.AI",
     "TMG",
     "Talaat Moustafa Group",
     "مجموعة طلعت مصطفى",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     "workshops Madinaty"
   ],
   authors: [{ name: "Madinaty Community" }],
-  creator: "Madinaty.AI",
+  creator: "Madinaty AI",
   publisher: "Madinaty Community",
   category: "technology",
   alternates: {
@@ -78,8 +78,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Madinaty.AI",
-    title: "Madinaty.AI — Smart City Intelligence for Madinaty by TMG",
+    siteName: "Madinaty AI",
+    title: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
     description:
       "The AI intelligence layer over Madinaty, Egypt's largest integrated smart city by Talaat Moustafa Group. Smart transport, community insights, live city map, and AI education for residents.",
     url: siteUrl,
@@ -90,13 +90,13 @@ export const metadata: Metadata = {
         url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Madinaty.AI logo"
+        alt: "Madinaty AI logo"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Madinaty.AI — Smart City Intelligence for Madinaty by TMG",
+    title: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
     description:
       "The AI intelligence layer over Madinaty — Egypt's largest integrated smart city by Talaat Moustafa Group.",
     images: ["/logo.png"]
@@ -157,7 +157,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <RouteProgress />
           </Suspense>
           <NewsMarquee initialItems={initialNews} />
-          {children}
+          <div className="site-bg" />
+          <RootNavFooter>
+            {children}
+          </RootNavFooter>
           <BackToTop />
           <GlobalShortcuts />
         </ThemeProvider>

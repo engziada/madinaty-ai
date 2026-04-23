@@ -42,7 +42,7 @@ const DEFAULTS: Payloads = {
   news: [
     {
       id: "seed-1",
-      text: "Madinaty.AI launches free 'Safe AI for Kids' workshop — 42 sponsored seats.",
+      text: "Madinaty AI launches free 'Safe AI for Kids' workshop — 42 sponsored seats.",
       source: "Madinaty Community",
       createdAt: new Date().toISOString()
     },
@@ -65,7 +65,7 @@ const DEFAULTS: Payloads = {
       title: "What every parent should know before letting kids use AI",
       summary:
         "A 3-minute primer on safety, prompt hygiene, and how to spot hallucinations — written for Madinaty families.",
-      source: "Madinaty.AI Blog",
+      source: "Madinaty AI Blog",
       tag: "Parenting",
       url: "#",
       imageUrl:

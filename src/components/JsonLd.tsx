@@ -7,12 +7,12 @@
  * Search Box eligibility for queries like "Madinaty" or "TMG".
  */
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://madinaty.ai";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.madinatyai.com";
 
 const organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Madinaty.AI",
+  name: "Madinaty AI",
   alternateName: ["Madinaty AI", "مدينتي AI", "مدينتي للذكاء الاصطناعي"],
   url: siteUrl,
   logo: `${siteUrl}/logo.png`,
@@ -46,7 +46,7 @@ const organization = {
   keywords: [
     "Madinaty",
     "مدينتي",
-    "Madinaty.AI",
+    "Madinaty AI",
     "TMG",
     "Talaat Moustafa Group",
     "مجموعة طلعت مصطفى",
@@ -64,7 +64,7 @@ const organization = {
 const website = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Madinaty.AI",
+  name: "Madinaty AI",
   url: siteUrl,
   inLanguage: ["ar", "en"],
   potentialAction: {
