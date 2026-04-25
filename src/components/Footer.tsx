@@ -50,7 +50,7 @@ export function Footer({ content, locale }: FooterProps) {
             <BrandLogo size="lg" />
           </a>
           <p className="footer-slogan">
-            {locale === "ar" ? "الطبقة الذكية لمجتمعات مصر" : "The Smart Layer for Egypt's Communities"}
+            {locale === "ar" ? "البُعد الذكي لمجتمعات مصر" : "The Smart Layer for Egypt's Communities"}
           </p>
           <p className="footer-copy">{footer.copy}</p>
 
@@ -121,7 +121,7 @@ export function Footer({ content, locale }: FooterProps) {
       <div className="footer-bottom">
         <div className="container">
           <p className="footer-slogan-bottom">
-            {locale === "ar" ? "الطبقة الذكية لمجتمعات مصر" : "The Smart Layer for Egypt's Communities"}
+            {locale === "ar" ? "البُعد الذكي لمجتمعات مصر" : "The Smart Layer for Egypt's Communities"}
           </p>
           <p className="footer-copyright">
             © {new Date().getFullYear()} Madinaty AI. All rights reserved.

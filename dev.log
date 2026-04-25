@@ -1,0 +1,274 @@
+
+> madinaty-ai@1.0.0 dev
+> next dev --turbopack
+
+   Γû▓ Next.js 15.5.15 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.100.200:3000
+   - Environments: .env.local
+
+ Γ£ô Starting...
+ Γ£ô Ready in 3.7s
+ Γùï Compiling /api/gallery ...
+ Γ£ô Compiled /api/gallery in 5.1s
+ GET /api/gallery 200 in 6014ms
+ GET /api/gallery 200 in 400ms
+ Γùï Compiling /coming-soon ...
+ Γ£ô Compiled /coming-soon in 5s
+ GET /coming-soon?c=shorouk 200 in 7106ms
+ Γùï Compiling /ar/coming-soon ...
+ Γ£ô Compiled /ar/coming-soon in 825ms
+ GET /ar/coming-soon?c=shorouk 200 in 1137ms
+ GET /coming-soon?c=rehab 200 in 468ms
+ GET /ar/coming-soon?c=zayed 200 in 513ms
+ GET /coming-soon 200 in 469ms
+ Γùï Compiling /gallery ...
+ Γ£ô Compiled /gallery in 780ms
+ GET /gallery 200 in 1144ms
+ Γùï Compiling /ar/gallery ...
+ Γ£ô Compiled /ar/gallery in 882ms
+ GET /ar/gallery 200 in 1373ms
+ Γùï Compiling /founders ...
+ Γ£ô Compiled /founders in 693ms
+ GET /founders 200 in 1310ms
+ Γùï Compiling /ar/founders ...
+ Γ£ô Compiled /ar/founders in 975ms
+ GET /ar/founders 200 in 1548ms
+ Γùï Compiling /vision-future ...
+ Γ£ô Compiled /vision-future in 677ms
+ GET /vision-future 200 in 1443ms
+ Γùï Compiling /en ...
+ Γ£ô Compiled /en in 1229ms
+ GET /en 200 in 2825ms
+ GET /api/gallery 200 in 416ms
+ GET /coming-soon?c=shorouk 200 in 379ms
+ GET /ar/coming-soon?c=shorouk 200 in 638ms
+ GET /coming-soon?c=rehab 200 in 554ms
+ GET /coming-soon 200 in 557ms
+ GET /gallery 200 in 744ms
+ GET /ar/gallery 200 in 589ms
+ GET /founders 200 in 727ms
+ GET /ar/founders 200 in 748ms
+ GET /vision-future 200 in 730ms
+ GET /en 200 in 996ms
+ GET /ar/coming-soon?c=shorouk 200 in 430ms
+ GET /ar/coming-soon?c=shorouk 200 in 507ms
+ GET /en 200 in 1107ms
+ GET /ar/coming-soon?c=shorouk 200 in 699ms
+ GET /en 200 in 1210ms
+ GET /ar/coming-soon?c=shorouk 200 in 564ms
+ GET /en 200 in 1226ms
+ Γùï Compiling /ar ...
+ Γ£ô Compiled /ar in 807ms
+ GET /ar 200 in 2995ms
+ Γùï Compiling /api/news ...
+ Γ£ô Compiled /api/news in 2.6s
+ GET /api/facebook?locale=ar 200 in 4326ms
+ GET /api/news?limit=20&locale=ar 200 in 5281ms
+ GET /api/ai-article?locale=ar 200 in 5272ms
+ GET /api/ai-article?locale=ar 200 in 5498ms
+ GET /api/ai-article?locale=ar 200 in 5879ms
+ GET /api/facebook?locale=ar 200 in 1425ms
+ GET /en 200 in 825ms
+ GET /api/facebook?locale=en 200 in 1775ms
+ GET /api/ai-article?locale=en 200 in 2566ms
+ GET /api/ai-article?locale=en 200 in 2584ms
+ GET /api/facebook?locale=en 200 in 970ms
+ GET /api/news?limit=20&locale=en 200 in 2983ms
+ GET /en 200 in 745ms
+ GET /api/ai-article?locale=en 200 in 381ms
+ GET /api/ai-article?locale=en 200 in 381ms
+ GET /api/news?limit=20&locale=en 200 in 350ms
+ GET /api/ai-article?locale=en 200 in 362ms
+ GET /api/ai-article?locale=en 200 in 336ms
+ GET /api/news?limit=20&locale=en 200 in 360ms
+ GET /api/ai-article?locale=en 200 in 391ms
+ GET /api/ai-article?locale=en 200 in 1296ms
+ GET /api/ai-article?locale=en 200 in 333ms
+ GET /api/news?limit=20&locale=en 200 in 1296ms
+ GET /api/ai-article?locale=en 200 in 416ms
+ GET /api/ai-article?locale=en 200 in 328ms
+ GET /api/news?limit=20&locale=en 200 in 328ms
+ GET /api/ai-article?locale=en 200 in 339ms
+ GET /api/ai-article?locale=en 200 in 996ms
+ GET /api/ai-article?locale=en 200 in 357ms
+ Γ£ô Compiled in 2.5s
+ Γ£ô Compiled /en in 270ms
+ GET /en 200 in 1058ms
+ GET /api/news?limit=20&locale=en 200 in 2276ms
+ GET /api/ai-article?locale=en 200 in 1234ms
+ GET /en 200 in 2388ms
+ GET /api/news?limit=20&locale=en 200 in 530ms
+ GET /api/ai-article?locale=en 200 in 533ms
+ GET /api/ai-article?locale=en 200 in 821ms
+ GET /api/facebook?locale=en 200 in 831ms
+ GET /api/ai-article?locale=en 200 in 860ms
+ GET /api/facebook?locale=en 200 in 465ms
+ Γ£ô Compiled in 368ms
+ GET /en 200 in 2988ms
+ GET /api/news?limit=20&locale=en 200 in 502ms
+ GET /api/ai-article?locale=en 200 in 493ms
+ GET /api/ai-article?locale=en 200 in 584ms
+ GET /api/facebook?locale=en 200 in 590ms
+ GET /api/ai-article?locale=en 200 in 581ms
+ GET /api/facebook?locale=en 200 in 364ms
+ Γ£ô Compiled in 189ms
+ Γ£ô Compiled in 37ms
+ Γ£ô Compiled in 104ms
+ Γ£ô Compiled in 103ms
+ Γ£ô Compiled in 88ms
+ Γ£ô Compiled in 26ms
+ GET /en 200 in 672ms
+ Γ£ô Compiled in 18ms
+ Γ£ô Compiled in 14ms
+ Γ£ô Compiled in 137ms
+ GET /en 200 in 666ms
+ GET /en 200 in 273ms
+ GET /en 200 in 344ms
+ GET /en 200 in 240ms
+ GET /api/ai-article?locale=en 200 in 347ms
+ Γ£ô Compiled in 15ms
+ GET /en 200 in 234ms
+ Γ£ô Compiled in 16ms
+ GET /en 200 in 226ms
+ Γ£ô Compiled in 124ms
+ Γ£ô Compiled in 103ms
+ Γ£ô Compiled in 32ms
+ Γ£ô Compiled in 44ms
+ GET /api/ai-article?locale=en 200 in 428ms
+ Γ£ô Compiled in 62ms
+ Γ£ô Compiled in 58ms
+ GET /api/news?limit=20&locale=en 200 in 361ms
+ GET /api/ai-article?locale=en 200 in 345ms
+ GET /api/ai-article?locale=en 200 in 1076ms
+ GET /api/ai-article?locale=en 200 in 347ms
+ GET /api/news?limit=20&locale=en 200 in 1422ms
+ GET /api/ai-article?locale=en 200 in 400ms
+ GET /api/ai-article?locale=en 200 in 401ms
+ GET /api/news?limit=20&locale=en 200 in 400ms
+ GET /api/ai-article?locale=en 200 in 399ms
+ GET /api/ai-article?locale=en 200 in 1099ms
+ GET /api/news?limit=20&locale=en 200 in 385ms
+ GET /api/ai-article?locale=en 200 in 404ms
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\api\ai-article\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\api\\ai-article\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ Γùï Compiling /_error ...
+ Γ£ô Compiled /_error in 3.8s
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.6644xqehju6'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.6644xqehju6'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\api\ai-article\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\api\\ai-article\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.fbmt0fo6mf'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.fbmt0fo6mf'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.enqbnvp8sw'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.enqbnvp8sw'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\api\ai-article\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\api\\ai-article\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.s936sp1gcib'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.s936sp1gcib'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\api\ai-article\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\api\\ai-article\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.y2y1t5enosl'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.y2y1t5enosl'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.0yen7rvosug'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.0yen7rvosug'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\api\news\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\api\\news\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.fx63q3twbqf'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.fx63q3twbqf'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\api\news\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\api\\news\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.xqyap3rzrz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.xqyap3rzrz'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.17hfecxi91d'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.17hfecxi91d'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\en\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\en\\page\\app-build-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.wb36k9dohm8'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.wb36k9dohm8'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\server\app\en\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\server\\app\\en\\page\\app-build-manifest.json'
+}
+ Γ¿» [Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.xnce0r7zhla'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.xnce0r7zhla'
+}
+[Error: ENOENT: no such file or directory, open 'F:\HTML\MadinatyAI\madinaty-ai\.next\static\development\_buildManifest.js.tmp.vk8vbeh6gi'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'F:\\HTML\\MadinatyAI\\madinaty-ai\\.next\\static\\development\\_buildManifest.js.tmp.vk8vbeh6gi'
+}

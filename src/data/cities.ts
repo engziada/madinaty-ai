@@ -26,6 +26,9 @@ export const cities: CityInfo[] = [
   { slug: "october",     name: "October",     nameAr: "٦ أكتوبر",     brandName: "OctoberAI",     active: false },
   { slug: "new-capital", name: "New Capital", nameAr: "العاصمة",      brandName: "NewCapitalAI",  active: false },
   { slug: "new-cairo",   name: "New Cairo",   nameAr: "القاهرة الج.", brandName: "NewCairoAI",    active: false },
+  { slug: "10th-ramadan", name: "10th of Ramadan", nameAr: "العاشر من رمضان", brandName: "10thRamadanAI", active: false },
+  { slug: "obour",       name: "Obour",       nameAr: "العبور",        brandName: "ObourAI",       active: false },
+  { slug: "noor",        name: "Noor",        nameAr: "نور",            brandName: "NoorAI",        active: false },
 ];
 
 /** Look up a city by slug. Falls back to the first entry when the slug is unknown. */

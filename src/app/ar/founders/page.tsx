@@ -5,7 +5,7 @@ import { ArrowLeft, Sparkles, Target, Heart } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "المؤسسون | Madinaty AI",
-  description: "تعرف على الرؤساء وراء Madinaty AI — المجتمع الذي يبني طبقة الذكاء لأذكى مدينة في مصر.",
+  description: "تعرف على الرؤساء وراء Madinaty AI — المجتمع الذي يبني بُعد الذكاء لأذكى مدينة في مصر.",
 };
 
 /**
@@ -97,7 +97,7 @@ export default function FoundersPageAr() {
         <h1 className="founders-hero-title">مهندسو المستقبل</h1>
         <p className="founders-hero-subtitle">
           مجموعة من الرؤساء والمهندسين وبناء المجتمعات يصنعون 
-          طبقة الذكاء لأذكى مدينة في مصر.
+          بُعد الذكاء لأذكى مدينة في مصر.
         </p>
       </section>
 

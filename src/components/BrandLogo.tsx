@@ -18,9 +18,9 @@ export function BrandLogo({ className = "", size = "md" }: BrandLogoProps) {
   };
 
   return (
-    <span className={`brand-logo ${sizeClasses[size]} ${className}`}>
+    <span className={`brand-logo ${sizeClasses[size]} ${className}`} dir="ltr">
       <span className="brand-text-madinaty">Madinaty</span>
-      <span className="brand-text-ai"> AI</span>
+      <span className="brand-text-ai">&nbsp;AI</span>
     </span>
   );
 }

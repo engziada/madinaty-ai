@@ -14,7 +14,14 @@ interface EnrollmentFormState {
   parentNationalId: string;
   phone: string;
   email: string;
-  madinatyAddress: string;
+  /**
+   * Address split into type ("buildings" | "villas" | "shops") + area
+   * (district / villa group / commercial zone). The backend still receives a
+   * single composed `madinatyAddress` string built from these on submit so
+   * the API contract and Sheet column remain unchanged.
+   */
+  addressType: "" | "buildings" | "villas" | "shops";
+  addressArea: string;
   interests: string[];
   hobbies: string;
 }
@@ -29,10 +36,72 @@ const initialFormState: EnrollmentFormState = {
   parentNationalId: "",
   phone: "",
   email: "",
-  madinatyAddress: "",
+  addressType: "",
+  addressArea: "",
   interests: [],
   hobbies: ""
 };
+
+type AddressOption = { value: string; label: string };
+
+function getAddressTypeOptions(locale: LocaleCode): AddressOption[] {
+  if (locale === "ar") {
+    return [
+      { value: "buildings", label: "عمارات" },
+      { value: "villas", label: "فيلات" },
+      { value: "shops", label: "محلات" }
+    ];
+  }
+  return [
+    { value: "buildings", label: "Apartment buildings" },
+    { value: "villas", label: "Villas" },
+    { value: "shops", label: "Shops" }
+  ];
+}
+
+function getAddressAreaOptions(
+  locale: LocaleCode,
+  type: EnrollmentFormState["addressType"]
+): AddressOption[] {
+  if (!type) return [];
+
+  if (type === "buildings") {
+    // Madinaty residential apartment districts / "groups".
+    const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    return ids.map((n) =>
+      locale === "ar"
+        ? { value: `B${n}`, label: `المجموعة ${n}` }
+        : { value: `B${n}`, label: `Group ${n}` }
+    );
+  }
+
+  if (type === "villas") {
+    const ids = [1, 2, 3, 4, 5, 6, 7];
+    return ids.map((n) =>
+      locale === "ar"
+        ? { value: `V${n}`, label: `مجموعة الفيلات ${n}` }
+        : { value: `V${n}`, label: `Villa Group ${n}` }
+    );
+  }
+
+  // shops — Madinaty commercial zones.
+  if (locale === "ar") {
+    return [
+      { value: "open-air", label: "أوبن إير مول" },
+      { value: "first-season", label: "فيرست سيزون" },
+      { value: "craft-zone", label: "كرافت زون" },
+      { value: "east-hub", label: "إيست هاب" },
+      { value: "strip", label: "ذا ستريب" }
+    ];
+  }
+  return [
+    { value: "open-air", label: "Open Air Mall" },
+    { value: "first-season", label: "First Season" },
+    { value: "craft-zone", label: "Craft Zone" },
+    { value: "east-hub", label: "East Hub" },
+    { value: "strip", label: "The Strip" }
+  ];
+}
 
 function getInterestOptions(locale: LocaleCode): Array<{ value: string; label: string }> {
   if (locale === "ar") {
@@ -173,8 +242,11 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
         parentNationalIdPlaceholder: "١٤ رقماً",
         phoneLabel: "رقم الهاتف",
         emailLabel: "بريد ولي الأمر الإلكتروني",
-        madinatyAddressLabel: "العنوان داخل مدينتي (رقم القطعة - العمارة - الشقة)",
-        madinatyAddressPlaceholder: "مثال: B10 - عمارة 4 - شقة 12",
+        addressTypeLabel: "نوع العنوان داخل مدينتي",
+        addressTypePlaceholder: "اختر النوع",
+        addressAreaLabel: "المنطقة",
+        addressAreaPlaceholder: "اختر المنطقة",
+        addressAreaHint: "اختر نوع العنوان أولاً",
         interestsLabel: "مهتم بـ (يمكن اختيار أكثر من خيار)",
         interestsHint: "اختر موضوعاً واحداً على الأقل",
         hobbiesLabel: "الهوايات",
@@ -207,8 +279,11 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
       parentNationalIdPlaceholder: "14-digit national ID",
       phoneLabel: "Phone number",
       emailLabel: "Parent email",
-      madinatyAddressLabel: "Address in Madinaty (Plot-Building-Apt)",
-      madinatyAddressPlaceholder: "E.g. B10 - Building 4 - Apt 12",
+      addressTypeLabel: "Address type in Madinaty",
+      addressTypePlaceholder: "Select address type",
+      addressAreaLabel: "Area",
+      addressAreaPlaceholder: "Select area",
+      addressAreaHint: "Pick the address type first",
       interestsLabel: "Interested in (multiple choices)",
       interestsHint: "Select at least one topic",
       hobbiesLabel: "Hobbies",
@@ -219,6 +294,11 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
   const genderOptions = useMemo(() => getGenderOptions(locale), [locale]);
   const gradeOptions = useMemo(() => getGradeOptions(locale), [locale]);
   const interestOptions = useMemo(() => getInterestOptions(locale), [locale]);
+  const addressTypeOptions = useMemo(() => getAddressTypeOptions(locale), [locale]);
+  const addressAreaOptions = useMemo(
+    () => getAddressAreaOptions(locale, form.addressType),
+    [locale, form.addressType]
+  );
 
   const isValid = useMemo(() => {
     return (
@@ -232,7 +312,8 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
       /^\d{14}$/.test(form.parentNationalId) &&
       /^\+?[0-9\s-]{7,15}$/.test(form.phone) &&
       /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email) &&
-      form.madinatyAddress.trim().length > 2 &&
+      Boolean(form.addressType) &&
+      form.addressArea.trim().length > 0 &&
       form.interests.length > 0 &&
       form.hobbies.trim().length > 1
     );
@@ -250,7 +331,8 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
       parentNationalId: /^\d{14}$/.test(form.parentNationalId),
       phone: /^\+?[0-9\s-]{7,15}$/.test(form.phone),
       email: /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email),
-      madinatyAddress: form.madinatyAddress.trim().length > 2,
+      addressType: Boolean(form.addressType),
+      addressArea: form.addressArea.trim().length > 0,
       interests: form.interests.length > 0,
       hobbies: form.hobbies.trim().length > 1
     };
@@ -283,6 +365,16 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
     setState("submitting");
     setStatusText(labels.submitting);
 
+    // Compose the legacy `madinatyAddress` field from the new type+area pair
+    // so the API contract and Google Sheet column stay unchanged.
+    const typeOptions = getAddressTypeOptions(locale);
+    const areaOptions = getAddressAreaOptions(locale, form.addressType);
+    const typeLabel =
+      typeOptions.find((o) => o.value === form.addressType)?.label ?? form.addressType;
+    const areaLabel =
+      areaOptions.find((o) => o.value === form.addressArea)?.label ?? form.addressArea;
+    const composedAddress = `${typeLabel}: ${areaLabel}`;
+
     try {
       const response = await fetch("/api/enrollment", {
         method: "POST",
@@ -297,7 +389,9 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
           parentNationalId: form.parentNationalId,
           phone: form.phone,
           email: form.email,
-          madinatyAddress: form.madinatyAddress,
+          madinatyAddress: composedAddress,
+          addressType: form.addressType,
+          addressArea: form.addressArea,
           interests: form.interests,
           hobbies: form.hobbies,
           locale
@@ -527,16 +621,47 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
             />
           </label>
 
-          <label className="enrollment-field">
-            <span className="required-field">{labels.madinatyAddressLabel}</span>
-            <input
-              type="text"
-              value={form.madinatyAddress}
-              onChange={(event) => handleChange("madinatyAddress", event.target.value)}
-              placeholder={labels.madinatyAddressPlaceholder}
-              required
-            />
-          </label>
+          <div className="enrollment-row">
+            <label className="enrollment-field">
+              <span className="required-field">{labels.addressTypeLabel}</span>
+              <select
+                value={form.addressType}
+                onChange={(event) => {
+                  const nextType = event.target.value as EnrollmentFormState["addressType"];
+                  // Clear the area whenever the type changes so we never submit
+                  // an area that doesn't belong to the selected type.
+                  setForm((prev) => ({ ...prev, addressType: nextType, addressArea: "" }));
+                }}
+                required
+              >
+                <option value="">{labels.addressTypePlaceholder}</option>
+                {addressTypeOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="enrollment-field">
+              <span className="required-field">{labels.addressAreaLabel}</span>
+              <select
+                value={form.addressArea}
+                onChange={(event) => handleChange("addressArea", event.target.value)}
+                disabled={!form.addressType}
+                required
+              >
+                <option value="">
+                  {form.addressType ? labels.addressAreaPlaceholder : labels.addressAreaHint}
+                </option>
+                {addressAreaOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
 
           <div className="enrollment-actions">
             <button type="submit" className="btn btn-primary" disabled={!isValid || state === "submitting"}>

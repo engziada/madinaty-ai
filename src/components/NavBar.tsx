@@ -8,6 +8,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ChevronDown, MapPin, Bot } from "lucide-react";
 import { cities } from "@/data/cities";
+import { toggleLocalePath } from "@/lib/locale";
 
 // Services for submenu (excluding AI Bot which is separate nav item)
 const getServices = (locale: LocaleCode) => [
@@ -81,7 +82,7 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
   const navRef = useRef<HTMLElement | null>(null);
 
   const pathname = usePathname();
-  const localePath = useMemo<string>(() => (locale === "ar" ? "/en" : "/ar"), [locale]);
+  const localePath = useMemo<string>(() => toggleLocalePath(pathname, locale), [pathname, locale]);
   const comingSoonHref = locale === "ar" ? "/ar/coming-soon" : "/coming-soon";
   const homeHref = locale === "ar" ? "/ar" : "/en";
   const logoSrc = theme === "light" ? "/logo-lite.jpeg" : "/logo.png";
