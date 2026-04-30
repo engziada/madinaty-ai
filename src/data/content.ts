@@ -305,16 +305,17 @@ const contentEn: SiteContent = {
     ]
   },
   footer: {
-    copy: "© 2026 Madinaty AI · New Cairo, Egypt · Built by the Community.",
+    copy: "© 2026 ZSolutions · New Cairo, Egypt · Built by the Community.",
     links: ["Privacy Policy", "System Status", "Terms of Use"],
     socialLinks: [
-      { icon: "facebook", label: "Facebook", url: "#" },
-      { icon: "instagram", label: "Instagram", url: "#" },
-      { icon: "twitter", label: "X (Twitter)", url: "#" },
-      { icon: "youtube", label: "YouTube", url: "#" }
+      { icon: "facebook",   label: "Facebook",    url: "https://www.facebook.com/profile.php?id=61587705874177" },
+      { icon: "instagram",  label: "Instagram",   url: "https://www.instagram.com/invites/contact/?igsh=1j16tus21g2ro&utm_content=d24zbtm" },
+      { icon: "twitter",    label: "X (Twitter)", url: "https://x.com/MadinatyAI" },
+      { icon: "youtube",    label: "YouTube",     url: "https://www.youtube.com/" },
+      { icon: "linkedin",   label: "LinkedIn",    url: "https://www.linkedin.com/company/112226033/" }
     ],
-    whatsappNumber: "+20 100 000 0000",
-    adminEmail: "admin@madinatyai.com"
+    whatsappNumber: "+201026655008",
+    adminEmail: "engziada@gmail.com"
   },
   vision: {
     overline: "Vision & Future",
@@ -619,16 +620,17 @@ const contentAr: SiteContent = {
     ]
   },
   footer: {
-    copy: "© ٢٠٢٦ Madinaty AI · القاهرة الجديدة، مصر · بناه المجتمع.",
+    copy: "© ٢٠٢٦ ZSolutions · القاهرة الجديدة، مصر · بناه المجتمع.",
     links: ["سياسة الخصوصية", "حالة النظام", "شروط الاستخدام"],
     socialLinks: [
-      { icon: "facebook", label: "فيسبوك", url: "#" },
-      { icon: "instagram", label: "إنستغرام", url: "#" },
-      { icon: "twitter", label: "إكس (تويتر)", url: "#" },
-      { icon: "youtube", label: "يوتيوب", url: "#" }
+      { icon: "facebook",   label: "فيسبوك",        url: "https://www.facebook.com/profile.php?id=61587705874177" },
+      { icon: "instagram",  label: "إنستغرام",       url: "https://www.instagram.com/invites/contact/?igsh=1j16tus21g2ro&utm_content=d24zbtm" },
+      { icon: "twitter",    label: "إكس (تويتر)",   url: "https://x.com/MadinatyAI" },
+      { icon: "youtube",    label: "يوتيوب",         url: "https://www.youtube.com/" },
+      { icon: "linkedin",   label: "لينكدإن",        url: "https://www.linkedin.com/company/112226033/" }
     ],
-    whatsappNumber: "+20 100 000 0000",
-    adminEmail: "admin@madinatyai.com"
+    whatsappNumber: "+201026655008",
+    adminEmail: "engziada@gmail.com"
   },
   vision: {
     overline: "الرؤية والمستقبل",
