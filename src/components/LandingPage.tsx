@@ -149,8 +149,8 @@ export function LandingPage({ locale }: LandingPageProps) {
               {/* Right: Service bento grid (scrollable) */}
               <div className="service-bento-wrap">
                 <div className="service-bento">
-                  {content.services.map((svc, idx) => {
-                    const prevCategory = idx > 0 ? content.services[idx - 1].category : null;
+                  {content.services.filter((s) => !s.hidden).map((svc, idx, arr) => {
+                    const prevCategory = idx > 0 ? arr[idx - 1].category : null;
                     const showGroupLabel = svc.category && svc.category !== prevCategory;
                     const categoryLabels: Record<string, string> = {
                       core: locale === "ar" ? "الخدمات الأساسية" : "Core Platform",
@@ -246,14 +246,37 @@ export function LandingPage({ locale }: LandingPageProps) {
                   </h2>
                   <p className="upcoming-description">{content.event.description}</p>
 
+                  {content.event.descriptionExtra && (
+                    <p className="upcoming-description-extra" style={{ whiteSpace: "pre-line" }}>
+                      {content.event.descriptionExtra}
+                    </p>
+                  )}
+
                   {content.event.safetyBadges && content.event.safetyBadges.length > 0 && (
                     <div className="safety-badges" aria-label="Safety commitments">
-                      {content.event.safetyBadges.map((badge) => (
-                        <span key={badge.label} className="safety-badge">
-                          <span className="safety-badge-icon" aria-hidden="true">{badge.icon}</span>
-                          {badge.label}
-                        </span>
-                      ))}
+                      {content.event.safetyBadges.map((badge) => {
+                        const badgeContent = (
+                          <>
+                            <span className="safety-badge-icon" aria-hidden="true">{badge.icon}</span>
+                            {badge.label}
+                          </>
+                        );
+                        return badge.url ? (
+                          <a
+                            key={badge.label}
+                            href={badge.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="safety-badge safety-badge-link"
+                          >
+                            {badgeContent}
+                          </a>
+                        ) : (
+                          <span key={badge.label} className="safety-badge">
+                            {badgeContent}
+                          </span>
+                        );
+                      })}
                     </div>
                   )}
 
@@ -281,7 +304,21 @@ export function LandingPage({ locale }: LandingPageProps) {
 
                   <div className="promo-box">
                     <small>{content.event.promoLabel}</small>
-                    <h3>{content.event.promoTitle}</h3>
+                    <h3>
+                      {content.event.promoTitle}
+                      {content.event.promoLocationUrl && (
+                        <a
+                          href={content.event.promoLocationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="promo-location-link"
+                          aria-label={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
+                          title={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
+                        >
+                          <span aria-hidden="true">📍</span>
+                        </a>
+                      )}
+                    </h3>
                     <p>{content.event.promoDescription}</p>
                   </div>
 

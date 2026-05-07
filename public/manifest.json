@@ -1,0 +1,30 @@
+{
+  "name": "Madinaty AI",
+  "short_name": "MadinatyAI",
+  "description": "AI intelligence layer over Madinaty — smart city services, community insights, and live maps for residents.",
+  "start_url": "/ar",
+  "display": "standalone",
+  "background_color": "#f6f9ff",
+  "theme_color": "#1e4fd9",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "1600x1200",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-lite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["utilities", "lifestyle", "productivity"],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

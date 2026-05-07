@@ -7,8 +7,7 @@ import type { LocaleCode } from "@/types/site";
  *   1. Paths under `/ar` (or exactly `/ar`) → "ar".
  *   2. Paths under `/en` (or exactly `/en`) → "en".
  *   3. Root-level sub-pages that have NO Arabic twin mounted (e.g. `/founders`,
- *      `/gallery`, `/privacy-policy`, `/terms-of-use`, `/vision-future`,
- *      `/coming-soon`) are English-by-content → "en".
+ *      `/gallery`, `/privacy-policy`, `/terms-of-use`, `/vision-future`) are English-by-content → "en".
  *   4. Bare `/` → "ar" (Arabic is the default home locale).
  */
 export function detectLocaleFromPath(pathname: string | null | undefined): LocaleCode {

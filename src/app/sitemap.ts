@@ -51,16 +51,52 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8
     },
     {
-      url: `${siteUrl}/ar/coming-soon`,
+      url: `${siteUrl}/ar/gallery`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.6
+      priority: 0.7
     },
     {
-      url: `${siteUrl}/coming-soon`,
+      url: `${siteUrl}/gallery`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 0.6
+      priority: 0.7
+    },
+    {
+      url: `${siteUrl}/ar/founders`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7
+    },
+    {
+      url: `${siteUrl}/founders`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7
+    },
+    {
+      url: `${siteUrl}/ar/privacy-policy`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.5
+    },
+    {
+      url: `${siteUrl}/privacy-policy`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.5
+    },
+    {
+      url: `${siteUrl}/ar/terms-of-use`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.5
+    },
+    {
+      url: `${siteUrl}/terms-of-use`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.5
     }
   ];
 }

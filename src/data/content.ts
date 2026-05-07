@@ -42,7 +42,7 @@ const contentEn: SiteContent = {
     dashboardTitle: "Madinaty AI · Live Dashboard",
     dashboardStats: [
       { value: "4.2K", label: "Members" },
-      { value: "42", label: "Services" },
+      { value: "7", label: "Services" },
       { value: "99.9%", label: "Uptime" }
     ]
   },
@@ -76,7 +76,7 @@ const contentEn: SiteContent = {
   },
   sections: {
     servicesOverline: "Our Platform",
-    servicesTitle: "One AI Layer. Fourteen Services. One Community.",
+    servicesTitle: "One AI Layer. Seven Services. One Community.",
     chatOverline: "Ask Madinaty AI",
     chatTitle: "Your Intelligent Community Companion",
     mapOverline: "Navigate Your Future",
@@ -116,6 +116,7 @@ const contentEn: SiteContent = {
       badge: "Beta Soon",
       badgeType: "soon",
       category: "core",
+      hidden: true,
     },
     {
       icon: "👥",
@@ -124,6 +125,7 @@ const contentEn: SiteContent = {
       badge: "Coming Soon",
       badgeType: "soon",
       category: "community",
+      hidden: true,
     },
     // ── COMMUNITY ──
     {
@@ -133,6 +135,7 @@ const contentEn: SiteContent = {
       badge: "Coming Soon",
       badgeType: "soon",
       category: "community",
+      hidden: true,
     },
     {
       icon: "⏱️",
@@ -150,6 +153,7 @@ const contentEn: SiteContent = {
       badge: "Coming Soon",
       badgeType: "soon",
       category: "lifestyle",
+      hidden: true,
     },
     // ── EDUCATION & LIFESTYLE ──
     {
@@ -159,6 +163,7 @@ const contentEn: SiteContent = {
       badge: "Coming Soon",
       badgeType: "soon",
       category: "education",
+      hidden: true,
     },
     {
       icon: "🏃",
@@ -167,6 +172,7 @@ const contentEn: SiteContent = {
       badge: "Coming Soon",
       badgeType: "soon",
       category: "lifestyle",
+      hidden: true,
     },
     // ── LOCAL ECONOMY ──
     {
@@ -279,29 +285,33 @@ const contentEn: SiteContent = {
     ]
   },
   event: {
-    overline: "Free Kids AI Safety Session",
+    overline: "Free Kids AI Session — Learn Safe & Smart Usage",
     title: "AI Chat for Kids—",
     titleHighlight: "Safe, Smart, Fun",
-    subtitle: "One-day session · 2 hours · Ages 7–10",
+    subtitle: "One-day session · 2 hours · Ages 8–12",
     description:
-      "A focused one-day session introducing kids to AI chat tools and how to use them safely. Each session runs for 2 hours with only 10 kids per group (without parents) to ensure attention and quality learning.",
-    promoLabel: "Completely Free · First 50 Kids",
-    promoTitle: "Date, time, and place are coming soon (TBD).",
+      "An interactive session teaching kids AI chat tools and how to use them safely. Each session runs for 2 hours with up to 20 kids per group (without parents inside) to ensure quality interaction.",
+    descriptionExtra:
+      "The course is supervised by:\nEngineering & Computer Science professors from Cairo University\n\nPrepared & delivered by:\nSoftware engineers & IT professionals\nExperienced educators ensuring every child receives information in a safe and engaging way\n\n🎮 This isn't just a lecture…\nIt's a hands-on experience where kids build and experiment themselves\n\n💡 Why this course matters:\n✔️ Develops logical thinking and creativity\n✔️ Introduces children to the foundations of the future (AI & Machine Learning)\n✔️ Makes learning fun and easy",
+    promoLabel: "Hurry — free for the first 10 subscribers",
+    promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
+    promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
-      "Instructors are a group of highly educated and professional mentors from within the Madinaty community. Priority is for Madinaty residents, and registration is required.",
+      "Priority is for Madinaty residents. Pre-registration is mandatory.",
     labTitle: "Small Cohort Format",
-    labSubtitle: "10 kids per session · no parents in class",
+    labSubtitle: "20 kids per session · no parents in class",
     cta: "Join the Waitlist",
     stats: [
       { value: "2H", label: "Session Length" },
-      { value: "10", label: "Kids / Session" },
-      { value: "50", label: "Free Seats" }
+      { value: "20", label: "Kids / Session" },
+      { value: "10", label: "Free Seats" }
     ],
     safetyBadges: [
-      { icon: "�️", label: "Safe AI Usage" },
+      { icon: "🛡️", label: "Safe AI Usage" },
       { icon: "🎓", label: "Expert Community Instructors" },
-      { icon: "👦", label: "Ages 7–10" },
-      { icon: "�", label: "Madinaty Residents Priority" }
+      { icon: "👦", label: "Ages 8–12" },
+      { icon: "💰", label: "Symbolic fee to ensure booking commitment" },
+      { icon: "📞", label: "For inquiries: +201026655008", url: "https://wa.me/201026655008" }
     ]
   },
   footer: {
@@ -357,7 +367,7 @@ const contentAr: SiteContent = {
     dashboardTitle: "مدينتي AI · لوحة التحكم المباشرة",
     dashboardStats: [
       { value: "٤٫٢ ألف", label: "عضو" },
-      { value: "٤٢", label: "خدمة ذكية" },
+      { value: "٧", label: "خدمة ذكية" },
       { value: "٩٩٫٩٪", label: "جاهزية" }
     ]
   },
@@ -391,7 +401,7 @@ const contentAr: SiteContent = {
   },
   sections: {
     servicesOverline: "منصتنا",
-    servicesTitle: "بُعد ذكاء واحد. أربعة عشر خدمة تُغيّر الحياة.",
+    servicesTitle: "لأن راحتك تستحق حلولا أذكى.",
     chatOverline: "اسأل Madinaty AI",
     chatTitle: "مساعدك الذكي للمجتمع",
     mapOverline: "تنقّل نحو المستقبل",
@@ -431,6 +441,7 @@ const contentAr: SiteContent = {
       badge: "قريباً",
       badgeType: "soon",
       category: "core",
+      hidden: true,
     },
     {
       icon: "👥",
@@ -439,6 +450,7 @@ const contentAr: SiteContent = {
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "community",
+      hidden: true,
     },
     // ── المجتمع ──
     {
@@ -448,6 +460,7 @@ const contentAr: SiteContent = {
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "community",
+      hidden: true,
     },
     {
       icon: "⏱️",
@@ -465,6 +478,7 @@ const contentAr: SiteContent = {
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "lifestyle",
+      hidden: true,
     },
     // ── التعليم والنمط الحياتي ──
     {
@@ -474,6 +488,7 @@ const contentAr: SiteContent = {
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "education",
+      hidden: true,
     },
     {
       icon: "🏃",
@@ -482,6 +497,7 @@ const contentAr: SiteContent = {
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "lifestyle",
+      hidden: true,
     },
     // ── الاقتصاد المحلي ──
     {
@@ -519,7 +535,7 @@ const contentAr: SiteContent = {
     messages: [
       { role: "ai", content: "مرحباً! أنا مساعد Madinaty AI. أستطيع مساعدتك في خطوط الحافلات والورش والفعاليات وتحديثات المدينة الحية عبر جميع الـ٢٣ حياً." },
       { role: "user", content: "أين تقام ورشة الذكاء الاصطناعي القادمة للأطفال؟" },
-      { role: "ai", content: "في مركز الابتكار المجتمعي بحي B5، السبت القادم الساعة ١٠ صباحاً. مجانية لأول ٤٢ عائلة. هل تريد حجز مقعد؟" }
+      { role: "ai", content: "في مركز (AAA) إيست هب - الدور الثاني ، لم يحدد الميعاد بعد, ولكن سيكون مع بداية الأجازة الصيفية.الفعالية مجانية لأول 10 أطفال. هل تريد حجز مقعد؟" }
     ]
   },
   map: {
@@ -594,29 +610,33 @@ const contentAr: SiteContent = {
     ]
   },
   event: {
-    overline: "جلسة مجانية للأطفال عن أمان الذكاء الاصطناعي",
+    overline: "جلسة مجانية للأطفال عن الذكاء الاصطناعي و كيفية إستخدامه بشكل آمن",
     title: "شات الذكاء الاصطناعي للأطفال—",
     titleHighlight: "آمن وذكي وممتع",
-    subtitle: "جلسة يوم واحد · ساعتان · أعمار ٧–١٠",
+    subtitle: "جلسة يوم واحد · ساعتان · أعمار ٨–١٢",
     description:
-      "جلسة تعريفية مركزة ليوم واحد لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ١٠ أطفال فقط بدون حضور الأهل داخل الجلسة لضمان جودة التفاعل.",
-    promoLabel: "مجاني بالكامل · لأول ٥٠ طفل",
-    promoTitle: "التاريخ والوقت والمكان سيُحددون قريباً (TBD).",
+      "جلسة تفاعلية لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ٢٠ طفل فقط بدون حضور الأهل داخل الجلسة لضمان جودة التفاعل.",
+    descriptionExtra:
+      "الكورس تحت إشراف:\nأساتذة هندسة و حاسبات من جامعة القاهرة\n\nو إعداد و تنفيذ:\nمهندسين برمجيات و تكنولوجيا معلومات\nأساتذة محترفين لضمان وصول المعلومة للطفل بشكل آمن و مشوق\n\n🎮 الكورس مش مجرد شرح…\nده تجربة عملية يخلي الطفل فيها \"يبني ويجرب بنفسه\"\n\n💡 ليه الكورس مهم؟\n✔️ ينمّي التفكير المنطقي والإبداع\n✔️ يعرّف الأطفال بأساسيات المستقبل (AI & Machine Learning)\n✔️ يخلّي التعلم ممتع وسهل",
+    promoLabel: "ألحق بسرعة مكانك مجاناً لأول ١٠ مشتركين",
+    promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
+    promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
-      "المدربون مجموعة من أشخاص محترفين وعاليي التعليم من داخل مجتمع مدينتي. الأولوية لسكان مدينتي، والتسجيل المسبق إلزامي.",
+      "الأولوية لسكان مدينتي، والتسجيل المسبق إلزامي.",
     labTitle: "نظام مجموعات صغيرة",
-    labSubtitle: "١٠ أطفال لكل جلسة · بدون أولياء أمور",
+    labSubtitle: "٢٠ طفل لكل جلسة · بدون أولياء أمور",
     cta: "انضم إلى قائمة الانتظار",
     stats: [
       { value: "ساعتان", label: "مدة الجلسة" },
-      { value: "١٠", label: "طفل / جلسة" },
-      { value: "٥٠", label: "مقاعد مجانية" }
+      { value: "٢٠", label: "طفل / جلسة" },
+      { value: "١٠", label: "مقاعد مجانية" }
     ],
     safetyBadges: [
-      { icon: "�️", label: "استخدام آمن للذكاء الاصطناعي" },
+      { icon: "🛡️", label: "استخدام آمن للذكاء الاصطناعي" },
       { icon: "🎓", label: "مدربون محترفون من المجتمع" },
-      { icon: "👦", label: "للأعمار ٧–١٠" },
-      { icon: "�", label: "أولوية لسكان مدينتي" }
+      { icon: "👦", label: "للأعمار ٨–١٢" },
+      { icon: "💰", label: "الكورس برسوم رمزية لضمان جدية الحجز" },
+      { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008" }
     ]
   },
   footer: {

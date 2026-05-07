@@ -64,6 +64,7 @@ export interface SiteContent {
     badgeType: "live" | "soon" | "beta";
     size?: "wide" | "tall" | "normal";
     category?: "core" | "community" | "economy" | "education" | "lifestyle";
+    hidden?: boolean;
   }>;
   chat: {
     systemOnline: string;
@@ -86,11 +87,13 @@ export interface SiteContent {
     promoLabel: string;
     promoTitle: string;
     promoDescription: string;
+    promoLocationUrl?: string;
     labTitle: string;
     labSubtitle: string;
     cta: string;
     stats: Array<{ value: string; label: string }>;
-    safetyBadges?: Array<{ icon: string; label: string }>;
+    safetyBadges?: Array<{ icon: string; label: string; url?: string }>;
+    descriptionExtra?: string;
   };
   footer: {
     copy: string;

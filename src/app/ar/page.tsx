@@ -1,9 +1,8 @@
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { LandingPage } from "@/components/LandingPage";
 
 /**
- * Arabic home route — shows the Coming Soon page while the full site
- * is under construction.
+ * Arabic home route — full landing page (coming-soon hidden).
  */
 export default function ArabicPage() {
-  return <ComingSoonPage locale="ar" />;
+  return <LandingPage locale="ar" />;
 }

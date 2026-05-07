@@ -2155,8 +2155,27 @@ p {
   background: #ffffff;
   padding: 0.75rem 1rem;
   font-size: 0.9rem;
-  color: var(--text);
+  color: #111;
+  color-scheme: light;
+  forced-color-adjust: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* Force dropdown options to always render with dark text on light background */
+.enrollment-field select option {
+  color: #111;
+  background: #ffffff;
+}
+
+/* Prevent OS dark mode from graying out the placeholder/select text */
+.enrollment-field select:disabled,
+.enrollment-field select:disabled option {
+  color: #111;
+  background: #ffffff;
+}
+
+.enrollment-field input::placeholder {
+  color: #4b5563;
 }
 
 .enrollment-checkbox-grid {
@@ -2173,19 +2192,45 @@ p {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   background: #ffffff;
-  color: var(--text);
+  color: #111 !important;
   font-size: 0.83rem;
   font-weight: 500;
+  forced-color-adjust: none;
+}
+
+.enrollment-checkbox-item span {
+  color: #111;
 }
 
 .enrollment-checkbox-item input {
   margin: 0;
   accent-color: var(--coral);
+  color-scheme: light;
+}
+
+[data-theme="dark"] .enrollment-field input,
+[data-theme="dark"] .enrollment-field select {
+  color: #111;
+  background: #ffffff;
+}
+
+[data-theme="dark"] .enrollment-field select option {
+  color: #111;
+  background: #ffffff;
+}
+
+[data-theme="dark"] .enrollment-checkbox-item {
+  color: #111 !important;
+  background: #ffffff;
+}
+
+[data-theme="dark"] .enrollment-checkbox-item span {
+  color: #111;
 }
 
 .enrollment-hint {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: #4b5563;
 }
 
 .enrollment-field input:focus,

@@ -88,8 +88,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/logo.png",
-        width: 1200,
-        height: 630,
+        width: 1600,
+        height: 1200,
         alt: "Madinaty AI logo"
       }
     ]
@@ -112,6 +112,7 @@ export const metadata: Metadata = {
       "max-video-preview": -1
     }
   },
+  manifest: "/manifest.json",
   icons: {
     icon: [
       { url: "/logo.png", type: "image/png" }
