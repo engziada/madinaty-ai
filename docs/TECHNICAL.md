@@ -314,7 +314,264 @@ CI recommendation: run `typecheck` + `build` on every PR. No test suite exists y
 
 ---
 
-## 12. Change Log (this upgrade)
+## 12. Platform Hierarchy
+
+### 12.1 Layer Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Browser (Client)                     │
+│  ┌─────────┐  ┌──────────┐  ┌───────────┐  ┌────────┐ │
+│  │ ThemeCtx │  │ ScrollRev │  │ CounterAn │  │ FocusT │ │
+│  └────┬─────┘  └────┬─────┘  └─────┬─────┘  └───┬────┘ │
+│       │              │              │             │      │
+│  ┌────▼──────────────▼──────────────▼─────────────▼────┐ │
+│  │               React 19 Component Tree                │ │
+│  │  PageShell → LandingPage → { NavBar, Hero, About,   │ │
+│  │    Services, ChatPanel, MapPanel, Event, Footer }    │ │
+│  └──────────────────────┬──────────────────────────────┘ │
+├─────────────────────────┼────────────────────────────────┤
+│                   Next.js Server                         │
+│  ┌──────────┐  ┌───────▼──────┐  ┌───────────────────┐  │
+│  │ Layouts  │  │  API Routes  │  │   Data Layer       │  │
+│  │ (SSR/RSC)│  │  (Node.js)   │  │  (store.ts + DB)  │  │
+│  └──────────┘  └──────────────┘  └───────────────────┘  │
+├─────────────────────────────────────────────────────────┤
+│                   Infrastructure                         │
+│  ┌──────────┐  ┌──────────────┐  ┌───────────────────┐  │
+│  │  Vercel  │  │  .data/*.json│  │  Google Gemini    │  │
+│  │  Edge/CDN│  │  (File Store)│  │  (Chat API)       │  │
+│  └──────────┘  └──────────────┘  └───────────────────┘  │
+└─────────────────────────────────────────────────────────┘
+```
+
+### 12.2 Request Flow
+
+```
+Browser Request
+     │
+     ▼
+Next.js Router (App Router)
+     │
+     ├─ /ar/*  →  ar/layout.tsx (RTL)  →  ar/page.tsx → LandingPage(locale="ar")
+     ├─ /en/*  →  en/layout.tsx (LTR)  →  en/page.tsx → LandingPage(locale="en")
+     ├─ /api/* →  API Route Handler (Node.js runtime)
+     └─ /*     →  Root layout → redirect / → /ar
+```
+
+---
+
+## 13. Component Architecture
+
+### 13.1 Component Classification
+
+| Type | Components | Rendering | Key Props |
+|------|-----------|-----------|-----------|
+| **Server Components** | `layout.tsx`, `page.tsx`, `JsonLd` | SSR only | — |
+| **Client Components** | All interactive components (`"use client"`) | CSR + Hydration | `locale`, `theme` |
+| **Hybrid** | `NewsMarquee` (SSR seed + CSR poll) | SSR + CSR | `initialItems` |
+
+### 13.2 Component Dependency Graph
+
+```
+RootLayout (Server)
+ ├── ThemeProvider (Client — context)
+ │    ├── SkipToContent (Client)
+ │    ├── RouteProgress (Client — Suspense)
+ │    ├── NewsMarquee (Client — SSR seed + poll)
+ │    ├── RootNavFooter (Client)
+ │    │    ├── NavBar (Client)
+ │    │    │    ├── BrandLogo (Client)
+ │    │    │    └── ThemeToggle (Client)
+ │    │    ├── {children} ← page content
+ │    │    └── Footer (Client)
+ │    ├── BackToTop (Client)
+ │    └── GlobalShortcuts (Client)
+ │
+ └── LandingPage (Client)
+      ├── ValueStrip (Client — useCounterAnimation)
+      ├── AiArticleWidget (Client — polls /api/ai-article)
+      ├── AiToolsSection (Client — filter state)
+      ├── ChatPanel (Client — /api/chat)
+      ├── MapPanel / MadinatyMap (Client — React-Leaflet)
+      ├── EnrollmentModal (Client — useFocusTrap)
+      ├── JoinModal (Client)
+      ├── FounderCard3D (Client)
+      ├── LiveFacebookFeed (Client)
+      └── CursorGlow (Client — PageShell wrapper)
+```
+
+### 13.3 Core Interfaces (TypeScript)
+
+```ts
+// ── Type Hierarchy ──
+
+LocaleCode = "en" | "ar"
+
+SiteContent              // Master content contract (120+ fields)
+ ├── nav                 // Navigation labels
+ ├── hero                // Hero section + dashboard stats
+ ├── about               // About section + highlight cards
+ ├── sections            // Section overlines & titles
+ ├── services[]          // Service cards (icon, badge, category)
+ ├── chat                // Chat panel config + seed messages
+ ├── map                 // Map locations (lat/lng + metadata)
+ ├── event               // Event promo + safety badges
+ ├── footer              // Footer copy + social links
+ └── vision              // Vision page content
+
+ChatMessage { role, content }
+MapLocation { id, title, details, latitude, longitude, category, status }
+AiToolCategory { id, title, icon, accent, tools[] }
+AiToolLink { name, href, tagline? }
+
+// ── Data Layer Interfaces ──
+
+NewsItem { id, text, url?, source?, createdAt }
+AiArticle { id, title, summary?, url?, source?, imageUrl?, tag?, createdAt }
+```
+
+### 13.4 Hook Architecture
+
+| Hook | Purpose | Trigger | Used By |
+|------|---------|---------|---------|
+| `useScrollReveal` | IntersectionObserver fade-in | Element enters viewport | `PageShell` → all `.reveal` elements |
+| `useCounterAnimation` | Animated number count-up | Scroll reaches element | `ValueStrip` |
+| `useFocusTrap` | Keyboard focus containment | Modal opens | `EnrollmentModal`, `JoinModal` |
+
+---
+
+## 14. Template & Page Patterns
+
+### 14.1 Page Template Structure
+
+Every locale page follows the same template:
+
+```tsx
+// src/app/{locale}/page.tsx
+import { LandingPage } from "@/components/LandingPage";
+import { getSiteContent } from "@/data/content";
+
+export default function Page() {
+  const content = getSiteContent("ar"); // or "en"
+  return <LandingPage content={content} locale="ar" />;
+}
+```
+
+Locale layouts set direction:
+
+```tsx
+// src/app/ar/layout.tsx — sets RTL
+export default function ArLayout({ children }) {
+  return <div lang="ar" dir="rtl">{children}</div>;
+}
+```
+
+### 14.2 API Route Template
+
+All API routes follow a consistent pattern:
+
+```ts
+// src/app/api/{resource}/route.ts
+import { NextResponse } from "next/server";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export async function GET() {
+  const data = await getData();
+  return NextResponse.json({ items: data }, {
+    headers: { "Cache-Control": "no-store" }
+  });
+}
+```
+
+Webhook routes add auth middleware:
+
+```ts
+export async function POST(request: Request) {
+  if (request.headers.get("x-webhook-secret") !== expectedWebhookSecret()) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  // ... validate payload, persist, return 200
+}
+```
+
+### 14.3 Content Template Pattern
+
+Bilingual content is managed through a single interface:
+
+```ts
+// 1. Define type in src/types/site.ts
+export interface SiteContent { ... }
+
+// 2. Implement both locales in src/data/content.ts
+const contentEn: SiteContent = { ... };
+const contentAr: SiteContent = { ... };
+
+// 3. Resolve via helper
+export function getSiteContent(locale: LocaleCode): SiteContent {
+  return contentByLocale[locale];
+}
+```
+
+To add a new string: update `SiteContent` interface → add to both `contentEn` and `contentAr` → consume in component.
+
+### 14.4 Component Template Pattern
+
+Interactive components follow this structure:
+
+```tsx
+"use client";
+
+import { useState, useEffect } from "react";
+
+interface Props {
+  locale: LocaleCode;
+  // ... component-specific props
+}
+
+export function ComponentName({ locale, ...props }: Props) {
+  const [state, setState] = useState(initialValue);
+
+  useEffect(() => {
+    // Data fetching / side effects
+  }, []);
+
+  return (
+    <section className="component-name" aria-label="...">
+      {/* Content consuming only var(--token) for styling */}
+    </section>
+  );
+}
+```
+
+Key conventions:
+- **`"use client"`** directive on all interactive components
+- **`aria-label`** on all major sections
+- **CSS variables only** — no hardcoded hex in component styles
+- **`locale` prop** drives bilingual text; no inline strings
+
+---
+
+## 15. API Route Inventory
+
+| Method | Path | Runtime | Auth | Purpose |
+|--------|------|---------|------|---------|
+| GET | `/api/news?limit=20` | nodejs | None | Fetch latest news items |
+| GET | `/api/ai-article` | nodejs | None | Fetch latest AI article |
+| GET | `/api/chat` | nodejs | None | Gemini chat proxy |
+| POST | `/api/webhooks/news` | nodejs | Secret header | Receive news items |
+| POST | `/api/webhooks/ai-article` | nodejs | Secret header | Receive AI article |
+| POST | `/api/enrollment` | nodejs | None | Course enrollment form |
+| POST | `/api/join` | nodejs | None | Community join form |
+| POST | `/api/waitlist` | nodejs | None | Waitlist signup |
+| GET | `/api/facebook` | nodejs | None | Facebook feed proxy |
+| GET | `/api/gallery` | nodejs | None | Gallery images |
+
+---
+
+## 16. Change Log (this upgrade)
 
 - **Theme:** rewrote tokens to Sunny Horizon; added complete `[data-theme="dark"]` Aurora Night overrides (~450 lines).
 - **Promo card:** redesigned as "Safe AI for Kids" with confetti background, safety badges, and parent-dashboard tile.
