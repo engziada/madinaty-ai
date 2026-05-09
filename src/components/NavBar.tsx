@@ -10,19 +10,16 @@ import { ChevronDown, MapPin, Bot } from "lucide-react";
 import { cities } from "@/data/cities";
 import { toggleLocalePath } from "@/lib/locale";
 
-// Services for submenu (excluding AI Bot which is separate nav item)
+// Services for submenu (only visible/non-hidden services, ready ones first)
 const getServices = (locale: LocaleCode) => [
-  { id: "rental", label: locale === "ar" ? "بوابة الإيجار" : "Rental Portal" },
-  { id: "community-club", label: locale === "ar" ? "نادي الاهتمامات" : "Community Club" },
-  { id: "poll", label: locale === "ar" ? "لوحة التصويت" : "Poll Board" },
+  // ── Ready / Live ──
+  { id: "kids-lab", label: locale === "ar" ? "مختبر AI للأطفال" : "AI Kids Lab", live: true },
+  { id: "business", label: locale === "ar" ? "معزز الأعمال" : "Business Enhancer", live: true },
+  // ── Coming Soon ──
+  { id: "summer", label: locale === "ar" ? "تدريب صيفي" : "Summer Training" },
   { id: "skills", label: locale === "ar" ? "تبادل المهارات" : "Skill Exchange" },
-  { id: "services-dir", label: locale === "ar" ? "دليل الخدمات" : "Services Dir" },
-  { id: "tutoring", label: locale === "ar" ? "الدروس الخصوصية" : "Tutoring" },
-  { id: "activities", label: locale === "ar" ? "مكتشف الأنشطة" : "Activities" },
   { id: "marketplace", label: locale === "ar" ? "سوق مدينتي" : "Marketplace" },
   { id: "kitchen", label: locale === "ar" ? "المطابخ المنزلية" : "Ghost Kitchen" },
-  { id: "business", label: locale === "ar" ? "معزز الأعمال" : "Business Booster" },
-  { id: "summer", label: locale === "ar" ? "تدريب صيفي" : "Summer Training" },
 ];
 
 interface DropdownProps {
@@ -113,15 +110,18 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
   // The fixed-header clearance is handled via `scroll-margin-top` on the
   // `.svc-card` targets (see globals.css) — the native scroller subtracts
   // that margin automatically, no manual offset math required.
-  const scrollToService = useCallback((serviceId: string) => {
-    const element = document.getElementById(`service-${serviceId}`);
+  const scrollToService = useCallback((serviceId: string, isLive?: boolean) => {
+    // Live services jump to their ad card; others jump to the service card.
+    const targetId = isLive ? `ad-${serviceId}` : `service-${serviceId}`;
+    const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
-      // Brief highlight so the user sees which card the nav jumped to.
-      element.classList.add("svc-card-highlight");
-      window.setTimeout(() => {
-        element.classList.remove("svc-card-highlight");
-      }, 1600);
+      if (!isLive) {
+        element.classList.add("svc-card-highlight");
+        window.setTimeout(() => {
+          element.classList.remove("svc-card-highlight");
+        }, 1600);
+      }
     }
     closeMenu();
   }, [closeMenu]);
@@ -189,10 +189,11 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             {services.map((service) => (
               <button
                 key={service.id}
-                className="nav-dropdown-item"
-                onClick={() => scrollToService(service.id)}
+                className={`nav-dropdown-item${service.live ? " nav-svc-live" : ""}`}
+                onClick={() => scrollToService(service.id, service.live)}
                 type="button"
               >
+                {service.live && <span className="nav-live-dot" />}
                 {service.label}
               </button>
             ))}

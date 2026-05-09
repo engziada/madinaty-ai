@@ -464,6 +464,28 @@ a {
   font-weight: 600;
 }
 
+/* Live service indicator in navbar dropdown */
+.nav-dropdown-item.nav-svc-live {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.nav-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--teal);
+  animation: live-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--teal); }
+  50% { opacity: 0.5; box-shadow: 0 0 2px var(--teal); }
+}
+
 .menu-btn {
   display: none;
   width: 2.8rem;
@@ -1667,19 +1689,32 @@ p {
   font-size: 0.85rem;
 }
 
-/* ---- Event / Upcoming — Safe AI for Kids ------------------ */
+/* ---- Ad Shell — reusable ad container template ------------ */
 
-.upcoming-shell {
+.ad-shell {
   position: relative;
   border-radius: var(--r-xl);
-  overflow: clip;
   background: #ffffff;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
+  scroll-margin-top: 88px;
 }
 
-.upcoming-shell::after {
-  /* Soft top divider glow */
+.ad-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--ad-bg-image, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: var(--ad-bg-opacity, 0.20);
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.ad-shell::after {
   content: "";
   position: absolute;
   inset: 0 0 auto 0;
@@ -1687,6 +1722,30 @@ p {
   pointer-events: none;
   background: linear-gradient(90deg, var(--coral), var(--sun), var(--blue));
   opacity: 0.9;
+  z-index: 1;
+}
+
+[data-theme="dark"] .ad-shell {
+  background: linear-gradient(135deg, #0a1f44 0%, #0d2a5c 100%);
+  border-color: rgba(0, 210, 210, 0.22);
+}
+
+[data-theme="dark"] .ad-shell::before {
+  opacity: var(--ad-bg-opacity-dark, 0.08);
+  filter: brightness(0.5) saturate(0.5);
+}
+
+[data-theme="dark"] .ad-shell::after {
+  opacity: 0.4;
+}
+
+/* ---- Event / Upcoming — Safe AI for Kids ------------------ */
+
+.upcoming-shell {
+  overflow: clip;
+  --ad-bg-image: url('/ad-1.webp');
+  --ad-bg-opacity: 0.20;
+  --ad-bg-opacity-dark: 0.08;
 }
 
 .upcoming-content {
@@ -1723,6 +1782,12 @@ p {
   width: 100%;
   height: 220px;
   object-fit: cover;
+}
+
+.erp-promo-shell .upcoming-image {
+  height: auto;
+  min-height: 300px;
+  object-fit: contain;
 }
 
 .upcoming-image-card figcaption {
@@ -1844,6 +1909,18 @@ p {
   color: var(--text-soft);
 }
 
+.promo-box-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.promo-box-link:hover {
+  border-color: rgba(37, 211, 102, 0.5);
+  box-shadow: 0 0 0 1px rgba(37, 211, 102, 0.25), 0 6px 18px rgba(37, 211, 102, 0.1);
+}
+
 .upcoming-stats-panel {
   background: #fbfdff;
   border: 1px solid var(--border);
@@ -1919,6 +1996,100 @@ p {
 
 .upcoming-lab-tile span {
   font-size: 1.4rem;
+}
+
+/* ---- ERP Promo — Business Enhancer -------------------------- */
+
+.erp-promo-shell {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: calc(clamp(1.5rem, 3vw, 2.5rem) + 4px);
+  --ad-bg-image: url('/erp-promo.png');
+  --ad-bg-opacity: 0.20;
+  --ad-bg-opacity-dark: 0.08;
+}
+
+.erp-promo-content {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.erp-promo-content .overline {
+  color: var(--coral);
+}
+
+.erp-promo-content h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  letter-spacing: -0.03em;
+}
+
+.erp-promo-content h2 .highlight {
+  background: linear-gradient(120deg, var(--coral) 0%, var(--sun) 55%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.erp-promo-description {
+  color: var(--text-soft);
+  max-width: 48ch;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.erp-promo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.5rem 0 0.5rem;
+  padding: 0.38rem 0.95rem;
+  border-radius: var(--r-full);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--coral) 0%, #ff8a6f 100%);
+  box-shadow: var(--shadow-coral);
+}
+
+.erp-promo-pill::before {
+  content: "💼";
+  font-size: 0.85rem;
+}
+
+.erp-promo-launch {
+  border-radius: var(--r-lg);
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(255, 107, 91, 0.22);
+  background: #fff9f5;
+}
+
+.erp-promo-launch p {
+  color: var(--text-soft);
+  margin: 0 0 0.45rem;
+  line-height: 1.55;
+  font-size: 0.92rem;
+}
+
+.erp-promo-launch small {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--coral);
+}
+
+@media (max-width: 900px) {
+  .erp-promo-shell {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 .enrollment-modal-backdrop {
@@ -3644,6 +3815,11 @@ body:has(.cursor-dot) {
     min-height: 40px;
   }
 
+  .nav-dropdown-menu .nav-dropdown-item.nav-svc-live {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
   .nav-controls {
     margin-inline-start: 0;
     padding-inline-start: 0;
@@ -4519,18 +4695,6 @@ body:has(.cursor-dot) {
   border-color: rgba(0, 210, 210, 0.2);
 }
 
-[data-theme="dark"] .upcoming-shell {
-  background:
-    radial-gradient(ellipse 60% 70% at 0% 0%, rgba(245, 200, 66, 0.12) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 70% at 100% 100%, rgba(43, 110, 255, 0.18) 0%, transparent 55%),
-    linear-gradient(135deg, #0a1f44 0%, #0d2a5c 100%);
-  border-color: rgba(0, 210, 210, 0.22);
-}
-
-[data-theme="dark"] .upcoming-shell::after {
-  opacity: 0.4;
-}
-
 [data-theme="dark"] .upcoming-title,
 [data-theme="dark"] .promo-box h3 {
   color: #ffffff;
@@ -4555,6 +4719,28 @@ body:has(.cursor-dot) {
 [data-theme="dark"] .promo-box::before {
   background: #142338;
   box-shadow: 0 0 0 1px rgba(255, 138, 116, 0.35);
+}
+
+[data-theme="dark"] .erp-promo-content h2 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .erp-promo-description {
+  color: rgba(232, 240, 254, 0.78);
+}
+
+[data-theme="dark"] .erp-promo-launch {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 138, 116, 0.35);
+}
+
+[data-theme="dark"] .erp-promo-launch p {
+  color: rgba(232, 240, 254, 0.78);
+}
+
+[data-theme="dark"] .promo-box-link:hover {
+  border-color: rgba(37, 211, 102, 0.6);
+  box-shadow: 0 0 0 1px rgba(37, 211, 102, 0.35), 0 6px 18px rgba(37, 211, 102, 0.12);
 }
 
 [data-theme="dark"] .upcoming-stats-panel {
