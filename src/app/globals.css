@@ -6464,3 +6464,212 @@ summary:focus-visible,
   padding: 0.5rem 1.5rem;
   white-space: nowrap;
 }
+
+/* ============================================================
+   FLOATING AI CHATBOT FAB & MODAL
+   ============================================================ */
+
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.4rem;
+  border-radius: var(--r-full);
+  border: 1px solid rgba(11, 184, 199, 0.35);
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-mid) 100%);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card), 0 0 0 4px rgba(11, 184, 199, 0.08);
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+  animation: chatFabFloat 3.5s ease-in-out infinite;
+}
+
+[dir="rtl"] .chat-fab {
+  right: auto;
+  left: 1.5rem;
+  padding: 0.4rem 0.4rem 0.4rem 0.9rem;
+}
+
+.chat-fab:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: var(--shadow-glow), 0 0 0 6px rgba(11, 184, 199, 0.12);
+}
+
+.chat-fab:active {
+  transform: scale(0.94);
+}
+
+.chat-fab--wiggle {
+  animation: chatFabWiggle 0.8s ease-in-out, chatFabFloat 3.5s ease-in-out infinite;
+}
+
+.chat-fab-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--teal);
+  white-space: nowrap;
+  font-family: var(--font-headline), "Space Grotesk", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* Modal overlay */
+.chat-fab-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  background: rgba(12, 26, 51, 0.35);
+  backdrop-filter: blur(6px);
+  animation: chatModalFadeIn 0.25s ease-out;
+}
+
+[dir="rtl"] .chat-fab-modal-overlay {
+  justify-content: flex-start;
+}
+
+/* Modal card */
+.chat-fab-modal {
+  width: min(420px, 92vw);
+  max-height: calc(100svh - 3rem);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-card), 0 24px 60px rgba(20, 60, 140, 0.18);
+  overflow: hidden;
+  animation: chatModalSlideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chat-fab-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  background: linear-gradient(180deg, var(--surface-hi) 0%, var(--bg-alt) 100%);
+  border-bottom: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+.chat-fab-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.chat-fab-modal-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.chat-fab-modal-close:hover {
+  background: var(--coral-soft);
+  color: var(--coral);
+  transform: rotate(90deg);
+}
+
+.chat-fab-modal-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ChatPanel overrides inside floating modal */
+.chat-fab-modal-body .chat-wrap {
+  max-width: none;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-fab-modal-body .chat {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+}
+
+.chat-fab-modal-body .chat-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Keyframes */
+@keyframes chatFabFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes chatFabWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-10deg); }
+  30% { transform: rotate(8deg); }
+  45% { transform: rotate(-6deg); }
+  60% { transform: rotate(4deg); }
+  75% { transform: rotate(-2deg); }
+  90% { transform: rotate(1deg); }
+}
+
+@keyframes chatModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes chatModalSlideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Mobile: center modal, full width */
+@media (max-width: 540px) {
+  .chat-fab-modal-overlay {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+
+  .chat-fab-modal {
+    width: 100%;
+    max-height: calc(100svh - 1.5rem);
+    border-radius: var(--r-lg);
+  }
+
+  .chat-fab {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  [dir="rtl"] .chat-fab {
+    left: 1rem;
+  }
+
+  .chat-fab-label {
+    display: none;
+  }
+}

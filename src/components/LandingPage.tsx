@@ -3,8 +3,8 @@
 import { Fragment, Suspense, useState } from "react";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
-import { ChatPanel } from "@/components/ChatPanel";
 // import { MapPanel } from "@/components/MapPanel"; // Hidden for now - will work on later
+import { ChatFab } from "@/components/ChatFab";
 import { ValueStrip } from "@/components/ValueStrip";
 // Legacy form: import { EnrollmentModal } from "@/components/EnrollmentModal";
 import { AstroChatEnrollment } from "@/components/conversational/AstroChatEnrollment";
@@ -64,7 +64,7 @@ export function LandingPage({ locale }: LandingPageProps) {
               <p className="hero-text">{content.hero.text}</p>
 
               <div className="hero-actions">
-                <a className="btn btn-primary" href="#chat">
+                <a className="btn btn-primary" href="#services">
                   {content.hero.primaryAction}
                 </a>
                 <a className="btn btn-outline" href="#events">
@@ -223,15 +223,6 @@ export function LandingPage({ locale }: LandingPageProps) {
         <Suspense fallback={null}>
           <AiToolsSection locale={locale} />
         </Suspense>
-
-        {/* ── CHAT ─────────────────────────────────────── */}
-        <section className="section container" id="chat">
-          <div className="section-head center reveal">
-            <p className="overline">{content.sections.chatOverline}</p>
-            <h2>{content.sections.chatTitle}</h2>
-          </div>
-          <ChatPanel content={content} locale={locale} />
-        </section>
 
         {/* ── UPCOMING EVENT ────────────────────────────────── */}
         <section className="section section-alt" id="events">
@@ -466,6 +457,9 @@ export function LandingPage({ locale }: LandingPageProps) {
 
       {/* AI-driven conversational enrollment (replaces EnrollmentModal) */}
       <AstroChatEnrollment locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
+
+      {/* Floating AI chatbot */}
+      <ChatFab content={content} locale={locale} />
     </>
   );
 }

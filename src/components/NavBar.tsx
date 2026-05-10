@@ -199,11 +199,18 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             ))}
           </NavDropdown>
 
-          {/* AI Bot - Direct Nav Item */}
-          <Link href={`${anchorBase}#chat`} className="nav-ai-bot" onClick={closeMenu}>
+          {/* AI Bot - Opens floating chat modal */}
+          <button
+            type="button"
+            className="nav-ai-bot"
+            onClick={() => {
+              closeMenu();
+              window.dispatchEvent(new CustomEvent("open-madinaty-chat"));
+            }}
+          >
             <Bot size={16} />
             {locale === "ar" ? "مدينتي بوت" : "AI Bot"}
-          </Link>
+          </button>
 
           {/* AI Tools */}
           <Link href={`${anchorBase}#ai-tools`} onClick={closeMenu}>
