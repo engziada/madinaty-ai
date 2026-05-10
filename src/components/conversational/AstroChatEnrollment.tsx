@@ -22,7 +22,7 @@ import {
   enrollmentSteps,
   type EnrollmentChatForm,
 } from "./steps/enrollmentSteps";
-import { AstroAvatar, type AstroMood } from "./AstroAvatar";
+import { AstroAvatar, type AstroMood } from "@/components/AstroAvatar/index";
 import { ChatBubble, ChatWidgetBubble } from "./ChatBubble";
 import {
   TextInputWidget,
@@ -390,7 +390,7 @@ export function AstroChatEnrollment({
 
         {conv.status === "success" ? (
           <div className="astro-success-screen">
-            <AstroAvatar mood="waving" className="astro-huge-avatar" />
+            <AstroAvatar mood="waving" size="huge" />
             <div className="astro-success-details">
               <h3>{isAr ? "تم إرسال الطلب بنجاح!" : "Mission Accomplished!"}</h3>
               {registrationNumber && (

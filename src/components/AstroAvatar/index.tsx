@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
+import "./AstroAvatar.css";
 
 /* ------------------------------------------------------------------ */
-/*  AstroAvatar — CSS-animated robot dog mascot                       */
+/*  AstroAvatar — Official AI Mascot of Madinaty AI                   */
 /*                                                                    */
-/*  Phase 1 implementation: pure CSS/SVG avatar with animation states */
-/*  Phase 2 will swap this for a Lottie or 3D model.                  */
+/*  Pure CSS/SVG animated robot dog. This is the global AI character  */
+/*  for the platform. Use it in chat, forms, success screens, etc.    */
 /* ------------------------------------------------------------------ */
 
 export type AstroMood =
@@ -18,27 +19,45 @@ export type AstroMood =
   | "error"
   | "waving";
 
-interface AstroAvatarProps {
+export interface AstroAvatarProps {
+  /** The current emotional/functional state of Astro */
   mood?: AstroMood;
-  /** "lg" for kids full-screen, "sm" for copilot sidebar. */
-  size?: "sm" | "md" | "lg";
+  /** 
+   * Predefined sizes:
+   * - sm: 60px (Sidebar/Input)
+   * - md: 90px (Standard)
+   * - lg: 120px (Modal headers)
+   * - xl: 180px (Success screens)
+   * - huge: 260px (Full-screen celebrations)
+   */
+  size?: "sm" | "md" | "lg" | "xl" | "huge";
+  /** Optional extra classes for positioning */
   className?: string;
+  /** Optional inline styles */
+  style?: React.CSSProperties;
 }
 
 /**
  * Animated Astro robot dog avatar rendered entirely with CSS.
- *
- * The SVG is inline so we can animate individual parts (ears, tail, eyes)
- * via CSS classes driven by the `mood` prop.
+ * 
+ * @example
+ * <AstroAvatar mood="talking" size="md" />
  */
-export function AstroAvatar({ mood = "idle", size = "md", className = "" }: AstroAvatarProps) {
+export function AstroAvatar({ 
+  mood = "idle", 
+  size = "md", 
+  className = "",
+  style 
+}: AstroAvatarProps) {
   const sizeClass = `astro-avatar--${size}`;
+  const moodClass = `astro-mood--${mood}`;
 
   return (
     <div
-      className={`astro-avatar ${sizeClass} astro-mood--${mood} ${className}`}
+      className={`astro-avatar ${sizeClass} ${moodClass} ${className}`}
       role="img"
       aria-label="Astro, the AI robot dog mascot"
+      style={style}
     >
       {/* Glow ring behind avatar */}
       <div className="astro-glow" aria-hidden="true" />

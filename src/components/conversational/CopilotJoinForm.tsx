@@ -10,7 +10,7 @@ import {
   getNextPrompt,
 } from "./CopilotEngine";
 import { ChatBubble } from "./ChatBubble";
-import { AstroAvatar, type AstroMood } from "./AstroAvatar";
+import { AstroAvatar, type AstroMood } from "@/components/AstroAvatar/index";
 
 const initialFormState: JoinFormState = {
   name: "",
