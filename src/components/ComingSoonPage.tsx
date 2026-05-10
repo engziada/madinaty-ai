@@ -3,7 +3,8 @@
 import { Suspense, useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import type { LocaleCode } from "@/types/site";
-import { EnrollmentModal } from "@/components/EnrollmentModal";
+// Legacy form fallback: import { EnrollmentModal } from "@/components/EnrollmentModal";
+import { AstroChatEnrollment } from "@/components/conversational/AstroChatEnrollment";
 
 interface ComingSoonPageProps {
   locale: LocaleCode;
@@ -319,7 +320,8 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
       </main>
 
       {/* ── Enrollment Modal ── */}
-      <EnrollmentModal locale={locale} open={enrollOpen} onClose={() => setEnrollOpen(false)} />
+      {/* AI-driven conversational enrollment (replaces EnrollmentModal) */}
+      <AstroChatEnrollment locale={locale} open={enrollOpen} onClose={() => setEnrollOpen(false)} />
     </div>
   );
 }

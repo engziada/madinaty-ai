@@ -6,7 +6,8 @@ import { getSiteContent } from "@/data/content";
 import { ChatPanel } from "@/components/ChatPanel";
 // import { MapPanel } from "@/components/MapPanel"; // Hidden for now - will work on later
 import { ValueStrip } from "@/components/ValueStrip";
-import { EnrollmentModal } from "@/components/EnrollmentModal";
+// Legacy form: import { EnrollmentModal } from "@/components/EnrollmentModal";
+import { AstroChatEnrollment } from "@/components/conversational/AstroChatEnrollment";
 import { AiArticleWidget } from "@/components/AiArticleWidget";
 import { AiToolsSection } from "@/components/AiToolsSection";
 import { LiveFacebookFeed } from "@/components/LiveFacebookFeed";
@@ -463,7 +464,8 @@ export function LandingPage({ locale }: LandingPageProps) {
         */}
       </main>
 
-      <EnrollmentModal locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
+      {/* AI-driven conversational enrollment (replaces EnrollmentModal) */}
+      <AstroChatEnrollment locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
     </>
   );
 }

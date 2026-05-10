@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
-import { JoinModal } from "@/components/JoinModal";
+// Legacy: import { JoinModal } from "@/components/JoinModal";
+import { CopilotJoinForm } from "@/components/conversational/CopilotJoinForm";
 import { PageShell } from "@/components/PageShell";
 import { getSiteContent } from "@/data/content";
 import { detectLocaleFromPath } from "@/lib/locale";
@@ -52,7 +53,7 @@ export function RootNavFooter({ children }: { children: React.ReactNode }) {
       <NavBar locale={locale} content={content} onOpenJoin={() => setJoinOpen(true)} />
       <PageShell>{children}</PageShell>
       <Footer content={content} locale={locale} />
-      <JoinModal locale={locale} open={joinOpen} onClose={() => setJoinOpen(false)} />
+      <CopilotJoinForm locale={locale} open={joinOpen} onClose={() => setJoinOpen(false)} />
     </>
   );
 }

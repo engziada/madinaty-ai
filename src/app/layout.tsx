@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { Cairo, Changa, Exo_2, Orbitron } from "next/font/google";
 import "./globals.css";
+import "@/components/conversational/conversational.css";
 import { ThemeProvider, themeInitScript } from "@/components/ThemeProvider";
 import { NewsMarquee } from "@/components/NewsMarquee";
 import { getEgyptNews } from "@/lib/egypt-news";
