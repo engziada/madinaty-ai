@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="glow" cx="100" cy="100" r="100">
+      <stop offset="0%" stop-color="rgba(11,184,199,0.18)"/>
+      <stop offset="100%" stop-color="rgba(11,184,199,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Glow ring -->
+  <circle cx="100" cy="100" r="110" fill="url(#glow)"/>
+
+  <!-- Body -->
+  <ellipse cx="100" cy="130" rx="52" ry="42" fill="#e6eeff" stroke="#0bb8c7" stroke-width="2"/>
+
+  <!-- Head -->
+  <circle cx="100" cy="78" r="40" fill="#ffffff" stroke="#0bb8c7" stroke-width="2"/>
+
+  <!-- Visor -->
+  <rect x="68" y="62" width="64" height="30" rx="15" fill="rgba(11,184,199,0.12)" stroke="#0bb8c7" stroke-width="1.5"/>
+
+  <!-- Eyes -->
+  <circle cx="85" cy="77" r="6" fill="#0c1a33"/>
+  <circle cx="115" cy="77" r="6" fill="#0c1a33"/>
+  <!-- Pupils -->
+  <circle cx="86" cy="76" r="2.5" fill="#ffffff"/>
+  <circle cx="116" cy="76" r="2.5" fill="#ffffff"/>
+  <!-- Eye shine -->
+  <circle cx="88" cy="74" r="1.2" fill="#ffffff" opacity="0.9"/>
+  <circle cx="118" cy="74" r="1.2" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Mouth -->
+  <path d="M90 90 Q100 97 110 90" stroke="#0bb8c7" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Left ear -->
+  <line x1="72" y1="52" x2="58" y2="28" stroke="#8094b0" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="58" cy="26" r="5" fill="#ff6b5b"/>
+
+  <!-- Right ear -->
+  <line x1="128" y1="52" x2="142" y2="28" stroke="#8094b0" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="142" cy="26" r="5" fill="#ff6b5b"/>
+
+  <!-- Tail -->
+  <path d="M148 140 Q168 125 160 105" stroke="#0bb8c7" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- Paws -->
+  <ellipse cx="72" cy="168" rx="14" ry="8" fill="#e6eeff" stroke="#0bb8c7" stroke-width="1.5"/>
+  <ellipse cx="128" cy="168" rx="14" ry="8" fill="#e6eeff" stroke="#0bb8c7" stroke-width="1.5"/>
+
+  <!-- Chest emblem -->
+  <circle cx="100" cy="122" r="8" fill="rgba(11,184,199,0.12)" stroke="#0bb8c7" stroke-width="1.5"/>
+  <text x="100" y="126" text-anchor="middle" fill="#0bb8c7" font-size="8" font-weight="700" font-family="Arial, sans-serif">AI</text>
+</svg>

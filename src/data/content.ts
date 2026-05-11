@@ -15,11 +15,11 @@ export const genesisImages = [
 
 /** Sunlit community / smart-city imagery, reusable across sections. */
 export const sectionImages = {
-  about:    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80", // modern campus
+  about: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80", // modern campus
   services: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1400&q=80", // smart transit
-  chat:     "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1400&q=80", // kid + laptop
-  map:      "https://images.unsplash.com/photo-1529670760083-b0d6a8d6d36c?w=1400&q=80", // aerial city
-  event:    "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=1400&q=80"  // kids workshop
+  chat: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1400&q=80", // kid + laptop
+  map: "https://images.unsplash.com/photo-1529670760083-b0d6a8d6d36c?w=1400&q=80", // aerial city
+  event: "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=1400&q=80"  // kids workshop
 };
 
 const contentEn: SiteContent = {
@@ -210,7 +210,7 @@ const contentEn: SiteContent = {
     messages: [
       { role: "ai", content: "Hello! I'm your Madinaty AI assistant. I can help with shuttle routes, workshops, community events, and live city updates across all 23 districts." },
       { role: "user", content: "Where is the next AI workshop for kids?" },
-      { role: "ai", content: "At the Community Innovation Hub near District B5, next Saturday at 10:00 AM. It's free for the first 42 Madinaty families. Want me to reserve a slot?" }
+      { role: "ai", content: "At the Community Innovation Hub near District B5, Sat 6 June at 8:00 PM. It's free for the first 42 Madinaty families. Want me to reserve a slot?" }
     ]
   },
   map: {
@@ -225,7 +225,7 @@ const contentEn: SiteContent = {
         longitude: 31.7018,
         category: "Innovation & Learning",
         status: "Live Workshops Today",
-        highlight: "Next AI for Kids session: Saturday at 10:00 AM"
+        highlight: "Next AI for Kids session: Sat 6 June at 8:00 PM"
       },
       {
         id: "logistics",
@@ -285,44 +285,44 @@ const contentEn: SiteContent = {
     ]
   },
   event: {
-    overline: "Free Kids AI Session — Learn Safe & Smart Usage",
-    title: "AI Chat for Kids—",
+    overline: "AI Labs in Madinaty",
+    title: "AI for Kids Awareness Session — ",
     titleHighlight: "Safe, Smart, Fun",
-    subtitle: "One-day session · 2 hours · Ages 8–12",
+    subtitle: "Sat 6 June 2026 · 8:00pm–10:00pm · Ages 8–12",
     description:
-      "An interactive session teaching kids AI chat tools and how to use them safely. Each session runs for 2 hours with up to 20 kids per group (without parents inside) to ensure quality interaction.",
+      "An interactive session teaching kids AI chat tools and how to use them safely. Each session runs for 2 hours with up to 10 kids per group (without parents inside) to ensure quality interaction.",
     descriptionExtra:
       "The course is supervised by:\nEngineering & Computer Science professors from Cairo University\n\nPrepared & delivered by:\nSoftware engineers & IT professionals\nExperienced educators ensuring every child receives information in a safe and engaging way\n\n🎮 This isn't just a lecture…\nIt's a hands-on experience where kids build and experiment themselves\n\n💡 Why this course matters:\n✔️ Develops logical thinking and creativity\n✔️ Introduces children to the foundations of the future (AI & Machine Learning)\n✔️ Makes learning fun and easy",
-    promoLabel: "Hurry — free for the first 10 subscribers",
+    promoLabel: "Hurry — discounted price up to 65% for the first 20 subscribers",
     promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
       "Priority is for Madinaty residents. Pre-registration is mandatory.",
     labTitle: "Small Cohort Format",
-    labSubtitle: "20 kids per session · no parents in class",
+    labSubtitle: "10 kids per session · no parents in class",
     cta: "Join the Waitlist",
     stats: [
       { value: "2H", label: "Session Length" },
-      { value: "20", label: "Kids / Session" },
-      { value: "10", label: "Free Seats" }
+      { value: "10", label: "Kids / Session" },
+      { value: "20", label: "Discounted Seats" }
     ],
     safetyBadges: [
       { icon: "🛡️", label: "Safe AI Usage" },
       { icon: "🎓", label: "Expert Community Instructors" },
       { icon: "👦", label: "Ages 8–12" },
-      { icon: "💰", label: "Symbolic fee to ensure booking commitment" },
-      { icon: "📞", label: "For inquiries: +201026655008", url: "https://wa.me/201026655008" }
+      { icon: "💰", label: "Discounted price for the first 20 subscribers" },
+      { icon: "📞", label: "For inquiries: +201026655008", url: "https://wa.me/201026655008?text=Hello%2C%20I%27d%20like%20to%20register%20for%20the%20AI%20Kids%20session%20on%20June%206th" }
     ]
   },
   footer: {
     copy: "© 2026 ZSolutions · New Cairo, Egypt · Built by the Community.",
     links: ["Privacy Policy", "System Status", "Terms of Use"],
     socialLinks: [
-      { icon: "facebook",   label: "Facebook",    url: "https://www.facebook.com/profile.php?id=61587705874177" },
-      { icon: "instagram",  label: "Instagram",   url: "https://www.instagram.com/invites/contact/?igsh=1j16tus21g2ro&utm_content=d24zbtm" },
-      { icon: "twitter",    label: "X (Twitter)", url: "https://x.com/MadinatyAI" },
-      { icon: "youtube",    label: "YouTube",     url: "https://www.youtube.com/" },
-      { icon: "linkedin",   label: "LinkedIn",    url: "https://www.linkedin.com/company/112226033/" }
+      { icon: "facebook", label: "Facebook", url: "https://www.facebook.com/profile.php?id=61587705874177" },
+      { icon: "instagram", label: "Instagram", url: "https://www.instagram.com/invites/contact/?igsh=1j16tus21g2ro&utm_content=d24zbtm" },
+      { icon: "twitter", label: "X (Twitter)", url: "https://x.com/MadinatyAI" },
+      { icon: "youtube", label: "YouTube", url: "https://www.youtube.com/" },
+      { icon: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/company/112226033/" }
     ],
     whatsappNumber: "+201026655008",
     adminEmail: "engziada@gmail.com"
@@ -535,7 +535,7 @@ const contentAr: SiteContent = {
     messages: [
       { role: "ai", content: "مرحباً! أنا مساعد Madinaty AI. أستطيع مساعدتك في خطوط الحافلات والورش والفعاليات وتحديثات المدينة الحية عبر جميع الـ٢٣ حياً." },
       { role: "user", content: "أين تقام ورشة الذكاء الاصطناعي القادمة للأطفال؟" },
-      { role: "ai", content: "في مركز (AAA) إيست هب - الدور الثاني ، لم يحدد الميعاد بعد, ولكن سيكون مع بداية الأجازة الصيفية.الفعالية مجانية لأول 10 أطفال. هل تريد حجز مقعد؟" }
+      { role: "ai", content: "في مركز (AAA) إيست هب - الدور الثاني، السبت ٦ يونيو في تمام الثامنة مساءً. الفعالية مجانية لأول ١٠ أطفال. هل تريد حجز مقعد؟" }
     ]
   },
   map: {
@@ -550,7 +550,7 @@ const contentAr: SiteContent = {
         longitude: 31.7018,
         category: "ابتكار وتعليم",
         status: "ورش حية اليوم",
-        highlight: "ورشة الأطفال القادمة: السبت ١٠ صباحاً"
+        highlight: "ورشة الأطفال القادمة: السبت ٦ يونيو الساعة ٨ مساءً"
       },
       {
         id: "logistics",
@@ -610,44 +610,44 @@ const contentAr: SiteContent = {
     ]
   },
   event: {
-    overline: "جلسة مجانية للأطفال عن الذكاء الاصطناعي و كيفية إستخدامه بشكل آمن",
+    overline: "جلسة توعوية للأطفال عن الذكاء الاصطناعي و كيفية إستخدامه بشكل آمن",
     title: "شات الذكاء الاصطناعي للأطفال—",
     titleHighlight: "آمن وذكي وممتع",
-    subtitle: "جلسة يوم واحد · ساعتان · أعمار ٨–١٢",
+    subtitle: "السبت ٦ يونيو ٢٠٢٦ · ٨:٠٠ م – ١٠:٠٠ م · أعمار ٨–١٢",
     description:
-      "جلسة تفاعلية لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ٢٠ طفل فقط بدون حضور الأهل داخل الجلسة لضمان جودة التفاعل.",
+      "جلسة تفاعلية لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ١٠ أطفال فقط داخل القاعة لضمان جودة التفاعل.",
     descriptionExtra:
       "الكورس تحت إشراف:\nأساتذة هندسة و حاسبات من جامعة القاهرة\n\nو إعداد و تنفيذ:\nمهندسين برمجيات و تكنولوجيا معلومات\nأساتذة محترفين لضمان وصول المعلومة للطفل بشكل آمن و مشوق\n\n🎮 الكورس مش مجرد شرح…\nده تجربة عملية يخلي الطفل فيها \"يبني ويجرب بنفسه\"\n\n💡 ليه الكورس مهم؟\n✔️ ينمّي التفكير المنطقي والإبداع\n✔️ يعرّف الأطفال بأساسيات المستقبل (AI & Machine Learning)\n✔️ يخلّي التعلم ممتع وسهل",
-    promoLabel: "ألحق بسرعة مكانك مجاناً لأول ١٠ مشتركين",
+    promoLabel: "ألحق بسرعة تحجز لـ أبنك/بنتك.. السعر رمزي جداً لأول ٢٠ مشترك فقط",
     promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
       "الأولوية لسكان مدينتي، والتسجيل المسبق إلزامي.",
     labTitle: "نظام مجموعات صغيرة",
-    labSubtitle: "٢٠ طفل لكل جلسة · بدون أولياء أمور",
+    labSubtitle: " تخفيض يصل إلى ٦٥% لـ سكان مدينتي فقط",
     cta: "انضم إلى قائمة الانتظار",
     stats: [
-      { value: "ساعتان", label: "مدة الجلسة" },
-      { value: "٢٠", label: "طفل / جلسة" },
-      { value: "١٠", label: "مقاعد مجانية" }
+      { value: "١٢٠ ", label: "دقيقة" },
+      { value: "١٠", label: "أطفال / جلسة" },
+      { value: "٢٠", label: "مقعد بسعر مخفض" }
     ],
     safetyBadges: [
       { icon: "🛡️", label: "استخدام آمن للذكاء الاصطناعي" },
       { icon: "🎓", label: "مدربون محترفون من المجتمع" },
       { icon: "👦", label: "للأعمار ٨–١٢" },
       { icon: "💰", label: "الكورس برسوم رمزية لضمان جدية الحجز" },
-      { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008" }
+      { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B1%D9%8A%20%D9%84%D9%84%D8%A3%D8%B7%D9%81%D8%A7%D9%84%20%D9%8A%D9%88%D9%84%206%20%D9%8A%D9%88%D9%86%D9%8A%D9%88" }
     ]
   },
   footer: {
     copy: "© ٢٠٢٦ ZSolutions · القاهرة الجديدة، مصر · بناه المجتمع.",
     links: ["سياسة الخصوصية", "حالة النظام", "شروط الاستخدام"],
     socialLinks: [
-      { icon: "facebook",   label: "فيسبوك",        url: "https://www.facebook.com/profile.php?id=61587705874177" },
-      { icon: "instagram",  label: "إنستغرام",       url: "https://www.instagram.com/invites/contact/?igsh=1j16tus21g2ro&utm_content=d24zbtm" },
-      { icon: "twitter",    label: "إكس (تويتر)",   url: "https://x.com/MadinatyAI" },
-      { icon: "youtube",    label: "يوتيوب",         url: "https://www.youtube.com/" },
-      { icon: "linkedin",   label: "لينكدإن",        url: "https://www.linkedin.com/company/112226033/" }
+      { icon: "facebook", label: "فيسبوك", url: "https://www.facebook.com/profile.php?id=61587705874177" },
+      { icon: "instagram", label: "إنستغرام", url: "https://www.instagram.com/invites/contact/?igsh=1j16tus21g2ro&utm_content=d24zbtm" },
+      { icon: "twitter", label: "إكس (تويتر)", url: "https://x.com/MadinatyAI" },
+      { icon: "youtube", label: "يوتيوب", url: "https://www.youtube.com/" },
+      { icon: "linkedin", label: "لينكدإن", url: "https://www.linkedin.com/company/112226033/" }
     ],
     whatsappNumber: "+201026655008",
     adminEmail: "engziada@gmail.com"

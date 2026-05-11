@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Export Astro Avatar PNGs</title>
+  <style>
+    body {
+      font-family: "Space Grotesk", Arial, sans-serif;
+      background: #f6f9ff;
+      color: #0c1a33;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      gap: 1rem;
+    }
+    .preview {
+      width: 200px;
+      height: 200px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 14px 42px rgba(20, 60, 140, 0.10);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .preview svg { width: 100%; height: 100%; }
+    .status { font-size: 0.9rem; color: #516787; }
+    .sizes { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .size-tag {
+      background: #e6eeff;
+      color: #0bb8c7;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    h1 { margin: 0; font-size: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Astro Avatar Export</h1>
+  <div class="preview" id="preview"></div>
+  <div class="status" id="status">Preparing downloads...</div>
+  <div class="sizes" id="sizes"></div>
+
+  <!-- Inline SVG (same as public/astro-avatar.svg) -->
+  <div id="svg-source" style="display:none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+      <defs>
+        <radialGradient id="glow" cx="100" cy="100" r="100">
+          <stop offset="0%" stop-color="rgba(11,184,199,0.18)"/>
+          <stop offset="100%" stop-color="rgba(11,184,199,0)"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="110" fill="url(#glow)"/>
+      <ellipse cx="100" cy="130" rx="52" ry="42" fill="#e6eeff" stroke="#0bb8c7" stroke-width="2"/>
+      <circle cx="100" cy="78" r="40" fill="#ffffff" stroke="#0bb8c7" stroke-width="2"/>
+      <rect x="68" y="62" width="64" height="30" rx="15" fill="rgba(11,184,199,0.12)" stroke="#0bb8c7" stroke-width="1.5"/>
+      <circle cx="85" cy="77" r="6" fill="#0c1a33"/>
+      <circle cx="115" cy="77" r="6" fill="#0c1a33"/>
+      <circle cx="86" cy="76" r="2.5" fill="#ffffff"/>
+      <circle cx="116" cy="76" r="2.5" fill="#ffffff"/>
+      <circle cx="88" cy="74" r="1.2" fill="#ffffff" opacity="0.9"/>
+      <circle cx="118" cy="74" r="1.2" fill="#ffffff" opacity="0.9"/>
+      <path d="M90 90 Q100 97 110 90" stroke="#0bb8c7" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <line x1="72" y1="52" x2="58" y2="28" stroke="#8094b0" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="58" cy="26" r="5" fill="#ff6b5b"/>
+      <line x1="128" y1="52" x2="142" y2="28" stroke="#8094b0" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="142" cy="26" r="5" fill="#ff6b5b"/>
+      <path d="M148 140 Q168 125 160 105" stroke="#0bb8c7" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <ellipse cx="72" cy="168" rx="14" ry="8" fill="#e6eeff" stroke="#0bb8c7" stroke-width="1.5"/>
+      <ellipse cx="128" cy="168" rx="14" ry="8" fill="#e6eeff" stroke="#0bb8c7" stroke-width="1.5"/>
+      <circle cx="100" cy="122" r="8" fill="rgba(11,184,199,0.12)" stroke="#0bb8c7" stroke-width="1.5"/>
+      <text x="100" y="126" text-anchor="middle" fill="#0bb8c7" font-size="8" font-weight="700" font-family="Arial, sans-serif">AI</text>
+    </svg>
+  </div>
+
+  <script>
+    (function () {
+      const svgEl = document.querySelector('#svg-source svg');
+      const preview = document.getElementById('preview');
+      const status = document.getElementById('status');
+      const sizesDiv = document.getElementById('sizes');
+
+      // Show preview
+      preview.appendChild(svgEl.cloneNode(true));
+
+      const svgStr = new XMLSerializer().serializeToString(svgEl);
+      const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      const sizes = [64, 128, 256, 512, 1024];
+      let completed = 0;
+
+      sizes.forEach((size) => {
+        const tag = document.createElement('span');
+        tag.className = 'size-tag';
+        tag.textContent = size + 'px';
+        sizesDiv.appendChild(tag);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Match the site background color
+        ctx.fillStyle = '#f6f9ff';
+        ctx.fillRect(0, 0, size, size);
+
+        const img = new Image();
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, size, size);
+          const a = document.createElement('a');
+          a.download = 'astro-avatar-' + size + '.png';
+          a.href = canvas.toDataURL('image/png');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          completed++;
+          if (completed === sizes.length) {
+            status.textContent = 'All ' + sizes.length + ' PNG files downloaded!';
+          } else {
+            status.textContent = 'Downloading ' + completed + ' of ' + sizes.length + '...';
+          }
+        };
+        img.src = url;
+      });
+    })();
+  </script>
+</body>
+</html>
