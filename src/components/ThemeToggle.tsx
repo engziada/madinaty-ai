@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "@/components/ThemeProvider";
+import { gaEvent } from "@/lib/gtag";
 
 interface ThemeToggleProps {
   labelLight?: string;
@@ -14,11 +15,17 @@ export function ThemeToggle({ labelLight = "Light", labelDark = "Dark" }: ThemeT
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
 
+  const handleToggle = () => {
+    const nextTheme = isDark ? "light" : "dark";
+    toggleTheme();
+    gaEvent("theme_toggled", { theme: nextTheme });
+  };
+
   return (
     <button
       type="button"
       className={`theme-toggle ${isDark ? "is-dark" : "is-light"}`}
-      onClick={toggleTheme}
+      onClick={handleToggle}
       aria-label={`Switch to ${isDark ? labelLight : labelDark} theme`}
       aria-pressed={isDark}
       title={`Switch to ${isDark ? labelLight : labelDark} theme`}

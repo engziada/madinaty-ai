@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { ChatMessage, LocaleCode, SiteContent } from "@/types/site";
+import { gaEvent } from "@/lib/gtag";
 
 /**
  * Minimal safe markdown renderer for AI messages.
@@ -81,6 +82,7 @@ export function ChatPanel({ content, locale }: ChatPanelProps) {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const hasStarted = useRef(false);
 
   // Auto-scroll the chat body to the bottom on new messages / typing state.
   useEffect(() => {
@@ -101,6 +103,12 @@ export function ChatPanel({ content, locale }: ChatPanelProps) {
     setInputValue("");
     setErrorMessage("");
     setIsLoading(true);
+
+    if (!hasStarted.current) {
+      hasStarted.current = true;
+      gaEvent("chat_started", { locale });
+    }
+    gaEvent("chat_message_sent", { locale });
 
     try {
       const response = await fetch("/api/chat", {

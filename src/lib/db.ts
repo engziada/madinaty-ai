@@ -59,6 +59,24 @@ function initTables() {
   addColumn("ALTER TABLE registrations ADD COLUMN group_no TEXT");
   addColumn("ALTER TABLE registrations ADD COLUMN building_no TEXT");
   addColumn("ALTER TABLE registrations ADD COLUMN apartment_no TEXT");
+
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS push_tokens (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      token TEXT NOT NULL UNIQUE,
+      locale TEXT DEFAULT 'ar',
+      platform TEXT,
+      os TEXT,
+      browser TEXT,
+      screen_size TEXT,
+      user_agent TEXT,
+      referrer TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS idx_push_tokens_locale ON push_tokens(locale);
+    CREATE INDEX IF NOT EXISTS idx_push_tokens_platform ON push_tokens(platform);
+  `);
 }
 
 export interface RegistrationData {
@@ -125,4 +143,66 @@ export function insertWaitlist(data: WaitlistData) {
 export function getWaitlist(limit = 100) {
   const db = getDb();
   return db.prepare("SELECT * FROM waitlist ORDER BY created_at DESC LIMIT ?").all(limit);
+}
+
+/* ------------------------------------------------------------------ */
+// Push notification tokens
+
+export interface PushTokenData {
+  token: string;
+  locale?: string;
+  platform?: string;
+  os?: string;
+  browser?: string;
+  screen_size?: string;
+  user_agent?: string;
+  referrer?: string;
+}
+
+export function upsertPushToken(data: PushTokenData) {
+  const db = getDb();
+  const stmt = db.prepare(`
+    INSERT INTO push_tokens (token, locale, platform, os, browser, screen_size, user_agent, referrer)
+    VALUES (@token, @locale, @platform, @os, @browser, @screen_size, @user_agent, @referrer)
+    ON CONFLICT(token) DO UPDATE SET
+      locale = excluded.locale,
+      platform = excluded.platform,
+      os = excluded.os,
+      browser = excluded.browser,
+      screen_size = excluded.screen_size,
+      user_agent = excluded.user_agent,
+      referrer = excluded.referrer,
+      updated_at = CURRENT_TIMESTAMP
+  `);
+  return stmt.run({
+    locale: "ar",
+    platform: null,
+    os: null,
+    browser: null,
+    screen_size: null,
+    user_agent: null,
+    referrer: null,
+    ...data,
+  });
+}
+
+export function deletePushToken(token: string) {
+  const db = getDb();
+  return db.prepare("DELETE FROM push_tokens WHERE token = ?").run(token);
+}
+
+export function getPushTokenCount() {
+  const db = getDb();
+  const row = db.prepare("SELECT COUNT(*) as count FROM push_tokens").get() as { count: number } | undefined;
+  return row?.count ?? 0;
+}
+
+export function getPushTokensByLocale(locale: string, limit = 1000) {
+  const db = getDb();
+  return db.prepare("SELECT * FROM push_tokens WHERE locale = ? ORDER BY created_at DESC LIMIT ?").all(locale, limit);
+}
+
+export function getAllPushTokens(limit = 10000) {
+  const db = getDb();
+  return db.prepare("SELECT * FROM push_tokens ORDER BY created_at DESC LIMIT ?").all(limit);
 }

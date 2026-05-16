@@ -6673,3 +6673,139 @@ summary:focus-visible,
     display: none;
   }
 }
+
+/* ============================================================
+   NOTIFICATION PROMPT
+   ============================================================ */
+
+.notif-prompt {
+  position: fixed;
+  inset-inline-start: 1rem;
+  inset-block-end: 1rem;
+  z-index: 1000;
+  max-width: 380px;
+  width: calc(100% - 2rem);
+  animation: notifPromptSlideIn 0.4s ease;
+}
+
+@keyframes notifPromptSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.notif-prompt-inner {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, rgba(20, 60, 140, 0.10));
+  border-radius: var(--r-lg, 1.25rem);
+  box-shadow: 0 14px 42px rgba(20, 60, 140, 0.14);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.notif-prompt-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-prompt-body {
+  text-align: center;
+}
+
+.notif-prompt-title {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text, #0c1a33);
+  margin: 0 0 0.25rem;
+  line-height: 1.35;
+}
+
+.notif-prompt-desc {
+  font-size: 0.8125rem;
+  color: var(--text-soft, #516787);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.notif-prompt-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.notif-prompt-btn {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-md, 0.875rem);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.notif-prompt-btn:active {
+  transform: scale(0.97);
+}
+
+.notif-prompt-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.notif-prompt-btn-primary {
+  background: var(--blue-mid, #1e4fd9);
+  color: #fff;
+}
+
+.notif-prompt-btn-primary:hover {
+  background: var(--blue, #2b6eff);
+}
+
+.notif-prompt-btn-ghost {
+  background: transparent;
+  color: var(--text-soft, #516787);
+  border: 1px solid var(--border, rgba(20, 60, 140, 0.10));
+}
+
+.notif-prompt-btn-ghost:hover {
+  background: var(--surface-mid, #f3f7ff);
+}
+
+/* Dark mode */
+[data-theme="dark"] .notif-prompt-inner {
+  background: #0d1422;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .notif-prompt-title {
+  color: #e8eef8;
+}
+
+[data-theme="dark"] .notif-prompt-desc {
+  color: #8ca0bf;
+}
+
+[data-theme="dark"] .notif-prompt-btn-ghost {
+  border-color: rgba(255, 255, 255, 0.10);
+  color: #8ca0bf;
+}
+
+[data-theme="dark"] .notif-prompt-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile: keep it pinned bottom, slightly smaller padding */
+@media (max-width: 480px) {
+  .notif-prompt {
+    inset-inline-start: 0.75rem;
+    inset-block-end: 0.75rem;
+    max-width: calc(100% - 1.5rem);
+  }
+
+  .notif-prompt-inner {
+    padding: 0.875rem 1rem;
+  }
+}

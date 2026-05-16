@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { X } from "lucide-react";
 import type { LocaleCode } from "@/types/site";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { gaEvent } from "@/lib/gtag";
 
 interface JoinFormState {
   name: string;
@@ -63,12 +64,13 @@ export function JoinModal({ locale, open, onClose }: JoinModalProps) {
 
   useEffect(() => {
     if (!open) return;
+    gaEvent("join_modal_opened", { locale });
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [open]);
+  }, [open, locale]);
 
   const labels = useMemo(() => {
     if (locale === "ar") {
@@ -172,10 +174,12 @@ export function JoinModal({ locale, open, onClose }: JoinModalProps) {
       setState("success");
       setStatusText(labels.success);
       setForm(initialFormState);
+      gaEvent("join_form_submitted", { locale, role: "Resident" });
     } catch (error) {
       console.error("[JoinModal] Submit error:", error);
       setState("error");
       setStatusText(labels.error);
+      gaEvent("join_form_error", { locale, error_count: 1 });
     }
   };
 

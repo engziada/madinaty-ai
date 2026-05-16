@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { Cairo, Changa, Exo_2, Orbitron } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import "@/components/conversational/conversational.css";
 import { ThemeProvider, themeInitScript } from "@/components/ThemeProvider";
@@ -13,6 +14,7 @@ import { RouteProgress } from "@/components/RouteProgress";
 import { GlobalShortcuts } from "@/components/GlobalShortcuts";
 import { JsonLd } from "@/components/JsonLd";
 import { RootNavFooter } from "@/components/RootNavFooter";
+import { NotificationPrompt } from "@/components/NotificationPrompt";
 
 const exoTwo = Exo_2({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-headline", display: "swap" });
@@ -149,6 +151,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <JsonLd />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
       </head>
       <body
         className={`${exoTwo.variable} ${orbitron.variable} ${cairo.variable} ${changa.variable}`}
@@ -165,6 +168,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           </RootNavFooter>
           <BackToTop />
           <GlobalShortcuts />
+          <NotificationPrompt />
         </ThemeProvider>
       </body>
     </html>
