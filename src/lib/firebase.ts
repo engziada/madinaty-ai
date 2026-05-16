@@ -11,15 +11,23 @@ import type { Messaging } from "firebase/messaging";
 let messagingInstance: Messaging | null = null;
 let appInstance: FirebaseApp | null = null;
 
+// Trim whitespace, CR, LF, and surrounding quotes — a recurring class of
+// "paste-from-Windows" env-var bugs on hosting platforms (Vercel, Netlify, etc.)
+// that silently break Firebase by tacking '\r\n' onto config values.
+function clean(v: string | undefined): string | undefined {
+  if (!v) return v;
+  return v.trim().replace(/^['"]|['"]$/g, "");
+}
+
 function getConfig() {
   return {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+    apiKey: clean(process.env.NEXT_PUBLIC_FIREBASE_API_KEY),
+    authDomain: clean(process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN),
+    projectId: clean(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID),
+    storageBucket: clean(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET),
+    messagingSenderId: clean(process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID),
+    appId: clean(process.env.NEXT_PUBLIC_FIREBASE_APP_ID),
+    measurementId: clean(process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID),
   };
 }
 
