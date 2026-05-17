@@ -4,7 +4,11 @@ let sqlInstance: ReturnType<typeof neon> | null = null;
 
 function clean(v: string | undefined): string | undefined {
   if (!v) return v;
-  return v.trim().replace(/^['"]|['"]$/g, "");
+  return v
+    .replace(/\r/g, "")
+    .replace(/\n/g, "")
+    .trim()
+    .replace(/^['"]|['"]$/g, "");
 }
 
 function getSql() {
