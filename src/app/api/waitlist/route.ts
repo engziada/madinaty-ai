@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: false, error: errors.join("; ") }, { status: 400 });
     }
 
-    insertWaitlist({
+    await insertWaitlist({
       email: (email as string).trim().toLowerCase(),
       city: (city as string).trim(),
       locale: locale === "ar" ? "ar" : "en",

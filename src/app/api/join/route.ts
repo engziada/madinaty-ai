@@ -72,8 +72,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: false, error: errors.join("; ") }, { status: 400 });
     }
 
-    // Save to SQLite
-    const result = insertRegistration({
+    const result = await insertRegistration({
       name: name.trim(),
       email: email.trim().toLowerCase(),
       phone: phone.trim(),

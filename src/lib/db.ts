@@ -1,82 +1,21 @@
-import Database from "better-sqlite3";
-import { join } from "path";
+import { neon } from "@neondatabase/serverless";
 
-const dbPath = join(process.cwd(), "data", "madinaty.db");
+let sqlInstance: ReturnType<typeof neon> | null = null;
 
-let db: Database.Database | null = null;
-
-export function getDb(): Database.Database {
-  if (!db) {
-    db = new Database(dbPath);
-    db.pragma("journal_mode = WAL");
-    initTables();
-  }
-  return db;
+function clean(v: string | undefined): string | undefined {
+  if (!v) return v;
+  return v.trim().replace(/^['"]|['"]$/g, "");
 }
 
-function initTables() {
-  if (!db) return;
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS registrations (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL,
-      phone TEXT NOT NULL,
-      role TEXT NOT NULL DEFAULT 'Resident',
-      district TEXT,
-      interests TEXT,
-      message TEXT,
-      gender TEXT,
-      group_no TEXT,
-      building_no TEXT,
-      apartment_no TEXT,
-      locale TEXT DEFAULT 'en',
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-    CREATE INDEX IF NOT EXISTS idx_registrations_email ON registrations(email);
-    CREATE INDEX IF NOT EXISTS idx_registrations_created ON registrations(created_at);
-
-    CREATE TABLE IF NOT EXISTS waitlist (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT NOT NULL,
-      city TEXT NOT NULL,
-      locale TEXT DEFAULT 'en',
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE(email, city)
-    );
-    CREATE INDEX IF NOT EXISTS idx_waitlist_email ON waitlist(email);
-  `);
-
-  // Best-effort additive migrations for older DBs that predate the new columns.
-  const addColumn = (sql: string) => {
-    try {
-      db!.exec(sql);
-    } catch {
-      /* ignore: column already exists */
-    }
-  };
-  addColumn("ALTER TABLE registrations ADD COLUMN gender TEXT");
-  addColumn("ALTER TABLE registrations ADD COLUMN group_no TEXT");
-  addColumn("ALTER TABLE registrations ADD COLUMN building_no TEXT");
-  addColumn("ALTER TABLE registrations ADD COLUMN apartment_no TEXT");
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS push_tokens (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      token TEXT NOT NULL UNIQUE,
-      locale TEXT DEFAULT 'ar',
-      platform TEXT,
-      os TEXT,
-      browser TEXT,
-      screen_size TEXT,
-      user_agent TEXT,
-      referrer TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-    CREATE INDEX IF NOT EXISTS idx_push_tokens_locale ON push_tokens(locale);
-    CREATE INDEX IF NOT EXISTS idx_push_tokens_platform ON push_tokens(platform);
-  `);
+function getSql() {
+  if (sqlInstance) return sqlInstance;
+  const raw = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL || "";
+  const DATABASE_URL = clean(raw);
+  if (!DATABASE_URL) {
+    throw new Error("DATABASE_URL or NEON_DATABASE_URL is required");
+  }
+  sqlInstance = neon(DATABASE_URL);
+  return sqlInstance;
 }
 
 export interface RegistrationData {
@@ -94,33 +33,32 @@ export interface RegistrationData {
   locale?: string;
 }
 
-export function insertRegistration(data: RegistrationData) {
-  const db = getDb();
-  const stmt = db.prepare(`
+export async function insertRegistration(data: RegistrationData) {
+  const result = (await getSql()`
     INSERT INTO registrations (
       name, email, phone, role, district, interests, message,
       gender, group_no, building_no, apartment_no, locale
     ) VALUES (
-      @name, @email, @phone, @role, @district, @interests, @message,
-      @gender, @group_no, @building_no, @apartment_no, @locale
+      ${data.name ?? null},
+      ${data.email ?? null},
+      ${data.phone ?? null},
+      ${data.role ?? "Resident"},
+      ${data.district ?? null},
+      ${data.interests ?? null},
+      ${data.message ?? null},
+      ${data.gender ?? null},
+      ${data.group_no ?? null},
+      ${data.building_no ?? null},
+      ${data.apartment_no ?? null},
+      ${data.locale ?? "en"}
     )
-  `);
-  return stmt.run({
-    district: null,
-    interests: null,
-    message: null,
-    gender: null,
-    group_no: null,
-    building_no: null,
-    apartment_no: null,
-    locale: "en",
-    ...data,
-  });
+    RETURNING id
+  `) as any[];
+  return { lastInsertRowid: result[0]?.id ?? 0 };
 }
 
-export function getRegistrations(limit = 100) {
-  const db = getDb();
-  return db.prepare("SELECT * FROM registrations ORDER BY created_at DESC LIMIT ?").all(limit);
+export async function getRegistrations(limit = 100) {
+  return await getSql()`SELECT * FROM registrations ORDER BY created_at DESC LIMIT ${limit}`;
 }
 
 export interface WaitlistData {
@@ -129,20 +67,16 @@ export interface WaitlistData {
   locale?: string;
 }
 
-export function insertWaitlist(data: WaitlistData) {
-  const db = getDb();
-  // Upsert on (email, city) to keep the UX idempotent.
-  const stmt = db.prepare(`
+export async function insertWaitlist(data: WaitlistData) {
+  await getSql()`
     INSERT INTO waitlist (email, city, locale)
-    VALUES (@email, @city, @locale)
-    ON CONFLICT(email, city) DO UPDATE SET created_at = CURRENT_TIMESTAMP
-  `);
-  return stmt.run({ locale: "en", ...data });
+    VALUES (${data.email}, ${data.city}, ${data.locale ?? "en"})
+    ON CONFLICT (email, city) DO UPDATE SET created_at = CURRENT_TIMESTAMP
+  `;
 }
 
-export function getWaitlist(limit = 100) {
-  const db = getDb();
-  return db.prepare("SELECT * FROM waitlist ORDER BY created_at DESC LIMIT ?").all(limit);
+export async function getWaitlist(limit = 100) {
+  return await getSql()`SELECT * FROM waitlist ORDER BY created_at DESC LIMIT ${limit}`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -159,50 +93,45 @@ export interface PushTokenData {
   referrer?: string;
 }
 
-export function upsertPushToken(data: PushTokenData) {
-  const db = getDb();
-  const stmt = db.prepare(`
-    INSERT INTO push_tokens (token, locale, platform, os, browser, screen_size, user_agent, referrer)
-    VALUES (@token, @locale, @platform, @os, @browser, @screen_size, @user_agent, @referrer)
-    ON CONFLICT(token) DO UPDATE SET
-      locale = excluded.locale,
-      platform = excluded.platform,
-      os = excluded.os,
-      browser = excluded.browser,
-      screen_size = excluded.screen_size,
-      user_agent = excluded.user_agent,
-      referrer = excluded.referrer,
+export async function upsertPushToken(data: PushTokenData) {
+  await getSql()`
+    INSERT INTO push_tokens (
+      token, locale, platform, os, browser, screen_size, user_agent, referrer
+    ) VALUES (
+      ${data.token},
+      ${data.locale ?? "ar"},
+      ${data.platform ?? null},
+      ${data.os ?? null},
+      ${data.browser ?? null},
+      ${data.screen_size ?? null},
+      ${data.user_agent ?? null},
+      ${data.referrer ?? null}
+    )
+    ON CONFLICT (token) DO UPDATE SET
+      locale = EXCLUDED.locale,
+      platform = EXCLUDED.platform,
+      os = EXCLUDED.os,
+      browser = EXCLUDED.browser,
+      screen_size = EXCLUDED.screen_size,
+      user_agent = EXCLUDED.user_agent,
+      referrer = EXCLUDED.referrer,
       updated_at = CURRENT_TIMESTAMP
-  `);
-  return stmt.run({
-    locale: "ar",
-    platform: null,
-    os: null,
-    browser: null,
-    screen_size: null,
-    user_agent: null,
-    referrer: null,
-    ...data,
-  });
+  `;
 }
 
-export function deletePushToken(token: string) {
-  const db = getDb();
-  return db.prepare("DELETE FROM push_tokens WHERE token = ?").run(token);
+export async function deletePushToken(token: string) {
+  await getSql()`DELETE FROM push_tokens WHERE token = ${token}`;
 }
 
-export function getPushTokenCount() {
-  const db = getDb();
-  const row = db.prepare("SELECT COUNT(*) as count FROM push_tokens").get() as { count: number } | undefined;
-  return row?.count ?? 0;
+export async function getPushTokenCount() {
+  const result = (await getSql()`SELECT COUNT(*)::int as count FROM push_tokens`) as any[];
+  return result[0]?.count ?? 0;
 }
 
-export function getPushTokensByLocale(locale: string, limit = 1000) {
-  const db = getDb();
-  return db.prepare("SELECT * FROM push_tokens WHERE locale = ? ORDER BY created_at DESC LIMIT ?").all(locale, limit);
+export async function getPushTokensByLocale(locale: string, limit = 1000) {
+  return await getSql()`SELECT * FROM push_tokens WHERE locale = ${locale} ORDER BY created_at DESC LIMIT ${limit}`;
 }
 
-export function getAllPushTokens(limit = 10000) {
-  const db = getDb();
-  return db.prepare("SELECT * FROM push_tokens ORDER BY created_at DESC LIMIT ?").all(limit);
+export async function getAllPushTokens(limit = 10000) {
+  return await getSql()`SELECT * FROM push_tokens ORDER BY created_at DESC LIMIT ${limit}`;
 }

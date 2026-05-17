@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Token is required" }, { status: 400 });
     }
 
-    upsertPushToken({
+    await upsertPushToken({
       token,
       locale: body.locale ?? "ar",
       platform: body.platform ?? null,
@@ -44,7 +44,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Token is required" }, { status: 400 });
     }
 
-    deletePushToken(token);
+    await deletePushToken(token);
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("[push-subscribe] DELETE error:", err);
