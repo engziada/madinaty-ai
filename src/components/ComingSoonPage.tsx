@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useRef, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import type { LocaleCode } from "@/types/site";
+import { getCityBySlug } from "@/data/cities";
 
 const AstroChatEnrollment = dynamic(
   () => import("@/components/conversational/AstroChatEnrollment").then((m) => m.AstroChatEnrollment),
@@ -11,6 +12,7 @@ const AstroChatEnrollment = dynamic(
 
 interface ComingSoonPageProps {
   locale: LocaleCode;
+  citySlug?: string;
 }
 
 /**
@@ -24,8 +26,9 @@ interface ComingSoonPageProps {
  *  - Scanline + grid overlay for depth
  *  - Enrollment modal trigger (same modal as the main landing page)
  */
-function ComingSoonInner({ locale }: ComingSoonPageProps) {
+function ComingSoonInner({ locale, citySlug }: ComingSoonPageProps) {
   const isAr = locale === "ar";
+  const city = getCityBySlug(citySlug);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [enrollOpen, setEnrollOpen] = useState(false);
   const [glitchActive, setGlitchActive] = useState(false);
@@ -159,11 +162,11 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
   /* ── Copy ── */
   const copy = isAr ? {
     badge: "🚀 قريباً جداً",
-    preTitle: "بوابة مدينتي الذكية",
+    preTitle: `بوابة ${city.nameAr} الذكية`,
     title: "مدينتي",
     titleAI: "AI",
     tagline: "ثورة ذكية قادمة لمجتمعك",
-    sub: "أعِدّ أبناءك لعصر الذكاء الاصطناعي بأكبر حدث مجاني وفريد من نوعه في مدينتي — ورشة مجانية لتأهيل أطفالك بأمان لعالم الذكاء الاصطناعي",
+    sub: `أعِدّ أبناءك لعصر الذكاء الاصطناعي بأكبر حدث مجاني وفريد من نوعه في ${city.nameAr} — ورشة مجانية لتأهيل أطفالك بأمان لعالم الذكاء الاصطناعي`,
     eventLabel: "🎯 الحدث القادم",
     eventTitle: "كورس الأطفال المجاني للذكاء الاصطناعي",
     eventDesc: "جلسة تفاعلية مكثفة · ٢ ساعة · أعمار ٧–١٠ سنوات · ٥٠ مقعداً فقط",
@@ -176,11 +179,11 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
     comingSoon: "الموقع الكامل قيد الإنشاء — ترقبوا الإطلاق الكبير",
   } : {
     badge: "🚀 Coming Very Soon",
-    preTitle: "Madinaty AI Portal",
+    preTitle: `${city.name} AI Portal`,
     title: "Madinaty",
     titleAI: "AI",
     tagline: "A smart revolution is coming to your community",
-    sub: "Prepare your kids for the biggest, FREE, one-of-a-kind event in Madinaty — a unique workshop to safely equip your children for the AI era",
+    sub: `Prepare your kids for the biggest, FREE, one-of-a-kind event in ${city.name} — a unique workshop to safely equip your children for the AI era`,
     eventLabel: "🎯 Next Event",
     eventTitle: "Free AI Flash Course for Kids",
     eventDesc: "Intensive interactive session · 2 hours · Ages 7–10 · Only 50 seats",
@@ -229,8 +232,8 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
 
         {/* Hero title */}
         <h1 className={`cs2-title${glitchActive ? " cs2-glitch" : ""}`}>
-          <span className="cs2-title-main">{copy.title}</span>
-          <span className="cs2-title-ai">&nbsp;{copy.titleAI}</span>
+          <span className="cs2-title-main">{isAr ? city.nameAr : city.brandName.replace(/AI$/i, "")}</span>
+          <span className="cs2-title-ai">&nbsp;AI</span>
         </h1>
 
         {/* Tagline */}
@@ -253,7 +256,7 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
           </div>
           
           <p className="cs2-event-location-hint" style={{ fontSize: "0.85rem", color: "var(--teal)", marginBottom: "1rem", opacity: 0.9 }}>
-            {isAr ? "📍 ملاحظة: سيتم تحديد المكان داخل مدينتي وإعلامكم لاحقاً." : "📍 Note: Location will be within Madinaty. We will inform you once determined."}
+            {isAr ? `📍 ملاحظة: سيتم تحديد المكان داخل ${city.nameAr} وإعلامكم لاحقاً.` : `📍 Note: Location will be within ${city.name}. We will inform you once determined.`}
           </p>
 
           {/* CTA */}
@@ -284,7 +287,7 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
               await fetch("/api/waitlist", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, city: "Madinaty", locale }),
+                body: JSON.stringify({ email, city: city.name, locale }),
               });
               const input = e.currentTarget.querySelector("input");
               if (input) {
@@ -333,10 +336,10 @@ function ComingSoonInner({ locale }: ComingSoonPageProps) {
  * Exported shell — wraps the inner component in a Suspense boundary so that
  * any downstream useSearchParams usage compiles cleanly under Next 15.
  */
-export function ComingSoonPage({ locale }: ComingSoonPageProps) {
+export function ComingSoonPage({ locale, citySlug }: ComingSoonPageProps) {
   return (
     <Suspense fallback={<div className="cs2-root" />}>
-      <ComingSoonInner locale={locale} />
+      <ComingSoonInner locale={locale} citySlug={citySlug} />
     </Suspense>
   );
 }

@@ -1,9 +1,10 @@
-import { redirect } from "next/navigation";
+import { ComingSoonPage } from "@/components/ComingSoonPage";
 
-/**
- * Hidden: coming-soon page now redirects to the Arabic home.
- * Keep file intact so route can be restored later if needed.
- */
-export default function ComingSoonAr(): never {
-  redirect("/ar");
+export default async function ComingSoonAr({
+  searchParams,
+}: {
+  searchParams: Promise<{ c?: string }>;
+}) {
+  const { c } = await searchParams;
+  return <ComingSoonPage locale="ar" citySlug={c} />;
 }
