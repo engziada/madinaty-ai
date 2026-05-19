@@ -6,8 +6,6 @@ import "./globals.css";
 import "@/components/conversational/conversational.css";
 import { ThemeProvider, themeInitScript } from "@/components/ThemeProvider";
 import { NewsMarquee } from "@/components/NewsMarquee";
-import { getEgyptNews } from "@/lib/egypt-news";
-import { getNews } from "@/lib/store";
 import { BackToTop } from "@/components/BackToTop";
 import { SkipToContent } from "@/components/SkipToContent";
 import { RouteProgress } from "@/components/RouteProgress";
@@ -90,9 +88,9 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     images: [
       {
-        url: "/logo.png",
-        width: 1600,
-        height: 1200,
+        url: "/madinaty_logo_dark.svg",
+        width: 512,
+        height: 512,
         alt: "Madinaty AI logo"
       }
     ]
@@ -102,7 +100,7 @@ export const metadata: Metadata = {
     title: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
     description:
       "The AI intelligence layer over Madinaty — Egypt's largest integrated smart city by Talaat Moustafa Group.",
-    images: ["/logo.png"]
+    images: ["/madinaty_logo_dark.svg"]
   },
   robots: {
     index: true,
@@ -118,10 +116,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/logo.png", type: "image/png" }
+      { url: "/madinaty_logo_dark.svg", type: "image/svg+xml" }
     ],
-    shortcut: "/logo.png",
-    apple: "/logo.png"
+    shortcut: "/madinaty_logo_dark.svg",
+    apple: "/madinaty_logo_dark.svg"
   },
   formatDetection: {
     email: false,
@@ -134,22 +132,42 @@ export const metadata: Metadata = {
  * Root layout — Arabic is the default locale, light is the default theme.
  * The theme-init script runs before hydration to prevent a flash of the
  * wrong palette on first paint.
+ *
+ * News is fetched *after* the HTML starts streaming so a slow RSS feed
+ * never blocks the initial render. NewsMarquee will show client-fetched
+ * data once available.
  */
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  // SSR initial news items so the marquee is never blank on first paint.
-  // We render AR because it's the default locale (html[lang=ar]); client
-  // refetches with the correct locale after hydration.
-  let initialNews;
-  try {
-    initialNews = await getEgyptNews("ar", 20);
-  } catch {
-    initialNews = await getNews(20);
-  }
-
   return (
     <html lang="ar" dir="rtl" data-theme="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function () {
+  try {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var lowMem = navigator.deviceMemory && navigator.deviceMemory < 4;
+    var lowCpu = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+    if (reduce || lowMem || lowCpu) {
+      document.documentElement.setAttribute('data-reduce-motion', '');
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        document.documentElement.setAttribute('data-tab-hidden', '');
+      } else {
+        document.documentElement.removeAttribute('data-tab-hidden');
+      }
+    });
+  } catch (_) {}
+})();
+            `,
+          }}
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <JsonLd />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
       </head>
@@ -161,7 +179,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <Suspense fallback={null}>
             <RouteProgress />
           </Suspense>
-          <NewsMarquee initialItems={initialNews} />
+          <NewsMarquee />
           <div className="site-bg" />
           <RootNavFooter>
             {children}

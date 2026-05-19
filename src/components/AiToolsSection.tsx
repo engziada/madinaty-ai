@@ -55,7 +55,7 @@ export function AiToolsSection({ locale }: Props) {
         params.set("category", id);
       }
       const qs = params.toString();
-      router.replace(qs ? `${pathname}?${qs}#ai-tools` : `${pathname}#ai-tools`, { scroll: false });
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
     },
     [pathname, router, searchParams]
   );

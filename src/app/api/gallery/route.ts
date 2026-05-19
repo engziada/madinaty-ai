@@ -1,47 +1,40 @@
 import { NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "node:path";
 
 /**
  * GET /api/gallery
  *
- * Returns every `imgi_*.{png,jpg,jpeg,webp}` file that actually exists under
- * `/public`. Gallery components fetch this on mount so new uploads (once the
- * feature ships) appear automatically without code changes. Until then, this
- * guarantees the grid never tries to render broken `<img>` references.
+ * Returns lightweight placeholder photos from an online service.
+ * Previously scanned local `/public` for `imgi_*` files; now uses
+ * curated Unsplash source images via picsum.photos for instant
+ * loading and zero local storage cost.
  *
  * Response shape: { photos: Array<{ src: string; name: string }> }
  */
 export const dynamic = "force-dynamic";
 
-const ALLOWED_EXT = new Set([".png", ".jpg", ".jpeg", ".webp"]);
-const PATTERN = /^imgi_/i;
+const PLACEHOLDER_IDS = [
+  { id: 1060, name: "city-park.webp" },
+  { id: 164, name: "residential-street.webp" },
+  { id: 329, name: "community-gathering.webp" },
+  { id: 558, name: "green-space.webp" },
+  { id: 593, name: "smart-city.webp" },
+  { id: 648, name: "family-event.webp" },
+  { id: 823, name: "sunset-view.webp" },
+  { id: 902, name: "modern-architecture.webp" },
+];
 
 export async function GET() {
-  try {
-    const publicDir = path.join(process.cwd(), "public");
-    const entries = await fs.readdir(publicDir);
+  const photos = PLACEHOLDER_IDS.map((p) => ({
+    src: `https://picsum.photos/id/${p.id}/400/300.webp`,
+    name: p.name,
+  }));
 
-    const photos = entries
-      .filter((f) => PATTERN.test(f) && ALLOWED_EXT.has(path.extname(f).toLowerCase()))
-      .sort()
-      .map((filename) => ({
-        src: `/${filename}`,
-        name: filename,
-      }));
-
-    return NextResponse.json(
-      { photos },
-      {
-        headers: {
-          // Short cache so a newly dropped photo shows up within a minute
-          // without hammering the filesystem on every request.
-          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
-        },
-      }
-    );
-  } catch (error) {
-    console.error("[/api/gallery] Failed to list photos:", error);
-    return NextResponse.json({ photos: [] }, { status: 200 });
-  }
+  return NextResponse.json(
+    { photos },
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+      },
+    }
+  );
 }

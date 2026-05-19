@@ -1,16 +1,19 @@
 "use client";
 
 import { Fragment, Suspense, useState } from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
-// import { MapPanel } from "@/components/MapPanel"; // Hidden for now - will work on later
-import { ChatFab } from "@/components/ChatFab";
 import { ValueStrip } from "@/components/ValueStrip";
-// Legacy form: import { EnrollmentModal } from "@/components/EnrollmentModal";
-import { AstroChatEnrollment } from "@/components/conversational/AstroChatEnrollment";
 import { AiArticleWidget } from "@/components/AiArticleWidget";
-import { AiToolsSection } from "@/components/AiToolsSection";
 import { LiveFacebookFeed } from "@/components/LiveFacebookFeed";
+
+const ChatFab = dynamic(() => import("@/components/ChatFab").then((m) => m.ChatFab), { ssr: false });
+const AstroChatEnrollment = dynamic(
+  () => import("@/components/conversational/AstroChatEnrollment").then((m) => m.AstroChatEnrollment),
+  { ssr: false }
+);
 
 interface LandingPageProps {
   locale: LocaleCode;
@@ -44,13 +47,15 @@ export function LandingPage({ locale }: LandingPageProps) {
       <main id="main-content" tabIndex={-1}>
         {/* ── HERO ──────────────────────────────────────────── */}
         <section className="hero-wrap" id="platform">
-          <img
-            src="/hero-bg.png"
+          <Image
+            src="/hero-bg.webp"
             alt=""
             aria-hidden="true"
             className="hero-skyline-art"
-            loading="eager"
-            decoding="async"
+            priority
+            fill
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
           />
           <div className="hero-backdrop-overlay" aria-hidden="true" />
           <div className="container hero-inner">
@@ -111,118 +116,108 @@ export function LandingPage({ locale }: LandingPageProps) {
         {/* ── VALUE STRIP ───────────────────────────────────── */}
         <ValueStrip items={stats} />
 
-        {/* ── PLATFORM (About + Services merged) ─────────────────── */}
-        <section className="section" id="services">
+        {/* ── OUR PLATFORM ────────────────────────────────── */}
+        <section className="section" id="about">
           <div className="container">
-            {/* Section header */}
             <div className="section-head reveal">
               <p className="overline">{content.sections.servicesOverline}</p>
-              <h2>{content.sections.servicesTitle}</h2>
+              <h2>{content.about.title}</h2>
             </div>
-
-            <div className="platform-grid reveal">
-              {/* Left: About narrative */}
-              <div className="platform-narrative">
-                <p className="overline accent-overline">{content.about.overline}</p>
-                <h3>{content.about.title}</h3>
-                <p className="platform-summary">{content.about.summary}</p>
-                <div className="platform-pillars">
-                  {content.about.cards.map((card, idx) => (
-                    <div className="platform-pillar" key={`pillar-${idx}`}>
-                      <span className="pillar-icon" aria-hidden="true">{card.icon}</span>
-                      <div>
-                        <strong>{card.title}</strong>
-                        <p>{card.text}</p>
-                      </div>
+            <div className="platform-horizontal reveal">
+              <p className="overline accent-overline">{content.about.overline}</p>
+              <p className="platform-summary">{content.about.summary}</p>
+              <div className="platform-pillars">
+                {content.about.cards.map((card, idx) => (
+                  <div className="platform-pillar" key={`pillar-${idx}`}>
+                    <span className="pillar-icon" aria-hidden="true">{card.icon}</span>
+                    <div>
+                      <strong>{card.title}</strong>
+                      <p>{card.text}</p>
                     </div>
-                  ))}
-                </div>
-                <div className="platform-highlights">
-                  {content.about.highlights.map((h) => (
-                    <div key={h} className="check-item">
-                      <div className="check-icon" aria-hidden="true">✓</div>
-                      <p>{h}</p>
-                    </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-
-              {/* Right: Service bento grid (scrollable) */}
-              <div className="service-bento-wrap">
-                <div className="service-bento">
-                  {content.services.filter((s) => !s.hidden).map((svc, idx, arr) => {
-                    const prevCategory = idx > 0 ? arr[idx - 1].category : null;
-                    const showGroupLabel = svc.category && svc.category !== prevCategory;
-                    const categoryLabels: Record<string, string> = {
-                      core: locale === "ar" ? "الخدمات الأساسية" : "Core Platform",
-                      community: locale === "ar" ? "المجتمع" : "Community",
-                      economy: locale === "ar" ? "الاقتصاد المحلي" : "Local Economy",
-                      education: locale === "ar" ? "التعليم" : "Education",
-                      lifestyle: locale === "ar" ? "الحياة اليومية" : "Lifestyle",
-                    };
-                    // Map service titles to anchor IDs (skip AI Bot — it has its own nav item)
-                    const serviceIdMap: Record<string, string> = {
-                      "AI Flash Courses for Kids": "kids-lab",
-                      "كورسات ذكاء اصطناعي للأطفال": "kids-lab",
-                      "Summer Business Training": "summer",
-                      "تدريب صيفي للشباب": "summer",
-                      "Rental Portal": "rental",
-                      "بوابة الإيجار الذكية": "rental",
-                      "Community Interest Club": "community-club",
-                      "نادي الاهتمامات المجتمعي": "community-club",
-                      "Poll Board": "poll",
-                      "لوحة التصويت المجتمعي": "poll",
-                      "Skill Exchange Network": "skills",
-                      "شبكة تبادل المهارات": "skills",
-                      "Trusted Services Directory": "services-dir",
-                      "دليل الخدمات الموثوقة": "services-dir",
-                      "Madinaty Tutoring Board": "tutoring",
-                      "لوحة الدروس الخصوصية": "tutoring",
-                      "Activity Finder": "activities",
-                      "مكتشف الأنشطة": "activities",
-                      "Madinaty Marketplace": "marketplace",
-                      "سوق مدينتي": "marketplace",
-                      "Ghost Kitchen Incubator": "kitchen",
-                      "حاضنة المطابخ المنزلية": "kitchen",
-                      "Local Business Booster": "business",
-                      "معزز الأعمال المحلية": "business",
-                    };
-                    const serviceId = serviceIdMap[svc.title];
-                    return (
-                      <Fragment key={`svc-fragment-${idx}`}>
-                        {showGroupLabel && (
-                          <div key={`label-${svc.category}`} className="svc-group-label">
-                            {categoryLabels[svc.category!] ?? svc.category}
-                          </div>
-                        )}
-                        <article
-                          key={`svc-${idx}`}
-                          id={serviceId ? `service-${serviceId}` : undefined}
-                          className={`svc-card svc-${svc.size ?? "normal"} svc-${svc.badgeType}`}
-                        >
-                          <div className="svc-header">
-                            <span className="svc-icon" aria-hidden="true">{svc.icon}</span>
-                            <span className={`svc-badge badge-${svc.badgeType}`}>{svc.badge}</span>
-                          </div>
-                          <h4>{svc.title}</h4>
-                          <p>{svc.text}</p>
-                        </article>
-                      </Fragment>
-                    );
-                  })}
-                </div>
+              <div className="platform-highlights">
+                {content.about.highlights.map((h) => (
+                  <div key={h} className="check-item">
+                    <div className="check-icon" aria-hidden="true">✓</div>
+                    <p>{h}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── AI TOOLS ────────────────────────────────── */}
-        {/* Suspense is required: AiToolsSection calls useSearchParams
-            for URL-based category persistence. Without a boundary,
-            Next.js bails out of static generation on /ar and /en. */}
-        <Suspense fallback={null}>
-          <AiToolsSection locale={locale} />
-        </Suspense>
+        {/* ── OUR SERVICES ────────────────────────────────── */}
+        <section className="section section-alt" id="services">
+          <div className="container">
+            <div className="section-head reveal">
+              <p className="overline">{locale === "ar" ? "خدماتنا" : "Our Services"}</p>
+              <h2>{content.sections.servicesTitle}</h2>
+            </div>
+            <div className="service-bento reveal">
+              {content.services.filter((s) => !s.hidden).map((svc, idx, arr) => {
+                const prevCategory = idx > 0 ? arr[idx - 1].category : null;
+                const showGroupLabel = svc.category && svc.category !== prevCategory;
+                const categoryLabels: Record<string, string> = {
+                  core: locale === "ar" ? "الخدمات الأساسية" : "Core Platform",
+                  community: locale === "ar" ? "المجتمع" : "Community",
+                  economy: locale === "ar" ? "الاقتصاد المحلي" : "Local Economy",
+                  education: locale === "ar" ? "التعليم" : "Education",
+                  lifestyle: locale === "ar" ? "الحياة اليومية" : "Lifestyle",
+                };
+                const serviceIdMap: Record<string, string> = {
+                  "AI Flash Courses for Kids": "kids-lab",
+                  "كورسات ذكاء اصطناعي للأطفال": "kids-lab",
+                  "Summer Business Training": "summer",
+                  "تدريب صيفي للشباب": "summer",
+                  "Rental Portal": "rental",
+                  "بوابة الإيجار الذكية": "rental",
+                  "Community Interest Club": "community-club",
+                  "نادي الاهتمامات المجتمعي": "community-club",
+                  "Poll Board": "poll",
+                  "لوحة التصويت المجتمعي": "poll",
+                  "Skill Exchange Network": "skills",
+                  "شبكة تبادل المهارات": "skills",
+                  "Trusted Services Directory": "services-dir",
+                  "دليل الخدمات الموثوقة": "services-dir",
+                  "Madinaty Tutoring Board": "tutoring",
+                  "لوحة الدروس الخصوصية": "tutoring",
+                  "Activity Finder": "activities",
+                  "مكتشف الأنشطة": "activities",
+                  "Madinaty Marketplace": "marketplace",
+                  "سوق مدينتي": "marketplace",
+                  "Ghost Kitchen Incubator": "kitchen",
+                  "حاضنة المطابخ المنزلية": "kitchen",
+                  "Local Business Booster": "business",
+                  "معزز الأعمال المحلية": "business",
+                };
+                const serviceId = serviceIdMap[svc.title];
+                return (
+                  <Fragment key={`svc-fragment-${idx}`}>
+                    {showGroupLabel && (
+                      <div key={`label-${svc.category}`} className="svc-group-label">
+                        {categoryLabels[svc.category!] ?? svc.category}
+                      </div>
+                    )}
+                    <article
+                      key={`svc-${idx}`}
+                      id={serviceId ? `service-${serviceId}` : undefined}
+                      className={`svc-card svc-${svc.size ?? "normal"}`}
+                    >
+                      <div className="svc-header">
+                        <span className="svc-icon" aria-hidden="true">{svc.icon}</span>
+                      </div>
+                      <h4>{svc.title}</h4>
+                      <p>{svc.text}</p>
+                    </article>
+                  </Fragment>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         {/* ── UPCOMING EVENT ────────────────────────────────── */}
         <section className="section section-alt" id="events">
@@ -284,12 +279,13 @@ export function LandingPage({ locale }: LandingPageProps) {
 
                 <div className="upcoming-side">
                   <figure className="upcoming-image-card">
-                    <img
+                    <Image
                       src="/ad-1.webp"
                       alt={locale === "ar" ? "أطفال يتعلمون أدوات الذكاء الاصطناعي بأمان" : "Kids learning AI chat tools in a safe and guided environment"}
                       className="upcoming-image"
+                      width={480}
+                      height={320}
                       loading="lazy"
-                      decoding="async"
                     />
                     <figcaption>
                       {locale === "ar" ? "جلسة تفاعلية آمنة وممتعة" : "Interactive, safe, and fun learning session"}
@@ -429,12 +425,13 @@ export function LandingPage({ locale }: LandingPageProps) {
                 </a>
               </div>
               <figure className="upcoming-image-card">
-                <img
-                  src="/erp-promo.png"
+                <Image
+                  src="/erp-promo.webp"
                   alt={locale === "ar" ? "نظام ERP الذكي - معزز الأعمال" : "Smart ERP System - Business Enhancer"}
                   className="upcoming-image"
+                  width={520}
+                  height={380}
                   loading="lazy"
-                  decoding="async"
                 />
                 <figcaption>
                   {locale === "ar" ? "منصة إدارة أعمال متكاملة" : "All-in-one business management platform"}

@@ -14,8 +14,6 @@
   justify-content: center;
   animation: fadeIn 0.25s ease;
   cursor: default;
-  justify-content: center;
-  animation: fadeIn 0.25s ease;
 }
 
 .astro-chat-modal {
@@ -324,6 +322,7 @@
   outline: none;
   font-family: inherit;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .chat-number-value::-webkit-inner-spin-button,

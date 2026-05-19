@@ -109,6 +109,7 @@ a {
     radial-gradient(ellipse 60% 50% at 95% 10%, rgba(43, 110, 255, 0.18) 0%, transparent 55%),
     radial-gradient(ellipse 70% 55% at 50% 95%, rgba(255, 107, 91, 0.14) 0%, transparent 55%);
   animation: bgPulse 14s ease-in-out infinite alternate;
+  will-change: opacity;
 }
 
 .site-bg::after {
@@ -121,6 +122,7 @@ a {
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 80%);
   animation: gridSlide 22s linear infinite;
+  will-change: background-position;
 }
 
 /* ---- Layout ----------------------------------------------- */
@@ -720,6 +722,7 @@ p {
   background-position: center 40%;
   transform: scale(1.04);
   animation: heroZoom 22s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 @keyframes heroZoom {
@@ -738,6 +741,7 @@ p {
     radial-gradient(ellipse 25% 25% at 18% 70%, rgba(43, 110, 255, 0.16), transparent 55%),
     radial-gradient(ellipse 22% 22% at 60% 88%, rgba(255, 107, 91, 0.18), transparent 55%);
   animation: orbFloat 9s ease-in-out infinite alternate;
+  will-change: transform;
   pointer-events: none;
 }
 
@@ -968,6 +972,7 @@ p {
   );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.4s linear infinite;
+  will-change: background-position;
 }
 
 .hero-activity-skeleton .skeleton-line.short {
@@ -1329,6 +1334,60 @@ p {
   gap: 0.6rem;
 }
 
+/* ── Horizontal Platform section (split from services) ── */
+.platform-horizontal {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.platform-horizontal .platform-summary {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 2.25rem;
+}
+
+.platform-horizontal .platform-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.platform-horizontal .platform-pillar {
+  flex-direction: column;
+  text-align: center;
+  padding: 1.25rem 1rem;
+}
+
+.platform-horizontal .pillar-icon {
+  width: 2.8rem;
+  height: 2.8rem;
+  font-size: 1.5rem;
+  margin: 0 auto;
+}
+
+.platform-horizontal .platform-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.platform-horizontal .check-item {
+  justify-content: center;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--r-lg);
+}
+
+[data-theme="dark"] .platform-horizontal .check-item {
+  background: rgba(10, 20, 38, 0.35);
+  border-color: rgba(255,255,255,0.06);
+}
+
 /* Right column – service bento */
 .service-bento-wrap {
   max-height: 75vh;
@@ -1486,7 +1545,7 @@ p {
 .svc-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 0.85rem;
 }
 
@@ -2809,6 +2868,11 @@ p {
   gap: 0.75rem;
 }
 
+.footer-brand-section--centered {
+  align-items: center;
+  text-align: center;
+}
+
 /* Tighten the gap between the brand mark and its slogan so the two read as
    a single locked-up unit (per partner feedback v2). */
 .footer-brand-section .footer-brand + .footer-slogan {
@@ -2842,6 +2906,12 @@ p {
   font-weight: 600;
   color: var(--teal);
   font-family: var(--font-headline), "Space Grotesk", sans-serif;
+}
+
+.footer-slogan--large {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 /* Gallery Modal */
@@ -3053,6 +3123,11 @@ p {
   margin-top: 0.5rem;
 }
 
+.footer-social--centered {
+  gap: 1rem;
+  justify-content: center;
+}
+
 .footer-social-link {
   display: inline-flex;
   align-items: center;
@@ -3165,52 +3240,54 @@ p {
   }
 }
 
-/* ---- Cursor glow ----------------------------------------- */
+/* ---- Cursor glow — futuristic arrow -------------------------------- */
 
-body:has(.cursor-dot) {
+body:has(.cursor-arrow) {
   cursor: none;
 }
 
-.cursor-dot {
+.cursor-arrow {
   position: fixed;
   top: 0;
   left: 0;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--coral);
-  box-shadow: 0 0 10px rgba(255, 107, 91, 0.75), 0 0 22px rgba(255, 107, 91, 0.35);
+  width: 28px;
+  height: 28px;
   pointer-events: none;
   z-index: 999999 !important;
   will-change: transform;
-  transition: width 0.15s ease, height 0.15s ease, opacity 0.15s ease;
 }
 
-.cursor-ring {
+.cursor-arrow svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.18s ease, filter 0.18s ease;
+  filter: drop-shadow(0 0 4px rgba(0, 210, 210, 0.55));
+}
+
+.cursor-underlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 38px;
-  height: 38px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  border: 1.5px solid rgba(43, 110, 255, 0.45);
   pointer-events: none;
   z-index: 999998 !important;
   will-change: transform;
-  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  background: radial-gradient(circle, rgba(0, 210, 210, 0.12) 0%, rgba(43, 110, 255, 0.06) 40%, transparent 70%);
+  transition: background 0.25s ease, width 0.25s ease, height 0.25s ease;
 }
 
-.cursor-dot--hover {
-  width: 10px;
-  height: 10px;
-  opacity: 0.7;
+.cursor-arrow--hover svg {
+  transform: rotate(-12deg) scale(1.15);
+  filter: drop-shadow(0 0 8px rgba(255, 107, 91, 0.7)) drop-shadow(0 0 3px rgba(0, 210, 210, 0.35));
 }
 
-.cursor-ring--hover {
-  width: 56px;
-  height: 56px;
-  border-color: rgba(255, 107, 91, 0.7);
-  background: rgba(255, 107, 91, 0.06);
+.cursor-underlay--hover {
+  background: radial-gradient(circle, rgba(255, 107, 91, 0.15) 0%, rgba(0, 210, 210, 0.08) 45%, transparent 70%);
+  width: 160px;
+  height: 160px;
 }
 
 /* ---- Event kids photo ------------------------------------ */
@@ -3728,6 +3805,15 @@ body:has(.cursor-dot) {
     padding-right: 0;
   }
 
+  .platform-horizontal .platform-pillars,
+  .platform-horizontal .platform-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-horizontal .platform-summary {
+    text-align: start;
+  }
+
   .hero-visual {
     margin-top: 2rem;
   }
@@ -3847,8 +3933,8 @@ body:has(.cursor-dot) {
 }
 
 @media (max-width: 640px) {
-  .cursor-dot,
-  .cursor-ring {
+  .cursor-arrow,
+  .cursor-underlay {
     display: none;
   }
 
@@ -3921,148 +4007,176 @@ body:has(.cursor-dot) {
 }
 
 /* ============================================================
-   MARQUEE NEWS BAR
+   NEWS TICKER — Futuristic marquee bar
    ============================================================ */
 
-.marquee-bar {
-  /* Relative: the bar scrolls away naturally on page scroll so the sticky
-     NavBar (z-index 40) never gets covered. */
+.news-ticker {
   position: relative;
   z-index: 30;
-  /* Collapse/expand for hide-on-scroll-down. */
-  max-height: 3.5rem;
-  overflow: hidden;
-  transform: translateY(0);
-  transition: transform 0.28s ease, max-height 0.32s ease, opacity 0.24s ease;
-  opacity: 1;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.35rem 1rem;
-  background: linear-gradient(90deg, var(--coral) 0%, #ff8c66 40%, var(--sun) 100%);
-  color: #ffffff;
-  font-size: 0.82rem;
+  gap: 0.6rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
   font-weight: 600;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 14px rgba(20, 60, 140, 0.12);
+  color: var(--text);
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(20, 60, 140, 0.06);
 }
 
-.marquee-badge {
+/* Animated top gradient border */
+.news-ticker-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--blue), var(--coral), var(--sun), var(--teal));
+  background-size: 200% 100%;
+  animation: tickerBorderFlow 3s linear infinite;
+}
+
+/* Live badge */
+.news-ticker-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.2rem 0.75rem;
+  padding: 0.2rem 0.7rem;
   border-radius: var(--r-full);
-  background: rgba(0, 0, 0, 0.25);
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, rgba(11, 184, 199, 0.12), rgba(43, 110, 255, 0.12));
+  border: 1px solid rgba(11, 184, 199, 0.25);
+  color: var(--teal);
+  font-family: var(--font-headline), "Orbitron", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.marquee-dot {
-  width: 0.45rem;
-  height: 0.45rem;
+.news-ticker-pulse {
+  width: 0.4rem;
+  height: 0.4rem;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
-  animation: pulse 1.8s ease-in-out infinite;
+  background: var(--teal);
+  box-shadow: 0 0 8px var(--teal-bright);
+  animation: tickerPulse 2s ease-in-out infinite;
 }
 
-.marquee-track-wrap {
+/* Track */
+.news-ticker-track-wrap {
   flex: 1;
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
 }
 
-.marquee-track {
+.news-ticker-track {
   display: inline-flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   white-space: nowrap;
-  animation: marqueeScroll 55s linear infinite;
+  animation: tickerScroll 55s linear infinite;
   will-change: transform;
 }
 
-[dir="rtl"] .marquee-track {
-  animation-name: marqueeScrollRTL;
+[dir="rtl"] .news-ticker-track {
+  animation-name: tickerScrollRTL;
   animation-direction: normal;
 }
 
-.marquee-item {
+.news-ticker-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  color: #ffffff;
+  gap: 0.5rem;
+  color: var(--text-soft);
 }
 
-.marquee-item a {
+.news-ticker-item a {
   color: inherit;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  transition: color 0.15s ease;
 }
 
-.marquee-item a:hover {
-  text-decoration: underline;
+.news-ticker-item a:hover {
+  color: var(--teal);
 }
 
-.marquee-item strong {
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  opacity: 0.95;
+.news-ticker-source {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text);
 }
 
-.marquee-item strong::after {
-  content: "·";
-  margin-inline: 0.35rem;
-  opacity: 0.8;
+.news-ticker-source::after {
+  content: "›";
+  margin-inline: 0.3rem;
+  opacity: 0.5;
+  color: var(--teal);
 }
 
-.marquee-sep {
-  opacity: 0.55;
-  margin-left: 1.5rem;
+.news-ticker-sep {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
+  margin-inline: 0.25rem;
 }
 
-.marquee-close {
+/* Close */
+.news-ticker-close {
   flex-shrink: 0;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   border: none;
-  background: rgba(0, 0, 0, 0.22);
-  color: #ffffff;
-  font-size: 1.05rem;
-  line-height: 1;
+  background: transparent;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background 0.18s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.marquee-close:hover {
-  background: rgba(0, 0, 0, 0.38);
+.news-ticker-close:hover {
+  background: var(--surface-hi);
+  color: var(--text);
 }
 
-@keyframes marqueeScroll {
+/* Keyframes */
+@keyframes tickerScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-@keyframes marqueeScrollRTL {
+@keyframes tickerScrollRTL {
   from { transform: translateX(0); }
   to   { transform: translateX(50%); }
 }
 
+@keyframes tickerBorderFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes tickerPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Mobile */
 @media (max-width: 640px) {
-  .marquee-bar {
-    font-size: 0.74rem;
-    padding: 0.3rem 0.6rem;
+  .news-ticker {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.5rem;
+    gap: 0.4rem;
   }
-  .marquee-badge {
+  .news-ticker-badge {
     display: none;
   }
 }
@@ -4620,6 +4734,14 @@ body:has(.cursor-dot) {
     linear-gradient(90deg, rgba(0, 210, 210, 0.05) 1px, transparent 1px);
 }
 
+/* Pause background animations for low-end devices, reduced-motion, or hidden tabs */
+html[data-reduce-motion] .site-bg::before,
+html[data-reduce-motion] .site-bg::after,
+html[data-tab-hidden] .site-bg::before,
+html[data-tab-hidden] .site-bg::after {
+  animation: none !important;
+}
+
 [data-theme="dark"] .glass {
   background: linear-gradient(155deg, rgba(15, 28, 50, 0.92), rgba(10, 20, 38, 0.75));
 }
@@ -4803,34 +4925,26 @@ body:has(.cursor-dot) {
   color: transparent;
 }
 
-[data-theme="dark"] .marquee-bar {
-  background: linear-gradient(90deg, #0d2a5c 0%, #1252c0 50%, #00d2d2 100%);
-  border-bottom-color: rgba(0, 210, 210, 0.25);
+[data-theme="dark"] .news-ticker {
+  background: rgba(12, 26, 51, 0.85);
+  border-bottom-color: rgba(0, 210, 210, 0.18);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .news-ticker-badge {
+  border-color: rgba(0, 210, 210, 0.35);
+  background: linear-gradient(135deg, rgba(11, 184, 199, 0.2), rgba(43, 110, 255, 0.2));
 }
 
 [data-theme="dark"] .nav-logo {
-  /* Allow the dark-friendly transparent logo.png to sit against dark nav */
-  filter: drop-shadow(0 0 10px rgba(0, 210, 210, 0.3));
+  filter: drop-shadow(0 0 8px rgba(0, 210, 210, 0.25));
 }
 
-/* Light mode: the lite logo is a JPEG on white — blend it into the white topbar */
-[data-theme="light"] .nav-logo {
-  mix-blend-mode: multiply;
-}
-
-/* Hidden state (is-hidden) — slide up & collapse so layout reflows. */
-.marquee-bar.is-hidden {
-  transform: translateY(-100%);
-  max-height: 0;
-  opacity: 0;
-  pointer-events: none;
-  border-bottom-width: 0;
-}
-
-/* Respect reduced-motion: pause the scrolling track + disable slide. */
+/* Reduced-motion: pause ticker scroll */
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none !important; }
-  .marquee-bar, .marquee-bar.is-hidden { transition: none !important; }
+  .news-ticker-track { animation: none !important; }
+  .news-ticker-border { animation: none !important; }
+  .news-ticker-pulse { animation: none !important; }
 }
 
 /* Nav item base colors — rely on tokens so both themes work */
@@ -5114,6 +5228,7 @@ summary:focus-visible,
   background: currentColor;
   opacity: 0.4;
   animation: typingBounce 1.1s ease-in-out infinite;
+  will-change: transform;
 }
 
 .typing-dot:nth-child(2) { animation-delay: 0.12s; }
@@ -5141,6 +5256,7 @@ summary:focus-visible,
   border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #ffffff;
   animation: btnSpin 0.7s linear infinite;
+  will-change: transform;
 }
 
 @keyframes btnSpin {
@@ -6396,12 +6512,15 @@ summary:focus-visible,
 [data-theme="dark"]  .footer-logo-dark { display: block; }
 
 /* Bottom bar logo */
+.footer-bottom-spacer {
+  height: 1rem;
+}
+
 .footer-bottom-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .footer-bottom-logo-link {
@@ -6486,6 +6605,7 @@ summary:focus-visible,
   cursor: pointer;
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
   animation: chatFabFloat 3.5s ease-in-out infinite;
+  will-change: transform, box-shadow;
 }
 
 [dir="rtl"] .chat-fab {

@@ -48,34 +48,22 @@ export function Footer({ content, locale }: FooterProps) {
     <footer className="footer" id="footer">
       <div className="container footer-inner">
         {/* Brand & Description */}
-        <div className="footer-brand-section" style={{ alignItems: 'center', textAlign: 'center' }}>
-          <p className="footer-slogan" style={{ marginBottom: '1rem', fontSize: '1.1rem', fontWeight: 'bold' }}>
+        <div className="footer-brand-section footer-brand-section--centered">
+          <p className="footer-slogan footer-slogan--large">
             {locale === "ar" ? "البُعد الذكي لمجتمعات مصر" : "The Smart Layer for Egypt's Communities"}
           </p>
 
           {/* Social Links */}
-          <div className="footer-social" style={{ gap: '1rem', marginTop: '0.5rem', justifyContent: 'center' }}>
+          <div className="footer-social footer-social--centered">
             {footer.socialLinks.map((link) => (
               <a
                 key={link.icon}
                 href={SOCIAL_URLS[link.icon as keyof typeof SOCIAL_URLS] || link.url}
                 className="footer-social-link"
-                style={{ 
-                  background: 'var(--surface-hover)', 
-                  padding: '0.75rem', 
-                  borderRadius: '50%',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                }}
                 aria-label={link.label}
                 title={link.label}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'var(--surface-hover)'; e.currentTarget.style.color = 'inherit'; }}
               >
                 <SocialIcon name={link.icon} />
               </a>
@@ -140,7 +128,7 @@ export function Footer({ content, locale }: FooterProps) {
       <div className="footer-bottom">
         <div className="container footer-bottom-inner">
           {/* Minimal footer bottom without ZSolutions logo */}
-          <div className="footer-bottom-spacer" style={{ height: '1rem' }} />
+          <div className="footer-bottom-spacer" />
 
           <p className="footer-copyright">
             © {new Date().getFullYear()} ZSolutions. {locale === "ar" ? "جميع الحقوق محفوظة." : "All rights reserved."}

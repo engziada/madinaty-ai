@@ -14,45 +14,34 @@ interface NewsItem {
 
 interface Props {
   locale?: LocaleCode;
-  initialItems?: NewsItem[];
 }
 
-const POLL_INTERVAL_MS = 5 * 60 * 1000; // 5 min — server already caches 10 min
+const POLL_INTERVAL_MS = 5 * 60 * 1000;
 const DISMISS_KEY = "madinaty.marquee.dismissed";
-/**
- * Per-item scroll time (seconds). Higher = slower. With an average headline
- * length ~60 chars, 5s/item gives ~12 chars/s — comfortable reading pace.
- */
 const SECONDS_PER_ITEM = 10;
 const MIN_DURATION_S = 60;
 
 /**
- * Top marquee bar streaming Egypt news (Google News RSS).
+ * Futuristic news ticker bar — glassmorphism, animated gradient border,
+ * pulsing live indicator, and tech-style typography.
  *
  * Design:
- *   • Positioned relatively — scrolls away naturally with the page. The
- *     sticky NavBar below takes over at top=0. The bar does NOT auto-hide
- *     on scroll (that caused a jarring "vanish" the moment you nudged the
- *     page).
- *   • Dismissed state is persisted in sessionStorage so a user who closes
- *     the bar doesn't see it again this session.
- *   • Animation duration scales with content width: more headlines = longer
- *     duration so the *visual* speed stays constant regardless of item
- *     count.
- *   • Reduced motion: animation pauses; content becomes a static list.
- *   • Initial items are SSR-provided so the bar never renders blank.
+ *   • Scrolls away naturally with the page (not sticky).
+ *   • Dismissed state persisted in sessionStorage.
+ *   • Animation duration scales with content count for constant visual speed.
+ *   • Reduced motion: animation pauses; content becomes static list.
+ *   • Fetched client-side so a slow RSS feed never blocks initial render.
  */
-export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props = {}) {
+export function NewsMarquee({ locale: explicitLocale }: Props = {}) {
   const pathname = usePathname();
   const locale: LocaleCode = useMemo(() => {
     if (explicitLocale) return explicitLocale;
     return pathname?.startsWith("/ar") ? "ar" : "en";
   }, [pathname, explicitLocale]);
 
-  const [items, setItems] = useState<NewsItem[]>(initialItems);
+  const [items, setItems] = useState<NewsItem[]>([]);
   const [dismissed, setDismissed] = useState(false);
 
-  // Restore dismissed state from sessionStorage (per tab / session).
   useEffect(() => {
     try {
       if (sessionStorage.getItem(DISMISS_KEY) === "1") {
@@ -63,8 +52,6 @@ export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props
     }
   }, []);
 
-  // Fetch + poll (skip first fetch if we already have SSR items in the
-  // current locale — avoids an immediate refetch flicker).
   useEffect(() => {
     let alive = true;
     async function load() {
@@ -79,9 +66,6 @@ export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props
         /* ignore */
       }
     }
-    // Only skip the initial load when SSR items are present AND the
-    // visitor's locale matches the SSR locale. Hard to detect the latter
-    // reliably, so we always refresh once — cheap due to server cache.
     load();
     const id = window.setInterval(load, POLL_INTERVAL_MS);
     return () => {
@@ -104,24 +88,25 @@ export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props
   }
 
   const label = locale === "ar" ? "آخر الأخبار" : "Live News";
-  const closeLabel = locale === "ar" ? "إغلاق شريط الأخبار" : "Dismiss news bar";
-  const loop = [...items, ...items]; // duplicate for seamless loop
+  const closeLabel = locale === "ar" ? "إغلاق" : "Dismiss";
+  const loop = [...items, ...items];
   const durationS = Math.max(MIN_DURATION_S, items.length * SECONDS_PER_ITEM);
 
   return (
-    <aside
-      className="marquee-bar"
-      role="complementary"
-      aria-label={label}
-    >
-      <span className="marquee-badge" aria-hidden="true">
-        <span className="marquee-dot" />
-        {label}
-      </span>
+    <aside className="news-ticker" role="complementary" aria-label={label}>
+      {/* Animated top gradient border */}
+      <div className="news-ticker-border" aria-hidden="true" />
 
-      <div className="marquee-track-wrap">
+      {/* Live badge with pulse */}
+      <div className="news-ticker-badge">
+        <span className="news-ticker-pulse" aria-hidden="true" />
+        <span className="news-ticker-label">{label}</span>
+      </div>
+
+      {/* Scrolling track */}
+      <div className="news-ticker-track-wrap">
         <div
-          className="marquee-track"
+          className="news-ticker-track"
           aria-live="off"
           style={{ animationDuration: `${durationS}s` }}
         >
@@ -129,15 +114,15 @@ export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props
             const inner = (
               <>
                 {item.source && (
-                  <strong>
+                  <span className="news-ticker-source">
                     <bdi>{item.source}</bdi>
-                  </strong>
+                  </span>
                 )}
                 <bdi>{item.text}</bdi>
               </>
             );
             return (
-              <span key={`${item.id}-${idx}`} className="marquee-item">
+              <span key={`${item.id}-${idx}`} className="news-ticker-item">
                 {item.url ? (
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
                     {inner}
@@ -145,21 +130,28 @@ export function NewsMarquee({ locale: explicitLocale, initialItems = [] }: Props
                 ) : (
                   inner
                 )}
-                <span className="marquee-sep" aria-hidden="true">•</span>
+                <span className="news-ticker-sep" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M6 0L7.5 4.5L12 6L7.5 7.5L6 12L4.5 7.5L0 6L4.5 4.5Z" fill="currentColor" opacity="0.4" />
+                  </svg>
+                </span>
               </span>
             );
           })}
         </div>
       </div>
 
+      {/* Dismiss */}
       <button
         type="button"
-        className="marquee-close"
+        className="news-ticker-close"
         aria-label={closeLabel}
         title={closeLabel}
         onClick={handleDismiss}
       >
-        <span aria-hidden="true">×</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
       </button>
     </aside>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, X } from "lucide-react";
 
@@ -181,8 +182,7 @@ export default function GalleryPage() {
               type="button"
               aria-label={`Open photo ${index + 1}`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.src} alt="" loading="lazy" />
+              <Image src={photo.src} alt="" width={400} height={300} loading="lazy" className="gallery-thumb" />
             </button>
           ))
         )}
@@ -200,11 +200,12 @@ export default function GalleryPage() {
           >
             <X size={24} />
           </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={photos[lightboxIndex].src}
             alt=""
             className="lightbox-image"
+            width={800}
+            height={600}
             onClick={(e) => e.stopPropagation()}
           />
         </div>

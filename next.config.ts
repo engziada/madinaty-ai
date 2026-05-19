@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "picsum.photos" },
+    ],
+  },
 
   /**
    * Performance & security headers applied to all routes.
@@ -41,7 +46,7 @@ const nextConfig: NextConfig = {
         ]
       },
       {
-        source: "/logo.png",
+        source: "/madinaty_logo_dark.svg",
         headers: [
           {
             key: "Cache-Control",
@@ -50,16 +55,7 @@ const nextConfig: NextConfig = {
         ]
       },
       {
-        source: "/logo-lite.svg",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=604800, immutable"
-          }
-        ]
-      },
-      {
-        source: "/logo-dark.svg",
+        source: "/madinaty_logo-lite.svg",
         headers: [
           {
             key: "Cache-Control",

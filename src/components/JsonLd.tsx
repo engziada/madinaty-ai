@@ -15,7 +15,7 @@ const organization = {
   name: "Madinaty AI",
   alternateName: ["Madinaty AI", "مدينتي AI", "مدينتي للذكاء الاصطناعي"],
   url: siteUrl,
-  logo: `${siteUrl}/logo.png`,
+  logo: `${siteUrl}/madinaty_logo_dark.svg`,
   description:
     "The AI intelligence layer over Madinaty — Egypt's largest integrated smart city, developed by Talaat Moustafa Group (TMG) in New Cairo.",
   foundingLocation: {

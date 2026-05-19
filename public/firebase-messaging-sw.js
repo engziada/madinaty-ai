@@ -28,8 +28,8 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification?.title ?? "Madinaty AI";
   const notificationOptions = {
     body: payload.notification?.body ?? "",
-    icon: "/logo.png",
-    badge: "/logo-lite.svg",
+    icon: "/madinaty_logo_dark.svg",
+    badge: "/madinaty_logo-lite.svg",
     tag: payload.data?.tag ?? "madinaty-ai-default",
     data: payload.data ?? {},
     requireInteraction: false,

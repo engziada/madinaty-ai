@@ -11,13 +11,13 @@
   "lang": "ar",
   "icons": [
     {
-      "src": "/logo.png",
-      "sizes": "1600x1200",
-      "type": "image/png",
+      "src": "/madinaty_logo_dark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/logo-lite.svg",
+      "src": "/madinaty_logo-lite.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable any"

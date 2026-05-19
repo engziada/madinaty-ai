@@ -1,10 +1,13 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState, useCallback } from "react";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import type { LocaleCode } from "@/types/site";
-// Legacy form fallback: import { EnrollmentModal } from "@/components/EnrollmentModal";
-import { AstroChatEnrollment } from "@/components/conversational/AstroChatEnrollment";
+
+const AstroChatEnrollment = dynamic(
+  () => import("@/components/conversational/AstroChatEnrollment").then((m) => m.AstroChatEnrollment),
+  { ssr: false }
+);
 
 interface ComingSoonPageProps {
   locale: LocaleCode;

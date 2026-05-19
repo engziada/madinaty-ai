@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
-// Legacy: import { JoinModal } from "@/components/JoinModal";
-import { CopilotJoinForm } from "@/components/conversational/CopilotJoinForm";
 import { PageShell } from "@/components/PageShell";
 import { getSiteContent } from "@/data/content";
 import { detectLocaleFromPath } from "@/lib/locale";
+
+const CopilotJoinForm = dynamic(
+  () => import("@/components/conversational/CopilotJoinForm").then((m) => m.CopilotJoinForm),
+  { ssr: false }
+);
 
 /**
  * Client-side NavBar/Footer wrapper for all pages.
@@ -20,12 +24,7 @@ import { detectLocaleFromPath } from "@/lib/locale";
 export function RootNavFooter({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const locale = useMemo(() => detectLocaleFromPath(pathname), [pathname]);
-  const [mounted, setMounted] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Keep <html lang> + <body dir> in sync with the active locale so RTL flips
   // correctly when the user toggles locale on a sub-page client-side.
@@ -37,16 +36,6 @@ export function RootNavFooter({ children }: { children: React.ReactNode }) {
   }, [locale]);
 
   const content = getSiteContent(locale);
-
-  // Prevent hydration mismatch - render minimal during SSR
-  if (!mounted) {
-    return (
-      <>
-        <div style={{ minHeight: "64px" }} />
-        {children}
-      </>
-    );
-  }
 
   return (
     <>

@@ -86,7 +86,7 @@ const contentEn: SiteContent = {
     // ── CORE PLATFORM ──
     {
       icon: "🤖",
-      title: "Madinaty AI Bot",
+      title: "Astro",
       text: "Your always-on local guide. Ask for restaurant picks, best spots for an outing, or let the bot find you a flat, villa, or shop — plus live prices for any good or service inside Madinaty.",
       badge: "Live Now",
       badgeType: "live",
@@ -95,15 +95,15 @@ const contentEn: SiteContent = {
     },
     {
       icon: "🎓",
-      title: "AI Flash Courses for Kids",
-      text: "Free, certified courses for ages 6–8, 9–12, and 13–15. Kids learn AI basics, prompt writing, safe tool usage, and digital critical thinking at Madinaty's Innovation Hub.",
+      title: "Innovation Hub",
+      text: "Certified courses for ages 6–8, 9–12, and 13–15. Let's learn AI basics, prompt writing, safe tool usage, digital critical thinking, programming and more at Madinaty's Innovation Hub.",
       badge: "Free · Waitlist Open",
       badgeType: "live",
       category: "education",
     },
     {
       icon: "🏢",
-      title: "Summer Business Training",
+      title: "SkillUp Shabab",
       text: "Bridging Madinaty youth (16–18) with local business owners for real hands-on internships and apprenticeships every summer inside the city.",
       badge: "Summer 2026",
       badgeType: "soon",
@@ -111,16 +111,16 @@ const contentEn: SiteContent = {
     },
     {
       icon: "🏠",
-      title: "Rental Portal",
+      title: "Sakn Madinaty",
       text: "A transparent, AI-powered marketplace connecting Madinaty tenants directly with owners — streamlining listings, viewings, contracts, and payments all in one place. Includes Short-Stay Hosting for verified guests and visiting families. [Disclaimer: This is a community platform. All transactions are between parties. Please ensure legal compliance and proper documentation.]",
       badge: "Beta Soon",
       badgeType: "soon",
       category: "core",
-      hidden: true,
+      hidden: false,
     },
     {
       icon: "👥",
-      title: "Community Interest Club",
+      title: "ConnectX",
       text: "Find your people. Match with Madinaty residents who share your hobbies, sports, or passions and organize group outings, meetups, and local events together.",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -130,7 +130,7 @@ const contentEn: SiteContent = {
     // ── COMMUNITY ──
     {
       icon: "🗳️",
-      title: "Poll Board",
+      title: "Raayak Eh",
       text: "Vote on urgent community topics. When enough residents agree, your collective voice is automatically escalated as an official request to Madinaty's city managers.",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -139,7 +139,7 @@ const contentEn: SiteContent = {
     },
     {
       icon: "⏱️",
-      title: "Skill Exchange Network",
+      title: "Time Bank",
       text: "Trade skills with neighbors using hours — not money. Offer tutoring, design, coding, or cooking; earn time credits you can spend on any skill you need. We manage the balance.",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -148,7 +148,7 @@ const contentEn: SiteContent = {
     // ── RESIDENTIAL LIFE ──
     {
       icon: "🔧",
-      title: "Trusted Services Directory",
+      title: "Craft Zone",
       text: "A curated, resident-rated directory of verified plumbers, electricians, cleaners, and handymen who operate inside Madinaty — no more random Facebook recommendations. [Disclaimer: We facilitate connections only. Verify credentials and establish proper service agreements independently.]",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -158,12 +158,12 @@ const contentEn: SiteContent = {
     // ── EDUCATION & LIFESTYLE ──
     {
       icon: "📖",
-      title: "Madinaty Tutoring Board",
+      title: "Nezakker",
       text: "Connect students with qualified resident-tutors for affordable, in-community private lessons across all subjects and grade levels.",
       badge: "Coming Soon",
       badgeType: "soon",
       category: "education",
-      hidden: true,
+      hidden: false,
     },
     {
       icon: "🏃",
@@ -177,7 +177,7 @@ const contentEn: SiteContent = {
     // ── LOCAL ECONOMY ──
     {
       icon: "🛍️",
-      title: "Madinaty Marketplace",
+      title: "ElSouk",
       text: "A hyper-local buy, sell, and swap platform exclusively for Madinaty residents — fast, trusted, and no platform fees for community members.",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -185,7 +185,7 @@ const contentEn: SiteContent = {
     },
     {
       icon: "🍽️",
-      title: "Ghost Kitchen Incubator",
+      title: "Bas Douk",
       text: "Turn your home kitchen into a micro-business. Sell verified, home-cooked meals to your neighbors through a legally structured, community-first food platform. [Disclaimer: Compliance with food safety regulations and local business licensing is the seller's responsibility.]",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -193,12 +193,12 @@ const contentEn: SiteContent = {
     },
     {
       icon: "🚀",
-      title: "Local Business Booster",
+      title: "Business Booster",
       text: "Give any Madinaty business an online presence in under 48 hours — starting with a free landing page, then a full e-commerce store, CRM, and ERP system as they grow.",
       badge: "Coming Soon",
       badgeType: "soon",
       size: "wide",
-      category: "economy",
+      category: "core",
     },
   ],
   chat: {
@@ -411,7 +411,7 @@ const contentAr: SiteContent = {
     // ── الخدمات الأساسية ──
     {
       icon: "🤖",
-      title: "مساعد مدينتي الذكي",
+      title: "أسترو..مساعد مدينتي الذكي",
       text: "دليلك المحلي المتاح دائماً. اسأله عن أفضل المطاعم أو أماكن الترفيه، أو اطلب منه إيجاد شقة أو فيلا أو محل — مع أسعار حية لأي منتج أو خدمة داخل مدينتي.",
       badge: "متاح الآن",
       badgeType: "live",
@@ -420,7 +420,7 @@ const contentAr: SiteContent = {
     },
     {
       icon: "🎓",
-      title: "كورسات ذكاء اصطناعي للأطفال",
+      title: "مركز الإبتكار",
       text: "كورسات مجانية معتمدة للأعمار ٦–٨ و٩–١٢ و١٣–١٥ سنة. أساسيات الذكاء الاصطناعي، كتابة البرومبت، الأدوات الآمنة، والتفكير النقدي الرقمي — في مركز الابتكار بمدينتي.",
       badge: "مجاناً · قائمة الانتظار مفتوحة",
       badgeType: "live",
@@ -428,7 +428,7 @@ const contentAr: SiteContent = {
     },
     {
       icon: "🏢",
-      title: "تدريب صيفي للشباب",
+      title: "تدريب صيفي",
       text: "ربط شباب مدينتي (١٦–١٨ سنة) بأصحاب الأعمال المحليين لتدريب عملي حقيقي داخل المدينة كل صيف.",
       badge: "صيف ٢٠٢٦",
       badgeType: "soon",
@@ -436,16 +436,16 @@ const contentAr: SiteContent = {
     },
     {
       icon: "🏠",
-      title: "بوابة الإيجار الذكية",
+      title: "سكن",
       text: "سوق شفاف مدعوم بالذكاء الاصطناعي يربط المستأجرين بالملاك مباشرةً — تسهيل الإعلانات والمعاينات والعقود والمدفوعات في مكان واحد. تشمل إيجار الإقامة القصيرة للضيوف والعائلات. [تنبيه: هذه منصة مجتمعية. جميع المعاملات بين الأطراف. يرجى ضمان الامتثال القانوني والتوثيق السليم.]",
       badge: "قريباً",
       badgeType: "soon",
       category: "core",
-      hidden: true,
+      hidden: false,
     },
     {
       icon: "👥",
-      title: "نادي الاهتمامات المجتمعي",
+      title: "نادي الاهتمامات",
       text: "ابحث عن سكان يشاركونك اهتماماتك وهواياتك — ورتّب معهم نزهات جماعية وفعاليات ولقاءات محلية داخل مدينتي.",
       badge: "قادم قريباً",
       badgeType: "soon",
@@ -455,7 +455,7 @@ const contentAr: SiteContent = {
     // ── المجتمع ──
     {
       icon: "🗳️",
-      title: "لوحة التصويت المجتمعي",
+      title: "رأيك إيه",
       text: "صوّت على أهم القضايا المجتمعية. عند تجاوز نسبة التصويت المتفق عليها مع إدارة المدينة، يُحوَّل تلقائياً إلى طلب رسمي معتمد.",
       badge: "قادم قريباً",
       badgeType: "soon",
@@ -464,7 +464,7 @@ const contentAr: SiteContent = {
     },
     {
       icon: "⏱️",
-      title: "شبكة تبادل المهارات",
+      title: "بنك الوقت",
       text: "تبادل المهارات مع الجيران بالساعات لا بالمال. قدّم ما تُجيده واكسب رصيداً زمنياً تصرفه على ما تحتاجه — ونحن ندير التوازن.",
       badge: "قادم قريباً",
       badgeType: "soon",
@@ -473,7 +473,7 @@ const contentAr: SiteContent = {
     // ── الحياة السكنية ──
     {
       icon: "🔧",
-      title: "دليل الخدمات الموثوقة",
+      title: "صنايعي",
       text: "دليل منتقى ومُقيَّم من السكان لسباكين وكهربائيين وعمال نظافة وصيانة يعملون داخل مدينتي — لا مزيد من التوصيات العشوائية. [تنبيه: نسهل التواصل فقط. تحقق من الأهلية وحدد اتفاقيات الخدمة بشكل مستقل.]",
       badge: "قادم قريباً",
       badgeType: "soon",
@@ -483,12 +483,12 @@ const contentAr: SiteContent = {
     // ── التعليم والنمط الحياتي ──
     {
       icon: "📖",
-      title: "لوحة الدروس الخصوصية",
+      title: "يلا نذاكر",
       text: "ربط الطلاب بمعلمين من سكان مدينتي للدروس الخصوصية بأسعار مناسبة في جميع المواد والمراحل الدراسية.",
       badge: "قادم قريباً",
       badgeType: "soon",
       category: "education",
-      hidden: true,
+      hidden: false,
     },
     {
       icon: "🏃",
@@ -510,7 +510,7 @@ const contentAr: SiteContent = {
     },
     {
       icon: "🍽️",
-      title: "حاضنة المطابخ المنزلية",
+      title: "بس دوق",
       text: "حوّل مطبخك إلى مشروع صغير. بِع وجبات منزلية موثَّقة لجيرانك من خلال منصة طعام مجتمعية منظَّمة قانونياً. [تنبيه: الامتثال لأنظمة سلامة الغذاء والتراخيص التجارية المحلية مسؤولية البائع.]",
       badge: "قادم قريباً",
       badgeType: "soon",
@@ -518,12 +518,12 @@ const contentAr: SiteContent = {
     },
     {
       icon: "🚀",
-      title: "معزز الأعمال المحلية",
+      title: "معزز الأعمال",
       text: "أعطِ أي نشاط تجاري في مدينتي حضوراً رقمياً في أقل من ٤٨ ساعة — يبدأ بصفحة هبوط مجانية ويتطور إلى متجر إلكتروني متكامل مع CRM وERP.",
       badge: "قادم قريباً",
       badgeType: "soon",
       size: "wide",
-      category: "economy",
+      category: "core",
     },
   ],
   chat: {

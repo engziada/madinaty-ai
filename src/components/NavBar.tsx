@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -82,7 +83,7 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
   const localePath = useMemo<string>(() => toggleLocalePath(pathname, locale), [pathname, locale]);
   const comingSoonHref = locale === "ar" ? "/ar/coming-soon" : "/coming-soon";
   const homeHref = locale === "ar" ? "/ar" : "/en";
-  const logoSrc = theme === "light" ? "/logo-lite.jpeg" : "/logo.png";
+  const logoSrc = theme === "light" ? "/madinaty_logo-lite.svg" : "/madinaty_logo_dark.svg";
   const services = useMemo(() => getServices(locale), [locale]);
 
   // When a user is on a non-home route (e.g. /coming-soon, /gallery, /founders),
@@ -152,13 +153,13 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
     <header className="topbar" ref={navRef}>
       <div className="container nav-wrap">
         <Link className="brand" href={homeHref} onClick={closeMenu} aria-label="Madinaty AI Home">
-          <img
+          <Image
             src={logoSrc}
             alt="Madinaty AI"
             className="nav-logo"
-            width={130}
-            height={130}
-            decoding="async"
+            width={40}
+            height={40}
+            priority
           />
         </Link>
 
@@ -213,7 +214,7 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
           </button>
 
           {/* AI Tools */}
-          <Link href={`${anchorBase}#ai-tools`} onClick={closeMenu}>
+          <Link href={locale === "ar" ? "/ar/ai-tools" : "/ai-tools"} onClick={closeMenu}>
             {locale === "ar" ? "أدوات AI" : "AI Tools"}
           </Link>
 
