@@ -21,6 +21,7 @@ export interface EnrollmentChatForm {
   schoolName: string;
   interests: string[];
   hobbies: string;
+  preferredDate: string;
   parentName: string;
   parentNationalId: string;
   phone: string;
@@ -198,6 +199,33 @@ export const enrollmentSteps: ConversationStep<EnrollmentChatForm>[] = [
       if (val.length === 0) return { valid: true }; // Optional
       if (val.length < 2) {
         return { valid: false, error: locale === "ar" ? "اكتب هواية واحدة على الأقل" : "Tell us at least one hobby" };
+      }
+      return { valid: true };
+    },
+  },
+
+  /* 6.5 — Preferred Date */
+  {
+    id: "preferredDate",
+    field: "preferredDate",
+    botMessage: (_ctx, locale) =>
+      locale === "ar"
+        ? "تحب تحجز أنهي تاريخ للجلسة؟ 📅"
+        : "Which session date would you like to book? 📅",
+    inputType: "select",
+    options: (locale) =>
+      locale === "ar"
+        ? [
+            { value: "2026-06-06", label: "السبت ٦ يونيو ٢٠٢٦" },
+            { value: "2026-06-13", label: "السبت ١٣ يونيو ٢٠٢٦" },
+          ]
+        : [
+            { value: "2026-06-06", label: "Saturday, June 6, 2026" },
+            { value: "2026-06-13", label: "Saturday, June 13, 2026" },
+          ],
+    validate: (v, locale) => {
+      if (!v) {
+        return { valid: false, error: locale === "ar" ? "برجاء اختيار تاريخ الجلسة" : "Please select a session date" };
       }
       return { valid: true };
     },

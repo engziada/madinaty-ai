@@ -249,6 +249,7 @@ export function AstroChatEnrollment({
           addressArea: form.addressArea,
           interests: form.interests,
           hobbies: form.hobbies,
+          preferredDate: form.preferredDate,
           locale,
         }),
       });
@@ -477,6 +478,7 @@ export function AstroChatEnrollment({
                               : step.id === "schoolName" ? (isAr ? "المدرسة" : "School")
                               : step.id === "interests" ? (isAr ? "المواضيع" : "Topics")
                               : step.id === "hobbies" ? (isAr ? "الهوايات" : "Hobbies")
+                              : step.id === "preferredDate" ? (isAr ? "تاريخ الجلسة" : "Session Date")
                               : step.id === "parentName" ? (isAr ? "ولي الأمر" : "Parent")
                               : step.id === "parentNationalId" ? (isAr ? "الرقم القومي" : "National ID")
                               : step.id === "phone" ? (isAr ? "الموبايل" : "Phone")

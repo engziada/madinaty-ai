@@ -18,6 +18,7 @@ interface EnrollmentPayload {
   madinatyAddress: string;
   interests: string[];
   hobbies: string;
+  preferredDate: string;
   locale: "en" | "ar";
 }
 
@@ -43,6 +44,7 @@ function isValidPayload(payload: unknown): payload is EnrollmentPayload {
     { name: "madinatyAddress", valid: typeof data.madinatyAddress === "string" && data.madinatyAddress.trim().length > 2, value: data.madinatyAddress },
     { name: "interests", valid: Array.isArray(data.interests) && data.interests.length > 0, value: data.interests },
     { name: "hobbies", valid: typeof data.hobbies === "string" && data.hobbies.trim().length > 1, value: data.hobbies },
+    { name: "preferredDate", valid: typeof data.preferredDate === "string" && (data.preferredDate === "2026-06-06" || data.preferredDate === "2026-06-13"), value: data.preferredDate },
     { name: "locale", valid: data.locale === "en" || data.locale === "ar", value: data.locale }
   ];
 
@@ -175,7 +177,8 @@ export async function POST(request: NextRequest) {
       childName: payload.childName,
       email: payload.email,
       registrationNumber: regNumber,
-      locale: payload.locale
+      locale: payload.locale,
+      preferredDate: payload.preferredDate
     }).catch((err) => console.error("Email send failed:", err));
 
     console.log("[Enrollment] Success - returning reg number:", regNumber);

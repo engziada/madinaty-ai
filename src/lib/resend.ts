@@ -10,6 +10,7 @@ export interface EnrollmentEmailData {
   email: string;
   registrationNumber: string;
   locale: "en" | "ar";
+  preferredDate?: string;
 }
 
 export async function sendEnrollmentConfirmation(
@@ -39,6 +40,7 @@ export async function sendEnrollmentConfirmation(
           <h2 style="color: #0057b8;">تم التسجيل بنجاح! 🎉</h2>
           <p>مرحباً ${data.parentName}،</p>
           <p>تم تسجيل <strong>${data.childName}</strong> بنجاح في نادي مدينتي للذكاء الاصطناعي.</p>
+          ${data.preferredDate ? `<p>موعد الجلسة المختار: <strong>${data.preferredDate === "2026-06-06" ? "السبت ٦ يونيو ٢٠٢٦" : "السبت ١٣ يونيو ٢٠٢٦"}</strong></p>` : ""}
           <div style="background: linear-gradient(135deg, #0057b8 0%, #00a3e0 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0;">
             <p style="margin: 0; font-size: 14px; opacity: 0.9;">رقم التسجيل الخاص بك:</p>
             <p style="margin: 8px 0; font-size: 24px; font-weight: bold; font-family: monospace; letter-spacing: 1px;">${data.registrationNumber}</p>
@@ -53,6 +55,7 @@ export async function sendEnrollmentConfirmation(
           <h2 style="color: #0057b8;">Registration Successful! 🎉</h2>
           <p>Hi ${data.parentName},</p>
           <p><strong>${data.childName}</strong> has been successfully registered for Madinaty AI Club.</p>
+          ${data.preferredDate ? `<p>Preferred Session Date: <strong>${data.preferredDate === "2026-06-06" ? "Saturday, June 6, 2026" : "Saturday, June 13, 2026"}</strong></p>` : ""}
           <div style="background: linear-gradient(135deg, #0057b8 0%, #00a3e0 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0;">
             <p style="margin: 0; font-size: 14px; opacity: 0.9;">Your Registration Number:</p>
             <p style="margin: 8px 0; font-size: 24px; font-weight: bold; font-family: monospace; letter-spacing: 1px;">${data.registrationNumber}</p>
