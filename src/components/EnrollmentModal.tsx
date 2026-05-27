@@ -230,7 +230,7 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
         guardianSection: "بيانات ولي الأمر",
         childNameLabel: "الاسم الكامل للطفل",
         childNamePlaceholder: "مثال: كريم حسن",
-        childAgeLabel: "العمر (٧–١٠)",
+        childAgeLabel: "العمر (٨-١٢)",
         childGenderLabel: "النوع",
         childGenderPlaceholder: "اختر النوع",
         childGradeLabel: "الصف الدراسي",
@@ -267,7 +267,7 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
       guardianSection: "Parent / Guardian Details",
       childNameLabel: "Child's full name",
       childNamePlaceholder: "E.g. Karim Hassan",
-      childAgeLabel: "Age (7-10)",
+      childAgeLabel: "Age (8-12)",
       childGenderLabel: "Gender",
       childGenderPlaceholder: "Select gender",
       childGradeLabel: "Grade",
@@ -303,8 +303,8 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
   const isValid = useMemo(() => {
     return (
       form.childName.trim().length > 1 &&
-      Number(form.childAge) >= 7 &&
-      Number(form.childAge) <= 10 &&
+      Number(form.childAge) >= 8 &&
+      Number(form.childAge) <= 12 &&
       Boolean(form.childGender) &&
       Boolean(form.childGrade) &&
       form.schoolName.trim().length > 1 &&
@@ -323,7 +323,7 @@ export function EnrollmentModal({ locale, open, onClose }: EnrollmentModalProps)
   useEffect(() => {
     const checks = {
       childName: form.childName.trim().length > 1,
-      childAge: Number(form.childAge) >= 7 && Number(form.childAge) <= 10,
+      childAge: Number(form.childAge) >= 8 && Number(form.childAge) <= 12,
       childGender: Boolean(form.childGender),
       childGrade: Boolean(form.childGrade),
       schoolName: form.schoolName.trim().length > 1,
