@@ -1,0 +1,9 @@
+feat: add generic course pages with pricing & date updates
+
+- Add reusable CourseLayout with sub-navigation (session, details, trainers, faq)
+- Add EN/AR routes: /en/course/* and /ar/course/*
+- Update pricing to 200 EGP/kid (65% off) for first 20 Madinaty residents
+- Update session dates to June 6 & June 13, 2026
+- Rename CTA buttons from Join Waitlist to Register Now / سجل الآن
+- Fix active tab white-on-white bug (use --blue instead of undefined --primary)
+- Update enrollment API, steps, and email templates for preferredDate support
