@@ -97,7 +97,7 @@ const contentEn: SiteContent = {
       icon: "🎓",
       title: "Innovation Hub",
       text: "Certified courses for ages 6–8, 9–12, and 13–15. Let's learn AI basics, prompt writing, safe tool usage, digital critical thinking, programming and more at Madinaty's Innovation Hub.",
-      badge: "200 EGP · Special Offer",
+      badge: "199.99 EGP · Special Offer",
       badgeType: "live",
       category: "education",
     },
@@ -210,7 +210,7 @@ const contentEn: SiteContent = {
     messages: [
       { role: "ai", content: "Hello! I'm your Madinaty AI assistant. I can help with shuttle routes, workshops, community events, and live city updates across all 23 districts." },
       { role: "user", content: "Where is the next AI workshop for kids?" },
-      { role: "ai", content: "At the Community Innovation Hub near District B5, Sat 6 June at 8:00 PM. It's free for the first 42 Madinaty families. Want me to reserve a slot?" }
+      { role: "ai", content: "At Triple A Education Center (East Hub - 2nd Floor). June 6 sessions are fully reserved. Discounted seats at 199.99 EGP still available for June 13 at 8:00 PM. Want me to reserve a slot?" }
     ]
   },
   map: {
@@ -225,7 +225,7 @@ const contentEn: SiteContent = {
         longitude: 31.7018,
         category: "Innovation & Learning",
         status: "Live Workshops Today",
-        highlight: "Next AI for Kids session: Sat 6 June at 8:00 PM"
+        highlight: "Next AI for Kids session: Sat 13 June at 8:00 PM — last chance!"
       },
       {
         id: "logistics",
@@ -288,29 +288,29 @@ const contentEn: SiteContent = {
     overline: "AI Labs in Madinaty",
     title: "AI for Kids Awareness Session — ",
     titleHighlight: "Safe, Smart, Fun",
-    subtitle: "Saturday, June 6 & June 13, 2026 · 8:00 PM – 10:00 PM · Ages 8–12",
+    subtitle: "Saturday, June 13, 2026 · 8:00 PM – 10:00 PM · Ages 8–12 — Last discounted seats!",
     description:
-      "An interactive session teaching kids chatbot tools and how to use them safely. Each session lasts 2 hours, with a maximum of 10 children per room. Special community price of 200 EGP/kid (65% off) for the first 20 signups.",
+      "An interactive session teaching kids chatbot tools and how to use them safely. Each session lasts 2 hours, with a maximum of 10 children per room. Special community price of 199.99 EGP/kid (65% off) for the first 20 signups.",
     descriptionExtra:
       "The course is supervised by:\nEngineering & Computer Science professors from Cairo University\n\nPrepared & delivered by:\nSoftware engineers & IT professionals\nExperienced educators ensuring every child receives information in a safe and engaging way\n\n🎮 This isn't just a lecture…\nIt's a hands-on experience where kids build and experiment themselves\n\n💡 Why this course matters:\n✔️ Develops logical thinking and creativity\n✔️ Introduces children to the foundations of the future (AI & Machine Learning)\n✔️ Makes learning fun and easy",
-    promoLabel: "Special Offer: 200 EGP/kid (65% off) for the first 20 signups",
+    promoLabel: "Special Offer: 199.99 EGP/kid (65% off) for the first 20 signups",
     promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
-      "Exclusively for Madinaty residents. Pre-registration is mandatory. Fee is 200 EGP per child (instead of 570 EGP) for the first 20 signups.",
+      "Exclusively for Madinaty residents. Pre-registration is mandatory. Fee is 199.99 EGP per child (instead of 570 EGP) for the first 20 signups.",
     labTitle: "Small Cohort Format",
     labSubtitle: "10 kids per session · no parents in class",
     cta: "Register Now",
     stats: [
       { value: "2H", label: "Session Length" },
       { value: "10", label: "Kids / Session" },
-      { value: "200 EGP", label: "Special Offer" }
+      { value: "199.99 EGP", label: "Special Offer" }
     ],
     safetyBadges: [
       { icon: "🛡️", label: "Safe AI Usage" },
       { icon: "🎓", label: "Expert Community Instructors" },
       { icon: "👦", label: "Ages 8–12" },
-      { icon: "💰", label: "200 EGP/kid for the first 20 signups" },
+      { icon: "💰", label: "199.99 EGP/kid for the first 20 signups" },
       { icon: "📞", label: "For inquiries: +201026655008", url: "https://wa.me/201026655008?text=Hello%2C%20I%20want%20to%20inquire%20about%20the%20kids%20AI%20session" }
     ]
   },
@@ -422,7 +422,7 @@ const contentAr: SiteContent = {
       icon: "🎓",
       title: "مركز الإبتكار",
       text: "كورسات معتمدة للأعمار ٦–٨ و٩–١٢ و١٣–١٥ سنة بأسعار رمزية. أساسيات الذكاء الاصطناعي، كتابة البرومبت، الأدوات الآمنة، والتفكير النقدي الرقمي — في مركز الابتكار بمدينتي.",
-      badge: "٢٠٠ ج.م · عرض خاص",
+      badge: "١٩٩٫٩٩ ج.م · عرض خاص",
       badgeType: "live",
       category: "education",
     },
@@ -535,7 +535,7 @@ const contentAr: SiteContent = {
     messages: [
       { role: "ai", content: "مرحباً! أنا مساعد Madinaty AI. أستطيع مساعدتك في خطوط الحافلات والورش والفعاليات وتحديثات المدينة الحية عبر جميع الـ٢٣ حياً." },
       { role: "user", content: "أين تقام ورشة الذكاء الاصطناعي القادمة للأطفال؟" },
-      { role: "ai", content: "في مركز Triple A إيست هب - الدور الثاني، السبت ٦ يونيو أو السبت ١٣ يونيو في تمام الثامنة مساءً. التكلفة ٢٠٠ ج.م لأول ٢٠ مشترك من سكان مدينتي. هل تريد حجز مقعد?" }
+      { role: "ai", content: "في مركز Triple A إيست هب - الدور الثاني. جلسات ٦ يونيو محجوزة بالكامل. مقاعد مخفضة بـ ١٩٩٫٩٩ ج.م متاحة لجلسة ١٣ يونيو الساعة ٨ مساءً. هل تريد حجز مقعد?" }
     ]
   },
   map: {
@@ -550,7 +550,7 @@ const contentAr: SiteContent = {
         longitude: 31.7018,
         category: "ابتكار وتعليم",
         status: "ورش حية اليوم",
-        highlight: "ورشة الأطفال القادمة: السبت ٦ يونيو الساعة ٨ مساءً"
+        highlight: "ورشة الأطفال القادمة: السبت ١٣ يونيو الساعة ٨ مساءً — آخر فرصة!"
       },
       {
         id: "logistics",
@@ -613,29 +613,29 @@ const contentAr: SiteContent = {
     overline: "جلسة توعوية للأطفال عن الذكاء الاصطناعي و كيفية إستخدامه بشكل آمن",
     title: "شات الذكاء الاصطناعي للأطفال—",
     titleHighlight: "آمن وذكي وممتع",
-    subtitle: "السبت ٦ يونيو والسبت ١٣ يونيو ٢٠٢٦ · ٨:٠٠ م – ١٠:٠٠ م · أعمار ٨–١٢",
+    subtitle: "السبت ١٣ يونيو ٢٠٢٦ · ٨:٠٠ م – ١٠:٠٠ م · أعمار ٨–١٢ — آخر مقاعد مخفضة!",
     description:
       "جلسة تفاعلية لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ١٠ أطفال فقط داخل القاعة لضمان جودة التفاعل.",
     descriptionExtra:
       "الكورس تحت إشراف:\nأساتذة هندسة و حاسبات من جامعة القاهرة\n\nو إعداد و تنفيذ:\nمهندسين برمجيات و تكنولوجيا معلومات\nأساتذة محترفين لضمان وصول المعلومة للطفل بشكل آمن و مشوق\n\n🎮 الكورس مش مجرد شرح…\nده تجربة عملية يخلي الطفل فيها \"يبني ويجرب بنفسه\"\n\n💡 ليه الكورس مهم؟\n✔️ ينمّي التفكير المنطقي والإبداع\n✔️ يعرّف الأطفال بأساسيات المستقبل (AI & Machine Learning)\n✔️ يخلّي التعلم ممتع وسهل",
-    promoLabel: "عرض خاص: ٢٠٠ ج.م للطفل (خصم ٦٥٪) لأول ٢٠ مشترك",
+    promoLabel: "عرض خاص: ١٩٩٫٩٩ ج.م للطفل (خصم ٦٥٪) لأول ٢٠ مشترك",
     promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
       "الأولوية لسكان مدينتي، والتسجيل المسبق إلزامي.",
     labTitle: "نظام مجموعات صغيرة",
-    labSubtitle: "١٠ أطفال في الجلسة · ٢٠٠ ج.م للطفل · بدون حضور أولياء الأمور",
+    labSubtitle: "١٠ أطفال في الجلسة · ١٩٩٫٩٩ ج.م للطفل · بدون حضور أولياء الأمور",
     cta: "سجل الآن",
     stats: [
       { value: "١٢٠ ", label: "دقيقة" },
       { value: "١٠", label: "أطفال / جلسة" },
-      { value: "٢٠٠", label: "ج.م / عرض خاص" }
+      { value: "١٩٩٫٩٩", label: "ج.م / عرض خاص" }
     ],
     safetyBadges: [
       { icon: "🛡️", label: "استخدام آمن للذكاء الاصطناعي" },
       { icon: "🎓", label: "مدربون محترفون من المجتمع" },
       { icon: "👦", label: "للأعمار ٨–١٢" },
-      { icon: "💰", label: "٢٠٠ ج.م للطفل لأول ٢٠ مشترك من سكان مدينتي" },
+      { icon: "💰", label: "١٩٩٫٩٩ ج.م للطفل لأول ٢٠ مشترك من سكان مدينتي" },
       { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B1%D9%8A%20%D9%84%D9%84%D8%A3%D8%B7%D9%81%D8%A7%D9%84%20%D9%8A%D9%88%D9%84%206%20%D9%8A%D9%88%D9%86%D9%8A%D9%88" }
     ]
   },

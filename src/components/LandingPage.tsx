@@ -97,6 +97,27 @@ export function LandingPage({ locale }: LandingPageProps) {
                       </div>
                     ))}
                   </div>
+
+                  {/* Announcement: top item in dashboard */}
+                  <div
+                    className="hero-activity"
+                    style={{
+                      background: "rgba(255, 243, 205, 0.6)",
+                      borderLeft: "3px solid #f0c040",
+                      borderRadius: "0 8px 8px 0",
+                    }}
+                  >
+                    <div className="hero-activity-icon" aria-hidden="true">📢</div>
+                    <div className="hero-activity-text" style={{ color: "#856404", fontWeight: 500 }}>
+                      {isAr
+                        ? "الجلسات الثلاثة الأولى (٦ يونيو) تم حجزها بالكامل. مقاعد مخفضة بـ ١٩٩٫٩٩ ج.م لا تزال متاحة لجلسة ١٣ يونيو — أسرع!"
+                        : "First 3 sessions (June 6) fully reserved. Discounted seats at 199.99 EGP still available for June 13 session — hurry!"}
+                      <small style={{ color: "#b38f00" }}>
+                        {isAr ? "آخر فرصة · عرض محدود" : "Last chance · Limited offer"}
+                      </small>
+                    </div>
+                  </div>
+
                   <Suspense
                     fallback={
                       <div className="hero-activity hero-activity-skeleton" aria-hidden="true">

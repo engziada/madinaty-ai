@@ -20,17 +20,17 @@ export function CourseFaqPage({ locale }: CourseFaqPageProps) {
     policyTextsAr: [
       "التسجيل المسبق إلزامي لحضور الجلسة وتأمين المقعد.",
       "لإلغاء أو تأجيل الحجز، يُرجى إبلاغنا قبل موعد الجلسة بـ ٤٨ ساعة على الأقل ليتمكن الطلاب في قائمة الانتظار من المشاركة.",
-      "الرسوم (٢٠٠ ج.م) غير مستردة في حالة الغياب بدون إشعار مسبق قبل الموعد بـ ٤٨ ساعة."
+      "الرسوم (١٩٩٫٩٩ ج.م) غير مستردة في حالة الغياب بدون إشعار مسبق قبل الموعد بـ ٤٨ ساعة."
     ],
     policyTextsEn: [
       "Prior registration is strictly mandatory to secure your child's seat.",
       "To cancel or reschedule, please notify us at least 48 hours in advance so we can offer the seat to candidates on the waiting list.",
-      "The promo fee (200 EGP) is non-refundable for no-shows without 48-hour prior notice."
+      "The promo fee (199.99 EGP) is non-refundable for no-shows without 48-hour prior notice."
     ],
     faqsAr: [
       {
         q: "هل الكورس مجاني بالكامل؟",
-        a: "الورشة ليست مجانية، بل تُقدم بسعر رمزي مدعوم لسكان مدينتي فقط وهو ٢٠٠ ج.م للطفل (خصم ٦٥٪ من السعر الأصلي البالغ ٥٧٠ ج.م)، وذلك لأول ٢٠ مشترك لتغطية تكاليف التشغيل وضمان جدية الحجز."
+        a: "الورشة ليست مجانية، بل تُقدم بسعر رمزي مدعوم لسكان مدينتي فقط وهو ١٩٩٫٩٩ ج.م للطفل (خصم ٦٥٪ من السعر الأصلي البالغ ٥٧٠ ج.م)، وذلك لأول ٢٠ مشترك لتغطية تكاليف التشغيل وضمان جدية الحجز."
       },
       {
         q: "ما هي الفئة العمرية المستهدفة؟",
@@ -52,7 +52,7 @@ export function CourseFaqPage({ locale }: CourseFaqPageProps) {
     faqsEn: [
       {
         q: "Is the workshop completely free?",
-        a: "No, the session is subsidized at a very low price of 200 EGP per child for the Madinaty community (65% off the standard fee of 570 EGP). This special pricing applies to the first 20 children to cover operating costs and confirm commitment."
+        a: "No, the session is subsidized at a very low price of 199.99 EGP per child for the Madinaty community (65% off the standard fee of 570 EGP). This special pricing applies to the first 20 children to cover operating costs and confirm commitment."
       },
       {
         q: "What is the target age group?",
