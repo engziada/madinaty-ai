@@ -30,12 +30,8 @@ interface RapidPost {
   user_name?: string;
 }
 
-const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
-const RAPIDAPI_HOST = process.env.RAPIDAPI_HOST ?? "facebook-scraper3.p.rapidapi.com";
-const PAGE_ID = process.env.FACEBOOK_PAGE_ID ?? "100064538536099";
-
-/** 1-hour fetch cache – balances freshness vs the 100 req/month RapidAPI tier. */
-const CACHE_TTL_SECONDS = 3600;
+// NOTE: Read from process.env at request-time (inside the function), NOT here.
+// Module-level constants are snapshotted at build time on some Vercel configurations.
 
 const MOCK_POSTS_EN: FacebookPost[] = [
   {
@@ -137,7 +133,15 @@ function formatDate(d: Date): string {
 }
 
 async function fetchRapidPosts(locale: string): Promise<FacebookPost[] | null> {
-  if (!RAPIDAPI_KEY) return null;
+  // Read at request time so Vercel env var updates take effect without a rebuild
+  const apiKey  = process.env.RAPIDAPI_KEY;
+  const apiHost = process.env.RAPIDAPI_HOST ?? "facebook-scraper3.p.rapidapi.com";
+  const pageId  = process.env.FACEBOOK_PAGE_ID ?? "100064538536099";
+
+  if (!apiKey) {
+    console.warn("[RapidAPI] RAPIDAPI_KEY is not set — falling back to mock");
+    return null;
+  }
 
   try {
     const today = new Date();
@@ -145,20 +149,18 @@ async function fetchRapidPosts(locale: string): Promise<FacebookPost[] | null> {
     tenDaysAgo.setDate(today.getDate() - 10);
 
     const url =
-      `https://${RAPIDAPI_HOST}/page/posts` +
-      `?page_id=${encodeURIComponent(PAGE_ID)}` +
+      `https://${apiHost}/page/posts` +
+      `?page_id=${encodeURIComponent(pageId)}` +
       `&start_date=${formatDate(tenDaysAgo)}` +
       `&end_date=${formatDate(today)}`;
 
     const res = await fetch(url, {
       method: "GET",
       headers: {
-        "x-rapidapi-key": RAPIDAPI_KEY,
-        "x-rapidapi-host": RAPIDAPI_HOST,
+        "x-rapidapi-key": apiKey,
+        "x-rapidapi-host": apiHost,
         "Content-Type": "application/json",
       },
-      // no-store: always fetch fresh from RapidAPI; rate-limiting is handled
-      // by the low request volume (~30/month on the 10-day rolling window).
       cache: "no-store",
     });
 
@@ -222,6 +224,10 @@ export async function GET(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const locale = searchParams.get("locale") === "ar" ? "ar" : "en";
 
+  // Diagnostic: log env var presence on every request
+  console.log("[facebook/route] RAPIDAPI_KEY set:", !!process.env.RAPIDAPI_KEY);
+  console.log("[facebook/route] FACEBOOK_PAGE_ID:", process.env.FACEBOOK_PAGE_ID);
+
   const realPosts = await fetchRapidPosts(locale);
   const isMock = realPosts === null;
   const posts = realPosts ?? (locale === "ar" ? MOCK_POSTS_AR : MOCK_POSTS_EN);
@@ -231,8 +237,10 @@ export async function GET(request: Request): Promise<NextResponse> {
     {
       headers: {
         "Cache-Control": "no-store",
-        // Debug header — remove once confirmed working
+        // Debug headers — remove once confirmed working
         "X-Posts-Source": isMock ? "mock" : "rapidapi",
+        "X-Key-Set": process.env.RAPIDAPI_KEY ? "yes" : "no",
+        "X-Page-Id": process.env.FACEBOOK_PAGE_ID ?? "(not set)",
       },
     },
   );
