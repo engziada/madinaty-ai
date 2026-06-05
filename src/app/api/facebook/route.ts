@@ -30,8 +30,8 @@ const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 const RAPIDAPI_HOST = process.env.RAPIDAPI_HOST ?? "facebook-scraper3.p.rapidapi.com";
 const PAGE_ID = process.env.FACEBOOK_PAGE_ID ?? "100064467919192";
 
-/** 12-hour fetch cache = ~60 calls/month, safely under the 100 req/month tier. */
-const CACHE_TTL_SECONDS = 43200;
+/** 24-hour fetch cache = ~30 calls/month, safely under the 100 req/month tier. */
+const CACHE_TTL_SECONDS = 86400;
 
 const MOCK_POSTS_EN: FacebookPost[] = [
   {
