@@ -13,25 +13,29 @@ export interface FacebookPost {
 interface RapidPost {
   post_id?: string;
   id?: string;
-  text?: string;
+  // Text content — in priority order
   message?: string;
+  text?: string;
   content?: string;
   post_text?: string;
+  message_rich?: string;
   title?: string;
-  time?: string;
-  timestamp?: string;
-  created_time?: string;
-  date?: string;
+  // Timestamp — API returns numeric Unix epoch in `timestamp`
+  timestamp?: string | number;
+  time?: string | number;
+  created_time?: string | number;
+  date?: string | number;
+  // Author
   author?: string;
   user_name?: string;
 }
 
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 const RAPIDAPI_HOST = process.env.RAPIDAPI_HOST ?? "facebook-scraper3.p.rapidapi.com";
-const PAGE_ID = process.env.FACEBOOK_PAGE_ID ?? "100064467919192";
+const PAGE_ID = process.env.FACEBOOK_PAGE_ID ?? "100064538536099";
 
-/** 24-hour fetch cache = ~30 calls/month, safely under the 100 req/month tier. */
-const CACHE_TTL_SECONDS = 86400;
+/** 1-hour fetch cache – balances freshness vs the 100 req/month RapidAPI tier. */
+const CACHE_TTL_SECONDS = 3600;
 
 const MOCK_POSTS_EN: FacebookPost[] = [
   {
@@ -76,14 +80,17 @@ const MOCK_POSTS_AR: FacebookPost[] = [
 ];
 
 function extractText(post: RapidPost): string {
+  // `message` is the plain-text body from the facebook-scraper3 API
   const raw =
-    post.text ??
     post.message ??
+    post.text ??
     post.content ??
     post.post_text ??
+    post.message_rich ??
     post.title ??
     "";
-  return raw.slice(0, 140) + (raw.length > 140 ? "…" : "");
+  const clean = raw.replace(/\n+/g, " ").trim();
+  return clean.slice(0, 160) + (clean.length > 160 ? "\u2026" : "");
 }
 
 function parseTimestamp(raw: string | number | undefined): Date | null {
@@ -106,9 +113,9 @@ function parseTimestamp(raw: string | number | undefined): Date | null {
 }
 
 function extractTime(post: RapidPost, locale: string): string {
-  const raw = post.time ?? post.timestamp ?? post.created_time ?? post.date;
-  const date = parseTimestamp(raw);
-  if (!date) return locale === "ar" ? "منذ قليل" : "Just now";
+  const raw = post.timestamp ?? post.time ?? post.created_time ?? post.date;
+  const date = parseTimestamp(raw as string | number | undefined);
+  if (!date) return locale === "ar" ? "\u0645\u0646\u0630 \u0642\u0644\u064a\u0644" : "Just now";
 
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
@@ -116,9 +123,9 @@ function extractTime(post: RapidPost, locale: string): string {
   const diffD = Math.floor(diffH / 24);
 
   if (locale === "ar") {
-    if (diffD > 0) return `منذ ${diffD} ${diffD === 1 ? "يوم" : "أيام"}`;
-    if (diffH > 0) return `منذ ${diffH} ${diffH === 1 ? "ساعة" : "ساعات"}`;
-    return "منذ قليل";
+    if (diffD > 0) return `\u0645\u0646\u0630 ${diffD} ${diffD === 1 ? "\u064a\u0648\u0645" : "\u0623\u064a\u0627\u0645"}`;
+    if (diffH > 0) return `\u0645\u0646\u0630 ${diffH} ${diffH === 1 ? "\u0633\u0627\u0639\u0629" : "\u0633\u0627\u0639\u0627\u062a"}`;
+    return "\u0645\u0646\u0630 \u0642\u0644\u064a\u0644";
   }
   if (diffD > 0) return `${diffD}d ago`;
   if (diffH > 0) return `${diffH}h ago`;
@@ -150,7 +157,9 @@ async function fetchRapidPosts(locale: string): Promise<FacebookPost[] | null> {
         "x-rapidapi-host": RAPIDAPI_HOST,
         "Content-Type": "application/json",
       },
-      next: { revalidate: CACHE_TTL_SECONDS },
+      // no-store: always fetch fresh from RapidAPI; rate-limiting is handled
+      // by the low request volume (~30/month on the 10-day rolling window).
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -207,15 +216,24 @@ async function fetchRapidPosts(locale: string): Promise<FacebookPost[] | null> {
  * Required env vars:
  *   RAPIDAPI_KEY=your_key_here
  *   RAPIDAPI_HOST=facebook-scraper3.p.rapidapi.com
- *   FACEBOOK_PAGE_ID=100064467919192
+ *   FACEBOOK_PAGE_ID=100064538536099
  */
 export async function GET(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const locale = searchParams.get("locale") === "ar" ? "ar" : "en";
 
   const realPosts = await fetchRapidPosts(locale);
-
+  const isMock = realPosts === null;
   const posts = realPosts ?? (locale === "ar" ? MOCK_POSTS_AR : MOCK_POSTS_EN);
 
-  return NextResponse.json({ posts }, { headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json(
+    { posts },
+    {
+      headers: {
+        "Cache-Control": "no-store",
+        // Debug header — remove once confirmed working
+        "X-Posts-Source": isMock ? "mock" : "rapidapi",
+      },
+    },
+  );
 }
