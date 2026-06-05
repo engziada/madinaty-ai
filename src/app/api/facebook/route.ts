@@ -86,12 +86,29 @@ function extractText(post: RapidPost): string {
   return raw.slice(0, 140) + (raw.length > 140 ? "…" : "");
 }
 
+function parseTimestamp(raw: string | number | undefined): Date | null {
+  if (raw == null) return null;
+
+  // Numeric timestamp (seconds or milliseconds)
+  const num = Number(raw);
+  if (!isNaN(num) && num > 0) {
+    // Heuristic: 10 digits = seconds, 13 digits = milliseconds
+    const ms = num < 1_000_000_000_000 ? num * 1000 : num;
+    const d = new Date(ms);
+    if (!isNaN(d.getTime())) return d;
+  }
+
+  // ISO or other string
+  const d = new Date(String(raw));
+  if (!isNaN(d.getTime())) return d;
+
+  return null;
+}
+
 function extractTime(post: RapidPost, locale: string): string {
   const raw = post.time ?? post.timestamp ?? post.created_time ?? post.date;
-  if (!raw) return locale === "ar" ? "منذ قليل" : "Just now";
-
-  const date = new Date(raw);
-  if (isNaN(date.getTime())) return raw; // return original string if unparseable
+  const date = parseTimestamp(raw);
+  if (!date) return locale === "ar" ? "منذ قليل" : "Just now";
 
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
