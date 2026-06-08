@@ -312,7 +312,12 @@ const contentEn: SiteContent = {
       { icon: "👦", label: "Ages 8–12" },
       { icon: "💰", label: "199.99 EGP/kid for the first 20 signups" },
       { icon: "📞", label: "For inquiries: +201026655008", url: "https://wa.me/201026655008?text=Hello%2C%20I%20want%20to%20inquire%20about%20the%20kids%20AI%20session" }
-    ]
+    ],
+    galleryTitle: "Highlights from the First Session",
+    gallerySubtitle: "Snapshots from our hands-on AI learning workshop on June 6. Real kids, real coding, real fun!",
+    galleryViewAll: "View All Photos",
+    galleryLoading: "Loading session gallery...",
+    galleryEmpty: "No photos uploaded for this session yet."
   },
   footer: {
     copy: "© 2026 ZSolutions · New Cairo, Egypt · Built by the Community.",
@@ -637,7 +642,12 @@ const contentAr: SiteContent = {
       { icon: "👦", label: "للأعمار ٨–١٢" },
       { icon: "💰", label: "١٩٩٫٩٩ ج.م للطفل لأول ٢٠ مشترك من سكان مدينتي" },
       { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B1%D9%8A%20%D9%84%D9%84%D8%A3%D8%B7%D9%81%D8%A7%D9%84%20%D9%8A%D9%88%D9%84%206%20%D9%8A%D9%88%D9%86%D9%8A%D9%88" }
-    ]
+    ],
+    galleryTitle: "لقطات من الجلسة الأولى",
+    gallerySubtitle: "صور من ورشة عمل التعلم التفاعلي للذكاء الاصطناعي التي أقيمت في ٦ يونيو. أطفالنا، برمجة حقيقية، ومتعة لا تنتهي!",
+    galleryViewAll: "عرض جميع الصور",
+    galleryLoading: "جاري تحميل معرض الصور...",
+    galleryEmpty: "لا توجد صور مرفوعة لهذه الجلسة بعد."
   },
   footer: {
     copy: "© ٢٠٢٦ ZSolutions · القاهرة الجديدة، مصر · بناه المجتمع.",

@@ -94,6 +94,11 @@ export interface SiteContent {
     stats: Array<{ value: string; label: string }>;
     safetyBadges?: Array<{ icon: string; label: string; url?: string }>;
     descriptionExtra?: string;
+    galleryTitle?: string;
+    gallerySubtitle?: string;
+    galleryViewAll?: string;
+    galleryLoading?: string;
+    galleryEmpty?: string;
   };
   footer: {
     copy: string;

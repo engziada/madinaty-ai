@@ -50,7 +50,6 @@ export function CourseLayout({ children, activeTab, locale }: CourseLayoutProps)
           min-height: 100vh;
           background: var(--bg);
           color: var(--text);
-          padding-top: 100px; /* navbar offset */
           padding-bottom: 80px;
         }
         

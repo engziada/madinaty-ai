@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import type { LocaleCode } from "@/types/site";
 import { CourseLayout } from "./CourseLayout";
+import { HighlightsGallery } from "./HighlightsGallery";
 import dynamic from "next/dynamic";
 
 const AstroChatEnrollment = dynamic(
@@ -135,6 +136,9 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
             </button>
           </div>
         </div>
+
+        {/* First Session Gallery */}
+        <HighlightsGallery locale={locale} />
 
         {/* Bullet points info */}
         <div style={{ marginTop: "4rem" }}>

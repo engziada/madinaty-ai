@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
-import { Cairo, Changa, Exo_2, Orbitron } from "next/font/google";
+import { Cairo, Alexandria, Inter, Space_Grotesk } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import "@/components/conversational/conversational.css";
@@ -14,10 +14,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { RootNavFooter } from "@/components/RootNavFooter";
 import { NotificationPrompt } from "@/components/NotificationPrompt";
 
-const exoTwo = Exo_2({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-headline", display: "swap" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-headline", display: "swap" });
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-body-ar", display: "swap" });
-const changa = Changa({ subsets: ["arabic"], variable: "--font-headline-ar", display: "swap" });
+const alexandria = Alexandria({ subsets: ["arabic"], variable: "--font-headline-ar", display: "swap" });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.madinatyai.com";
 
@@ -35,11 +35,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
+    default: "Madinaty AI - Smart City Intelligence for Madinaty by TMG",
     template: "%s | Madinaty AI"
   },
   description:
-    "Madinaty AI is the AI intelligence layer over Madinaty — Egypt's largest integrated city by Talaat Moustafa Group (TMG) in New Cairo. Smart transport, community insights, AI education, and live city services for 700,000+ residents across 23 districts.",
+    "Madinaty AI is the AI intelligence layer over Madinaty - Egypt's largest integrated city by Talaat Moustafa Group (TMG) in New Cairo. Smart transport, community insights, AI education, and live city services for 700,000+ residents across 23 districts.",
   applicationName: "Madinaty AI",
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Madinaty AI",
-    title: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
+    title: "Madinaty AI - Smart City Intelligence for Madinaty by TMG",
     description:
       "The AI intelligence layer over Madinaty, Egypt's largest integrated smart city by Talaat Moustafa Group. Smart transport, community insights, live city map, and AI education for residents.",
     url: siteUrl,
@@ -97,9 +97,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Madinaty AI — Smart City Intelligence for Madinaty by TMG",
+    title: "Madinaty AI - Smart City Intelligence for Madinaty by TMG",
     description:
-      "The AI intelligence layer over Madinaty — Egypt's largest integrated smart city by Talaat Moustafa Group.",
+      "The AI intelligence layer over Madinaty - Egypt's largest integrated smart city by Talaat Moustafa Group.",
     images: ["/madinaty_logo_dark.svg"]
   },
   robots: {
@@ -129,7 +129,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Root layout — Arabic is the default locale, light is the default theme.
+ * Root layout - Arabic is the default locale, light is the default theme.
  * The theme-init script runs before hydration to prevent a flash of the
  * wrong palette on first paint.
  *
@@ -172,7 +172,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
       </head>
       <body
-        className={`${exoTwo.variable} ${orbitron.variable} ${cairo.variable} ${changa.variable}`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${cairo.variable} ${alexandria.variable}`}
       >
         <ThemeProvider>
           <SkipToContent />
