@@ -557,7 +557,7 @@ const SEARCH_TOOL = {
   function: {
     name: "search_madinaty_web",
     description:
-      "Search the trusted public web (Google Maps, Tripadvisor, Instagram, Facebook) for places, shops, products, services, outings, or rentals located inside Madinaty. Use this whenever the user asks about anything requiring up-to-date local information in Madinaty. Do not use for smalltalk, general knowledge, or topics unrelated to Madinaty.",
+      "Search the trusted public web (Google Maps, Tripadvisor, Instagram, Facebook) for physical places, shops, products, services, outings, or rentals located inside Madinaty city. Do NOT use this for questions about Madinaty AI, the ERP project, or our platform services. Use this ONLY for live local city discovery.",
     parameters: {
       type: "object",
       properties: {
@@ -571,10 +571,36 @@ const SEARCH_TOOL = {
   }
 };
 
+const INITIATE_WHATSAPP_TOOL = {
+  type: "function" as const,
+  function: {
+    name: "initiate_whatsapp_session",
+    description: "Initiate a direct WhatsApp session with the user/visitor when they ask about the platform, our projects (like ERP), or our services, AND the answer is not in the provided facts, OR when they explicitly want to contact us. Requires the visitor's WhatsApp phone number (Egyptian format).",
+    parameters: {
+      type: "object",
+      properties: {
+        visitorPhone: {
+          type: "string",
+          description: "The visitor's WhatsApp phone number in Egyptian format (e.g., 01xxxxxxxxx or +201xxxxxxxxx). MUST be provided by the user in the chat. DO NOT use the admin number +201026655008."
+        },
+        visitorName: {
+          type: "string",
+          description: "The visitor's name."
+        },
+        query: {
+          type: "string",
+          description: "The visitor's query or question that wasn't answered."
+        }
+      },
+      required: ["visitorPhone"]
+    }
+  }
+};
+
 function buildRouterSystemInstruction(base: string, locale: LocaleCode): string {
   const toolRule = locale === "ar"
-    ? "إذا كان السؤال يتطلب معلومات محلية عن مدينتي (أماكن، محلات، منتجات، خدمات، أسعار، تقييمات، مواعيد، إيجار، خروج، فسحة، صيانة...) استدعِ الأداة search_madinaty_web بصياغة استعلام مركّزة. إذا كان السؤال ترحيبياً أو عاماً أو خارج نطاق مدينتي، لا تستدعِ الأداة وأجب مباشرة."
-    : "If the user's question needs real-time local Madinaty information (places, shops, products, services, prices, ratings, hours, rent, outings, maintenance, etc.) call the tool search_madinaty_web with a focused query. For greetings, general knowledge, or out-of-scope topics, do not call the tool and answer directly.";
+    ? "أولاً، اقرأ معلومات (Madinaty AI Platform Facts) المرفقة دائماً. إذا كان السؤال عن منصتنا، أو مشاريعنا (مثل مشروع ERP)، أو خدماتنا، أجب مباشرةً بناءً على تلك المعلومات. إذا لم تجد الإجابة فيها أو أراد المستخدم التواصل معنا، استخدم أداة initiate_whatsapp_session (واطلب رقم الواتساب الخاص به). ثانياً، استخدم أداة search_madinaty_web فقط وحصرياً إذا كان السؤال عن أماكن، محلات، أو منتجات محلية حية داخل مدينة مدينتي."
+    : "FIRST, ALWAYS read the provided (Madinaty AI Platform Facts). If the question is about our platform, our projects (like the ERP project), or our services, answer directly based on those facts. If the answer is missing from the facts or the user wants to contact us, use the initiate_whatsapp_session tool (ask for their WhatsApp number). SECOND, use the search_madinaty_web tool ONLY and EXCLUSIVELY for questions about physical places, shops, or local products inside Madinaty city.";
   return `${base}\n\n${toolRule}`;
 }
 
@@ -608,7 +634,7 @@ async function callGroq(messages: GroqMessage[], useTools: boolean, useJson: boo
     messages
   };
   if (useTools) {
-    body.tools = [SEARCH_TOOL];
+    body.tools = [SEARCH_TOOL, INITIATE_WHATSAPP_TOOL];
     body.tool_choice = "auto";
   }
   if (useJson) {
@@ -672,6 +698,109 @@ export async function POST(request: NextRequest) {
     );
 
     const toolCall = firstChoice?.message?.tool_calls?.[0];
+
+    if (toolCall && toolCall.function?.name === "initiate_whatsapp_session") {
+      let visitorPhone = "";
+      let visitorName = "Visitor";
+      let query = "";
+      try {
+        const args = JSON.parse(toolCall.function.arguments || "{}") as {
+          visitorPhone?: string;
+          visitorName?: string;
+          query?: string;
+        };
+        visitorPhone = args.visitorPhone?.trim() || "";
+        visitorName = args.visitorName?.trim() || "Visitor";
+        query = args.query?.trim() || "";
+      } catch {
+        // ignore
+      }
+
+      if (visitorPhone) {
+        // Hard guardrail to prevent the AI from hallucinating the admin number as the visitor number
+        const visitorClean = visitorPhone.replace(/\D/g, "");
+        if (visitorClean.includes("01026655008") || visitorClean.includes("201026655008") || visitorClean.length < 10) {
+          return NextResponse.json({
+            reply: detectedLocale === "ar"
+              ? "من فضلك أدخل رقم الواتساب الخاص بك (بالصيغة المصرية) لكي أتمكن من ربطك بفريقنا المباشر."
+              : "Please provide your personal WhatsApp number (in Egyptian format) so I can connect you with our live team."
+          });
+        }
+
+        try {
+          const wahaBaseUrl = process.env.WAHA_BASE_URL;
+          const wahaApiKey = process.env.WAHA_API_KEY;
+          const wahaSession = process.env.WAHA_SESSION || "default";
+          const adminPhone = "+201026655008"; // Ziada's phone number
+
+          if (wahaBaseUrl && wahaApiKey) {
+            // Helper to format Egyptian phone number for WAHA
+            const cleanDigits = visitorPhone.replace(/\D/g, "");
+            let digits = cleanDigits;
+            if (digits.startsWith("002")) {
+              digits = digits.slice(2);
+            }
+            if (digits.startsWith("01") && digits.length === 11) {
+              digits = "2" + digits;
+            }
+            if (digits.startsWith("1") && digits.length === 10) {
+              digits = "20" + digits;
+            }
+            const visitorChatId = `${digits}@c.us`;
+
+            const visitorMessage = detectedLocale === "ar"
+              ? `مرحباً ${visitorName}! تلقينا استفسارك على موقع Madinaty AI بخصوص: "${query}". سيقوم أحد ممثلينا بالتواصل معك هنا قريباً.`
+              : `Hi ${visitorName}! We received your inquiry on Madinaty AI regarding: "${query}". One of our representatives will chat with you here shortly.`;
+
+            // 1. Send initiation message to visitor
+            await fetch(`${wahaBaseUrl}/api/sendText`, {
+              method: "POST",
+              headers: {
+                "X-Api-Key": wahaApiKey,
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                session: wahaSession,
+                chatId: visitorChatId,
+                text: visitorMessage
+              })
+            });
+
+            // 2. Send notification to Ziada/Admin
+            const adminChatId = `${adminPhone.replace(/\D/g, "")}@c.us`;
+            const adminMessage = `🔔 *استفسار جديد من الموقع (New Website Inquiry)*\n\nالاسم (Name): ${visitorName}\nالتليفون (Phone): ${visitorPhone}\nالاستفسار (Query): ${query}`;
+
+            await fetch(`${wahaBaseUrl}/api/sendText`, {
+              method: "POST",
+              headers: {
+                "X-Api-Key": wahaApiKey,
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                session: wahaSession,
+                chatId: adminChatId,
+                text: adminMessage
+              })
+            });
+
+            const successReply = detectedLocale === "ar"
+              ? `تم بدء جلسة واتساب بنجاح! لقد أرسلنا رسالة إلى رقمك ${visitorPhone}. سيقوم فريقنا بالتواصل معك الآن.`
+              : `WhatsApp session initiated successfully! We've sent a message to your number ${visitorPhone}. Our team will connect with you now.`;
+            return NextResponse.json({ reply: successReply });
+          } else {
+            console.error("WAHA credentials missing in environment variables.");
+          }
+        } catch (error: any) {
+          console.error("WAHA initiation error:", error?.message || error);
+        }
+
+        // Fallback message if WAHA fails
+        const fallbackReply = detectedLocale === "ar"
+          ? `عذراً، لم نتمكن من إرسال رسالة واتساب تلقائياً بسبب مشكلة فنية. يرجى التواصل معنا مباشرة على رقمنا: +201026655008.`
+          : `Sorry, we couldn't send a WhatsApp message automatically. Please contact us directly at +201026655008.`;
+        return NextResponse.json({ reply: fallbackReply });
+      }
+    }
 
     if (toolCall && toolCall.function?.name === "search_madinaty_web") {
       let searchQuery = message;
