@@ -49,19 +49,19 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
     statsAr: [
       { icon: "🛡️", title: "بيئة تعليمية آمنة", text: "استخدام أدوات وحسابات تم التحقق منها وبإشراف مدربين متخصصين." },
       { icon: "👥", title: "مجموعات صغيرة جداً", text: "بحد أقصى ١٠ أطفال في القاعة لضمان جودة التفاعل والتعلم الفردي." },
-      { icon: "💰", title: "سعر مدعوم للمجتمع", text: "تخفيض ٦٥٪ لسكان مدينتي (١٩٩٫٩٩ ج.م بدلاً من ٥٧٠ ج.م) — آخر فرصة!" }
+      { icon: "💰", title: "سعر مدعوم للمجتمع", text: "تخفيض ٦٥٪ لسكان مدينتي (١٩٩٫٩٩ ج.م بدلاً من 569.99 ج.م) — آخر فرصة!" }
     ],
     statsEn: [
       { icon: "🛡️", title: "100% Safe Environment", text: "Using verified AI tools and accounts supervised by experienced trainers." },
       { icon: "👥", title: "Ultra-small Groups", text: "Max 10 kids per room to ensure personalized attention and interactive learning." },
-      { icon: "💰", title: "Community Subsidized", text: "65% discount for Madinaty residents (199.99 EGP instead of 570 EGP) — last chance!" }
+      { icon: "💰", title: "Community Subsidized", text: "65% discount for Madinaty residents (199.99 EGP instead of 569.99 EGP) — last chance!" }
     ]
   };
 
   return (
     <CourseLayout activeTab="session" locale={locale}>
       <div className="reveal">
-        <h2 style={{ textAlign: "center", marginBottom: "2rem", fontSize: "1.75rem", fontWeight: "700" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "2rem", marginTop: "3rem", fontSize: "1.75rem", fontWeight: "700" }}>
           {isAr ? t.datesTitleAr : t.datesTitleEn}
         </h2>
 
@@ -122,7 +122,7 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
             <div className="course-card-icon" style={{ margin: "0 auto 1rem auto" }}>📅</div>
             <h3>{isAr ? t.june13Ar : t.june13En}</h3>
             <p style={{ fontWeight: "600", color: "var(--primary)", marginBottom: "0.5rem" }}>
-              {isAr ? t.time8Ar : t.time8En}
+              {isAr ? t.time12Ar : t.time12En}
             </p>
             <p style={{ fontSize: "0.85rem", color: "#00c889", fontWeight: "600" }}>
               {isAr ? t.lastChanceAr : t.lastChanceEn}

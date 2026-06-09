@@ -19,8 +19,8 @@ export async function GET() {
     const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".svg", ".avif"];
     const validFiles = files.filter((file) => imageExtensions.includes(path.extname(file).toLowerCase()));
 
-    // Randomize and pick 10
-    const shuffledFiles = validFiles.sort(() => 0.5 - Math.random()).slice(0, 10);
+    // Randomize all files
+    const shuffledFiles = validFiles.sort(() => 0.5 - Math.random());
 
     const images = shuffledFiles.map((file) => ({
       src: `/images/gallery/${file}`,

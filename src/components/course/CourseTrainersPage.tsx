@@ -28,14 +28,20 @@ export function CourseTrainersPage({ locale }: CourseTrainersPageProps) {
     timelineTitleEn: "Session Lesson Plan (120 Minutes) ⏱️",
     
     timelineAr: [
-      { time: "٠٠:٠٠ – ٠٠:٣٠", title: "مقدمة تفاعلية ولعبة تفكير آلي", text: "ترحيب بالطلاب، أنشطة كسر الجليد، ولعبة تفاعلية بدون كمبيوتر (Unplugged Activity) لفهم طريقة معالجة الآلة للأوامر." },
-      { time: "٠٠:٣٠ – ٠١:٣٠", title: "تطبيق عملي: هندسة الأوامر الذكية", text: "تطبيق مباشر على أجهزة الكمبيوتر في بيئة آمنة ومراقبة. كتابة الأوامر (Prompts)، وحل تحديات إبداعية ورسم الصور وتأليف القصص بالذكاء الاصطناعي." },
-      { time: "٠١:٣٠ – ٠٢:٠٠", title: "تحدي الأمان الرقمي وتوزيع الشهادات", text: "تحدي عملي لكشف المعلومات المضللة (Fact-checking)، ومسابقة الحماية والخصوصية، تليها الاحتفالية وتسليم شهادات الحضور." }
+      { time: "٢٥ دقيقة", title: "مقدمة تفاعلية ولعبة تفكير آلي", text: "ترحيب بالطلاب، أنشطة كسر الجليد، ولعبة تفاعلية بدون كمبيوتر (Unplugged Activity) لفهم طريقة معالجة الآلة للأوامر." },
+      { time: "٣٠ دقيقة", title: "تطبيق عملي: هندسة الأوامر الذكية", text: "تطبيق مباشر على أجهزة الكمبيوتر في بيئة آمنة ومراقبة. كتابة الأوامر (Prompts)، وحل تحديات إبداعية ورسم الصور وتأليف القصص بالذكاء الاصطناعي." },
+      { time: "١٠ دقائق", title: "BREAK", text: "وقت مستقطع للراحة." },
+      { time: "١٥ دقيقة", title: "رحلة في فضاء الذكاء الاصطناعي", text: "استكشاف إمكانيات الذكاء الاصطناعي في مختلف المجالات." },
+      { time: "٢٥ دقيقة", title: "لعبة تدريب بالموديل", text: "تدريب عملي مبسط على كيفية تعلم الآلة وتدريب نموذج مصغر." },
+      { time: "١٥ دقيقة", title: "معمل جوجل", text: "تجارب تفاعلية مع أدوات وتطبيقات الذكاء الاصطناعي من جوجل (Google Labs)." }
     ],
     timelineEn: [
-      { time: "00:00 – 00:30", title: "Interactive Intro & Unplugged Game", text: "Icebreakers and a physical game showing how instructions (algorithms) are executed, helping kids grasp machine thinking without looking at a screen." },
-      { time: "00:30 – 01:30", title: "Hands-on: Prompt Engineering Lab", text: "Working in a safe, sandboxed environment. Kids write prompts, solve creative challenges, generate artwork, and co-write stories with AI helpers." },
-      { time: "01:30 – 02:00", title: "Digital Safety Quest & Graduation", text: "A fun gamified challenge about fact-checking and spotting biased info, a review of safety rules, followed by certificates of completion." }
+      { time: "25 Minutes", title: "Interactive Intro & Unplugged Game", text: "Icebreakers and a physical game showing how instructions (algorithms) are executed, helping kids grasp machine thinking without looking at a screen." },
+      { time: "30 Minutes", title: "Hands-on: Prompt Engineering Lab", text: "Working in a safe, sandboxed environment. Kids write prompts, solve creative challenges, generate artwork, and co-write stories with AI helpers." },
+      { time: "10 Minutes", title: "BREAK", text: "Short break." },
+      { time: "15 Minutes", title: "Journey into AI Space", text: "Exploring the capabilities of Artificial Intelligence in various fields." },
+      { time: "25 Minutes", title: "Model Training Game", text: "Simplified hands-on training on how machines learn and training a mini model." },
+      { time: "15 Minutes", title: "Google Lab", text: "Interactive experiments with AI tools and applications from Google Labs." }
     ]
   };
 

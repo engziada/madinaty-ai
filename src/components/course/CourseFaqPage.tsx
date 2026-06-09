@@ -42,7 +42,7 @@ export function CourseFaqPage({ locale }: CourseFaqPageProps) {
       },
       {
         q: "هل يمكن لأولياء الأمور حضور الورشة مع الأطفال؟",
-        a: "لضمان تركيز الأطفال وتفاعلهم المباشر وبنائهم للتطبيقات بأنفسهم بشكل مستقل، لا يُسمح بحضور أولياء الأمور داخل قاعة الشرح. ولكن، يُرحب بكم تماماً للانتظار في استراحة المركز المريحة المجهزة بالخارج."
+        a: "نعم، يمكن لأولياء الأمور الحضور مع أطفالهم للمراقبة، ويمكنهم أيضاً المشاركة في بعض الأنشطة التفاعلية خلال الجلسة."
       },
       {
         q: "ما هي الأدوات المطلوبة من الطفل؟",
@@ -64,7 +64,7 @@ export function CourseFaqPage({ locale }: CourseFaqPageProps) {
       },
       {
         q: "Can parents attend the classroom session?",
-        a: "To encourage independence, experimentation, and peer-to-peer collaboration, parents are not allowed inside the main classroom. However, you are welcome to wait in the center's comfortable lounge area."
+        a: "Yes, parents may attend with their kids to monitor and may even contribute to some of the activities during the session."
       },
       {
         q: "Do children need to bring their own laptops?",

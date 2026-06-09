@@ -200,18 +200,15 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             ))}
           </NavDropdown>
 
-          {/* AI Bot - Opens floating chat modal */}
-          <button
-            type="button"
+          {/* AI Bot - Opens Course Session */}
+          <Link
+            href={locale === "ar" ? "/ar/course/session" : "/course/session"}
             className="nav-ai-bot"
-            onClick={() => {
-              closeMenu();
-              window.dispatchEvent(new CustomEvent("open-madinaty-chat"));
-            }}
+            onClick={closeMenu}
           >
             <Bot size={16} />
-            {locale === "ar" ? "مدينتي بوت" : "AI Bot"}
-          </button>
+            {locale === "ar" ? "مختبر AI للأطفال" : "Kids AI Lab"}
+          </Link>
 
           {/* AI Tools */}
           <Link href={locale === "ar" ? "/ar/ai-tools" : "/ai-tools"} onClick={closeMenu}>
@@ -237,7 +234,7 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             ))}
           </NavDropdown>
 
-          {/* More Dropdown */}
+          {/* More Dropdown (Disabled for now)
           <NavDropdown label="More" labelAr="المزيد" locale={locale}>
             <Link href={locale === "ar" ? "/ar/gallery" : "/gallery"} onClick={closeMenu} className="nav-dropdown-item">
               {locale === "ar" ? "معرض الصور" : "Gallery"}
@@ -252,6 +249,7 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
               {locale === "ar" ? "الفعاليات" : "Events"}
             </Link>
           </NavDropdown>
+          */}
 
           {/* CTA + Controls */}
           <button

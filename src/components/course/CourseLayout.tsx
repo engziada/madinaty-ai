@@ -32,9 +32,9 @@ export function CourseLayout({ children, activeTab, locale }: CourseLayoutProps)
     categoryEn: "Madinaty Innovation Hub · Triple A East Hub",
     titleAr: "شات الذكاء الاصطناعي للأطفال (أعمار ٨-١٢)",
     titleEn: "AI Chatbots for Kids (Ages 8-12)",
-    badgeAr: "عرض محدود: ١٩٩٫٩٩ ج.م بدلاً من ٥٧٠ ج.م",
-    badgeEn: "Limited Offer: 199.99 EGP instead of 570 EGP",
-    descriptionAr: "ورشة عمل تفاعلية لبناء مهارات المستقبل، تعليم أدوات الشات، الكتابة الآمنة للأوامر، والتفكير النقدي الرقمي.",
+    badgeAr: "عرض محدود: ١٩٩٫٩٩ ج.م بدلاً من 569.99 ج.م",
+    badgeEn: "Limited Offer: 199.99 EGP instead of 569.99 EGP",
+    descriptionAr: "ورشة عمل تفاعلية لبناء مهارات المستقبل، تعليم أدوات الشات والكتابة الآمنة للأوامر.",
     descriptionEn: "An interactive hands-on workshop to build future-ready skills, teaching chatbot tools, safe prompting, and critical thinking.",
     ctaAr: "سجل الآن مع أسترو 🐕",
     ctaEn: "Register Now with Astro 🐕",
@@ -51,8 +51,47 @@ export function CourseLayout({ children, activeTab, locale }: CourseLayoutProps)
           background: var(--bg);
           color: var(--text);
           padding-bottom: 80px;
+          position: relative;
+          z-index: 1;
         }
         
+        .course-bg-animation {
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          z-index: -1;
+          overflow: hidden;
+          pointer-events: none;
+        }
+        .poly {
+          position: absolute;
+          filter: blur(90px);
+          opacity: 0.35;
+          animation: floatBg 25s infinite alternate ease-in-out;
+        }
+        .poly-1 {
+          width: 50vw; height: 50vw;
+          background: rgba(43, 110, 255, 0.12);
+          top: -20%; left: -10%;
+          animation-delay: 0s;
+        }
+        .poly-2 {
+          width: 45vw; height: 45vw;
+          background: rgba(11, 184, 199, 0.12);
+          bottom: -20%; right: -10%;
+          animation-delay: -5s;
+        }
+        .poly-3 {
+          width: 40vw; height: 40vw;
+          background: rgba(147, 51, 234, 0.08);
+          top: 30%; left: 40%;
+          animation-delay: -10s;
+        }
+        @keyframes floatBg {
+          0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+          50% { transform: translate(3%, 8%) scale(1.05) rotate(10deg); }
+          100% { transform: translate(-3%, -8%) scale(0.95) rotate(-10deg); }
+        }
+
         .course-hero {
           background: linear-gradient(180deg, rgba(43, 110, 255, 0.07) 0%, rgba(43, 110, 255, 0) 100%);
           border-bottom: 1px solid var(--border);
@@ -268,6 +307,13 @@ export function CourseLayout({ children, activeTab, locale }: CourseLayoutProps)
           color: var(--blue);
         }
       `}</style>
+
+      {/* Animated Background */}
+      <div className="course-bg-animation">
+        <div className="poly poly-1" />
+        <div className="poly poly-2" />
+        <div className="poly poly-3" />
+      </div>
 
       {/* ── COURSE HERO ── */}
       <section className="course-hero">

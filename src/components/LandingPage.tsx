@@ -53,6 +53,7 @@ export function LandingPage({ locale }: LandingPageProps) {
             aria-hidden="true"
             className="hero-skyline-art"
             priority
+            unoptimized
             fill
             sizes="100vw"
             style={{ objectFit: "cover" }}
@@ -136,6 +137,230 @@ export function LandingPage({ locale }: LandingPageProps) {
 
         {/* ── VALUE STRIP ───────────────────────────────────── */}
         <ValueStrip items={stats} />
+
+        {/* ── UPCOMING EVENT ────────────────────────────────── */}
+        <section className="section section-alt" id="events">
+          <div className="container reveal">
+            <div className="upcoming-shell ad-shell" id="ad-kids-lab" style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+              <div className="upcoming-content">
+                <div className="upcoming-main">
+                  <p className="overline overline-light">{content.event.overline}</p>
+                  <div className="upcoming-pill">{content.event.subtitle}</div>
+                  <h2 className="upcoming-title">
+                    {content.event.title}
+                    {content.event.titleHighlight && (
+                      <span className="highlight">{content.event.titleHighlight}</span>
+                    )}
+                  </h2>
+                  <p className="upcoming-description">{content.event.description}</p>
+
+                  {content.event.descriptionExtra && (
+                    <p className="upcoming-description-extra" style={{ whiteSpace: "pre-line" }}>
+                      {content.event.descriptionExtra}
+                    </p>
+                  )}
+
+                  {content.event.safetyBadges && content.event.safetyBadges.length > 0 && (
+                    <div className="safety-badges" aria-label="Safety commitments">
+                      {content.event.safetyBadges.map((badge) => {
+                        const badgeContent = (
+                          <>
+                            <span className="safety-badge-icon" aria-hidden="true">{badge.icon}</span>
+                            {badge.label}
+                          </>
+                        );
+                        return badge.url ? (
+                          <a
+                            key={badge.label}
+                            href={badge.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="safety-badge safety-badge-link"
+                          >
+                            {badgeContent}
+                          </a>
+                        ) : (
+                          <span key={badge.label} className="safety-badge">
+                            {badgeContent}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  <div className="upcoming-actions">
+                    <button className="btn btn-primary" type="button" onClick={() => setEnrollmentOpen(true)}>
+                      {content.event.cta}
+                    </button>
+                    <p className="upcoming-cta-note">{content.event.promoLabel}</p>
+                  </div>
+                </div>
+
+                <div className="upcoming-side">
+                  <figure className="upcoming-image-card" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+                    <Image
+                      src="/ad-1.webp"
+                      alt={locale === "ar" ? "أطفال يتعلمون أدوات الذكاء الاصطناعي بأمان" : "Kids learning AI chat tools in a safe and guided environment"}
+                      className="upcoming-image"
+                      width={480}
+                      height={320}
+                      loading="lazy"
+                    />
+                    <figcaption>
+                      {locale === "ar" ? "جلسة تفاعلية آمنة وممتعة" : "Interactive, safe, and fun learning session"}
+                    </figcaption>
+                  </figure>
+
+                  <div className="promo-box" style={{ borderRadius: '16px' }}>
+                    <small>{content.event.promoLabel}</small>
+                    <h3>
+                      {content.event.promoTitle}
+                      {content.event.promoLocationUrl && (
+                        <a
+                          href={content.event.promoLocationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="promo-location-link"
+                          aria-label={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
+                          title={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
+                        >
+                          <span aria-hidden="true">📍</span>
+                        </a>
+                      )}
+                    </h3>
+                    <p>{content.event.promoDescription}</p>
+                  </div>
+
+                  <div className="upcoming-stats-panel" style={{ borderRadius: '16px' }}>
+                  <div className="event-stats">
+                    {content.event.stats.map((stat) => (
+                      <div key={`${stat.value}-${stat.label}`}>
+                        <strong>{stat.value}</strong>
+                        <small>{stat.label}</small>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="upcoming-lab-tile">
+                    <div>
+                      <strong>{content.event.labTitle}</strong>
+                      <small>{content.event.labSubtitle}</small>
+                    </div>
+                    <span>⚙️</span>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── ERP PROMO ─────────────────────────────────────── */}
+        <section className="section section-alt" id="erp-promo">
+          <div className="container">
+            <div className="erp-promo-shell ad-shell reveal" id="ad-business" style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+              <div className="erp-promo-content">
+                <p className="overline">{locale === "ar" ? "معزز الأعمال" : "Business Enhancer"}</p>
+                <div className="erp-promo-pill">{locale === "ar" ? "للأعمال" : "For Business"}</div>
+                <h2 className="upcoming-title">
+                  {locale === "ar" ? "نظام ERP " : "Smart ERP "}
+                  <span className="highlight">{locale === "ar" ? "الذكي" : "System"}</span>
+                </h2>
+                <p className="erp-promo-description">
+                  {locale === "ar"
+                    ? "نظام AZHA ERP متكامل لإدارة أعمالك — نقطة بيع، مشتريات ومبيعات، مخزون، محاسبة، ضرائب، وموارد بشرية في منصة سحابية واحدة."
+                    : "All-in-one AZHA ERP system — POS, sales & purchases, inventory, accounting, taxes, HR, and CRM in one cloud platform."}
+                </p>
+                <div className="safety-badges" aria-label="ERP features">
+                  {locale === "ar"
+                    ? [
+                        { icon: "🛒", label: "نقطة بيع" },
+                        { icon: "📦", label: "إدارة المخزون" },
+                        { icon: "💰", label: "المحاسبة" },
+                        { icon: "📊", label: "التقارير" },
+                        { icon: "👥", label: "الموارد البشرية" },
+                        { icon: "🧾", label: "الضرائب والزكاة" },
+                        { icon: "🏪", label: "متجر إلكتروني خلال أسبوع" },
+                        { icon: "🚀", label: "صفحة هبوط خلال ٤٨ ساعة" },
+                      ].map((b) => (
+                        <span key={b.label} className="safety-badge">
+                          <span className="safety-badge-icon" aria-hidden="true">{b.icon}</span>
+                          {b.label}
+                        </span>
+                      ))
+                    : [
+                        { icon: "🛒", label: "POS" },
+                        { icon: "📦", label: "Inventory" },
+                        { icon: "💰", label: "Accounting" },
+                        { icon: "📊", label: "Reports" },
+                        { icon: "👥", label: "HR" },
+                        { icon: "🧾", label: "Tax & Zakat" },
+                        { icon: "🏪", label: "eCommerce in 1 Week" },
+                        { icon: "🚀", label: "Landing Page in 48H" },
+                      ].map((b) => (
+                        <span key={b.label} className="safety-badge">
+                          <span className="safety-badge-icon" aria-hidden="true">{b.icon}</span>
+                          {b.label}
+                        </span>
+                      ))
+                  }
+                </div>
+                <div className="erp-promo-launch">
+                  <p>
+                    {locale === "ar"
+                      ? "سرّع نمو أعمالك وحقق تواجدك الرقمي فورًا — متجرك الإلكتروني جاهز خلال أسبوع، وصفحة الهبوط خلال ٤٨ ساعة."
+                      : "Accelerate your business and establish your online presence instantly — your custom eCommerce store in 1 week, and your landing page in just 48 hours."}
+                  </p>
+                  <small>
+                    {locale === "ar"
+                      ? "🎁 صفحة الهبوط مجانية لأول ١٠ عملاء!"
+                      : "🎁 Landing page is completely FREE for the first 10 customers!"}
+                  </small>
+                </div>
+                <a
+                  className="promo-box promo-box-link"
+                  href="https://wa.me/201026655008"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={locale === "ar" ? "تواصل عبر واتساب" : "Chat on WhatsApp"}
+                  style={{ borderRadius: '16px' }}
+                >
+                  <small>{locale === "ar" ? "عرض محدود" : "Limited Offer"}</small>
+                  <h3>
+                    {locale === "ar" ? "تواصل معنا الآن" : "Contact Us Now"}
+                    <span aria-hidden="true">💬</span>
+                  </h3>
+                  <p>
+                    {locale === "ar"
+                      ? "للإستفسارات والحجز، تواصل معنا عبر واتساب على +201026655008"
+                      : "For inquiries and booking, reach us on WhatsApp at +201026655008"}
+                  </p>
+                </a>
+                <a
+                  className="btn btn-primary"
+                  href="https://smart.azhasoft.com/login_demo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {locale === "ar" ? "ابدأ تجربتك الآن" : "Start Your Demo Now"}
+                </a>
+              </div>
+              <figure className="upcoming-image-card" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+                <Image
+                  src="/erp-promo.webp"
+                  alt={locale === "ar" ? "نظام ERP الذكي - معزز الأعمال" : "Smart ERP System - Business Enhancer"}
+                  className="upcoming-image"
+                  width={520}
+                  height={380}
+                  loading="lazy"
+                />
+                <figcaption>
+                  {locale === "ar" ? "منصة إدارة أعمال متكاملة" : "All-in-one business management platform"}
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
 
         {/* ── OUR PLATFORM ────────────────────────────────── */}
         <section className="section" id="about">
@@ -240,227 +465,7 @@ export function LandingPage({ locale }: LandingPageProps) {
           </div>
         </section>
 
-        {/* ── UPCOMING EVENT ────────────────────────────────── */}
-        <section className="section section-alt" id="events">
-          <div className="container reveal">
-            <div className="upcoming-shell ad-shell" id="ad-kids-lab">
-              <div className="upcoming-content">
-                <div className="upcoming-main">
-                  <p className="overline overline-light">{content.event.overline}</p>
-                  <div className="upcoming-pill">{content.event.subtitle}</div>
-                  <h2 className="upcoming-title">
-                    {content.event.title}
-                    {content.event.titleHighlight && (
-                      <span className="highlight">{content.event.titleHighlight}</span>
-                    )}
-                  </h2>
-                  <p className="upcoming-description">{content.event.description}</p>
 
-                  {content.event.descriptionExtra && (
-                    <p className="upcoming-description-extra" style={{ whiteSpace: "pre-line" }}>
-                      {content.event.descriptionExtra}
-                    </p>
-                  )}
-
-                  {content.event.safetyBadges && content.event.safetyBadges.length > 0 && (
-                    <div className="safety-badges" aria-label="Safety commitments">
-                      {content.event.safetyBadges.map((badge) => {
-                        const badgeContent = (
-                          <>
-                            <span className="safety-badge-icon" aria-hidden="true">{badge.icon}</span>
-                            {badge.label}
-                          </>
-                        );
-                        return badge.url ? (
-                          <a
-                            key={badge.label}
-                            href={badge.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="safety-badge safety-badge-link"
-                          >
-                            {badgeContent}
-                          </a>
-                        ) : (
-                          <span key={badge.label} className="safety-badge">
-                            {badgeContent}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  <div className="upcoming-actions">
-                    <button className="btn btn-primary" type="button" onClick={() => setEnrollmentOpen(true)}>
-                      {content.event.cta}
-                    </button>
-                    <p className="upcoming-cta-note">{content.event.promoLabel}</p>
-                  </div>
-                </div>
-
-                <div className="upcoming-side">
-                  <figure className="upcoming-image-card">
-                    <Image
-                      src="/ad-1.webp"
-                      alt={locale === "ar" ? "أطفال يتعلمون أدوات الذكاء الاصطناعي بأمان" : "Kids learning AI chat tools in a safe and guided environment"}
-                      className="upcoming-image"
-                      width={480}
-                      height={320}
-                      loading="lazy"
-                    />
-                    <figcaption>
-                      {locale === "ar" ? "جلسة تفاعلية آمنة وممتعة" : "Interactive, safe, and fun learning session"}
-                    </figcaption>
-                  </figure>
-
-                  <div className="promo-box">
-                    <small>{content.event.promoLabel}</small>
-                    <h3>
-                      {content.event.promoTitle}
-                      {content.event.promoLocationUrl && (
-                        <a
-                          href={content.event.promoLocationUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="promo-location-link"
-                          aria-label={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
-                          title={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
-                        >
-                          <span aria-hidden="true">📍</span>
-                        </a>
-                      )}
-                    </h3>
-                    <p>{content.event.promoDescription}</p>
-                  </div>
-
-                  <div className="upcoming-stats-panel">
-                  <div className="event-stats">
-                    {content.event.stats.map((stat) => (
-                      <div key={`${stat.value}-${stat.label}`}>
-                        <strong>{stat.value}</strong>
-                        <small>{stat.label}</small>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="upcoming-lab-tile">
-                    <div>
-                      <strong>{content.event.labTitle}</strong>
-                      <small>{content.event.labSubtitle}</small>
-                    </div>
-                    <span>⚙️</span>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── ERP PROMO ─────────────────────────────────────── */}
-        <section className="section section-alt" id="erp-promo">
-          <div className="container">
-            <div className="erp-promo-shell ad-shell reveal" id="ad-business">
-              <div className="erp-promo-content">
-                <p className="overline">{locale === "ar" ? "معزز الأعمال" : "Business Enhancer"}</p>
-                <div className="erp-promo-pill">{locale === "ar" ? "للأعمال" : "For Business"}</div>
-                <h2 className="upcoming-title">
-                  {locale === "ar" ? "نظام ERP " : "Smart ERP "}
-                  <span className="highlight">{locale === "ar" ? "الذكي" : "System"}</span>
-                </h2>
-                <p className="erp-promo-description">
-                  {locale === "ar"
-                    ? "نظام AZHA ERP متكامل لإدارة أعمالك — نقطة بيع، مشتريات ومبيعات، مخزون، محاسبة، ضرائب، وموارد بشرية في منصة سحابية واحدة."
-                    : "All-in-one AZHA ERP system — POS, sales & purchases, inventory, accounting, taxes, HR, and CRM in one cloud platform."}
-                </p>
-                <div className="safety-badges" aria-label="ERP features">
-                  {locale === "ar"
-                    ? [
-                        { icon: "🛒", label: "نقطة بيع" },
-                        { icon: "📦", label: "إدارة المخزون" },
-                        { icon: "💰", label: "المحاسبة" },
-                        { icon: "📊", label: "التقارير" },
-                        { icon: "👥", label: "الموارد البشرية" },
-                        { icon: "🧾", label: "الضرائب والزكاة" },
-                        { icon: "🏪", label: "متجر إلكتروني خلال أسبوع" },
-                        { icon: "🚀", label: "صفحة هبوط خلال ٤٨ ساعة" },
-                      ].map((b) => (
-                        <span key={b.label} className="safety-badge">
-                          <span className="safety-badge-icon" aria-hidden="true">{b.icon}</span>
-                          {b.label}
-                        </span>
-                      ))
-                    : [
-                        { icon: "🛒", label: "POS" },
-                        { icon: "📦", label: "Inventory" },
-                        { icon: "💰", label: "Accounting" },
-                        { icon: "📊", label: "Reports" },
-                        { icon: "👥", label: "HR" },
-                        { icon: "🧾", label: "Tax & Zakat" },
-                        { icon: "🏪", label: "eCommerce in 1 Week" },
-                        { icon: "🚀", label: "Landing Page in 48H" },
-                      ].map((b) => (
-                        <span key={b.label} className="safety-badge">
-                          <span className="safety-badge-icon" aria-hidden="true">{b.icon}</span>
-                          {b.label}
-                        </span>
-                      ))
-                  }
-                </div>
-                <div className="erp-promo-launch">
-                  <p>
-                    {locale === "ar"
-                      ? "سرّع نمو أعمالك وحقق تواجدك الرقمي فورًا — متجرك الإلكتروني جاهز خلال أسبوع، وصفحة الهبوط خلال ٤٨ ساعة."
-                      : "Accelerate your business and establish your online presence instantly — your custom eCommerce store in 1 week, and your landing page in just 48 hours."}
-                  </p>
-                  <small>
-                    {locale === "ar"
-                      ? "🎁 صفحة الهبوط مجانية لأول ١٠ عملاء!"
-                      : "🎁 Landing page is completely FREE for the first 10 customers!"}
-                  </small>
-                </div>
-                <a
-                  className="promo-box promo-box-link"
-                  href="https://wa.me/201026655008"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={locale === "ar" ? "تواصل عبر واتساب" : "Chat on WhatsApp"}
-                >
-                  <small>{locale === "ar" ? "عرض محدود" : "Limited Offer"}</small>
-                  <h3>
-                    {locale === "ar" ? "تواصل معنا الآن" : "Contact Us Now"}
-                    <span aria-hidden="true">💬</span>
-                  </h3>
-                  <p>
-                    {locale === "ar"
-                      ? "للإستفسارات والحجز، تواصل معنا عبر واتساب على +201026655008"
-                      : "For inquiries and booking, reach us on WhatsApp at +201026655008"}
-                  </p>
-                </a>
-                <a
-                  className="btn btn-primary"
-                  href="https://smart.azhasoft.com/login_demo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {locale === "ar" ? "ابدأ تجربتك الآن" : "Start Your Demo Now"}
-                </a>
-              </div>
-              <figure className="upcoming-image-card">
-                <Image
-                  src="/erp-promo.webp"
-                  alt={locale === "ar" ? "نظام ERP الذكي - معزز الأعمال" : "Smart ERP System - Business Enhancer"}
-                  className="upcoming-image"
-                  width={520}
-                  height={380}
-                  loading="lazy"
-                />
-                <figcaption>
-                  {locale === "ar" ? "منصة إدارة أعمال متكاملة" : "All-in-one business management platform"}
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
 
         {/* ── MAP ─────────────────────────────────────────────
         <section className="section container" id="map">

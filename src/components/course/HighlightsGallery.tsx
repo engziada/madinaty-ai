@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ZoomIn, Sparkles } from "lucide-react";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
 
@@ -18,23 +18,25 @@ interface HighlightsGalleryProps {
 export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const [limit, setLimit] = useState(9); // Default to 9 (3x3 grid)
 
   const isAr = locale === "ar";
   const content = getSiteContent(locale);
   const t = content.event;
 
-  // Fetch photos on load
+  // Fetch photos on load and shuffle client-side
   useEffect(() => {
     let active = true;
     async function fetchPhotos() {
       try {
-        const res = await fetch("/api/gallery/session", { cache: "no-store" });
+        // Cache-busting timestamp to guarantee a fresh random response on each page load
+        const res = await fetch(`/api/gallery/session?t=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         if (active && Array.isArray(data.photos)) {
-          setPhotos(data.photos);
+          // Shuffle the full list on the client side for guaranteed randomness
+          const shuffled = [...data.photos].sort(() => 0.5 - Math.random());
+          setPhotos(shuffled);
         }
       } catch (err) {
         console.error("Failed to load highlights gallery", err);
@@ -48,22 +50,52 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
     };
   }, []);
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? photos.length - 1 : prev - 1));
-  };
+  // Manage responsive grid limits
+  useEffect(() => {
+    function updateLimit() {
+      if (window.innerWidth < 768) {
+        setLimit(6); // 2x3 grid on small screens
+      } else {
+        setLimit(9); // 3x3 grid on medium/large screens
+      }
+    }
+    updateLimit();
+    window.addEventListener("resize", updateLimit);
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === photos.length - 1 ? 0 : prev + 1));
-  };
+  // Manage body scroll overflow dynamically to prevent global scrolling lock
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [lightboxIndex]);
+
+  // Manage ESC key listener for closing lightbox
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightboxIndex(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxIndex]);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
-    document.body.style.overflow = "hidden";
   };
 
   const closeLightbox = () => {
     setLightboxIndex(null);
-    document.body.style.overflow = "";
   };
 
   if (loading) {
@@ -97,92 +129,69 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
     );
   }
 
-  if (photos.length === 0) {
-    return null; // Don't render empty section
-  }
+  if (!photos || photos.length === 0) return null;
+
+  const visiblePhotos = photos.slice(0, limit);
 
   return (
     <div className="highlights-gallery-container reveal">
       <div className="gallery-header">
-        <h2 className="gallery-title">{t.galleryTitle || "First Session Highlights"}</h2>
+        <div className="title-wrapper">
+          <Sparkles className="sparkle-icon" size={32} />
+          <h2 className="gallery-title">{t.galleryTitle || "ألبوم الصور مع العباقرة الصغار"}</h2>
+        </div>
         <p className="gallery-subtitle">
-          {t.gallerySubtitle || "Real moments and certifications from our initial session."}
+          {t.gallerySubtitle || "Magical moments from our AI lab!"}
         </p>
       </div>
 
-      <div className="carousel-outer">
-        {/* Navigation Buttons */}
-        <button
-          className="nav-btn prev-btn"
-          onClick={isAr ? handleNext : handlePrev}
-          aria-label="Previous slide"
-        >
-          <ChevronLeft size={24} />
-        </button>
-
-        <div className="carousel-viewport">
-          <div
-            className="carousel-track"
-            ref={trackRef}
-            style={{
-              transform: `translateX(${isAr ? currentIndex * 100 : -currentIndex * 100}%)`,
-            }}
-          >
-            {photos.map((photo, idx) => (
-              <div key={photo.src} className="carousel-slide">
-                <div className="image-wrapper" onClick={() => openLightbox(idx)}>
-                  <Image
-                    src={photo.src}
-                    alt={photo.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 800px"
-                    className="gallery-img"
-                    priority={idx === 0}
-                    loading={idx === 0 ? "eager" : "lazy"}
-                  />
-                  <div className="image-overlay">
-                    <ZoomIn className="zoom-icon" size={32} />
+      <div className="magic-grid">
+        {visiblePhotos.map((photo, idx) => {
+          // Playful randomness
+          const rotation = idx % 2 === 0 ? "rotate(2deg)" : "rotate(-2deg)";
+          const colorClass = ["accent-blue", "accent-teal", "accent-purple", "accent-orange"][idx % 4];
+          
+          return (
+            <div 
+              key={`${photo.src}-${idx}`} 
+              className={`magic-card ${colorClass}`}
+              style={{ '--base-rotation': rotation } as any}
+              onClick={() => openLightbox(idx)}
+            >
+              <div className="image-wrapper">
+                <Image
+                  src={photo.src}
+                  alt={photo.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="gallery-img"
+                  loading={idx < 4 ? "eager" : "lazy"}
+                />
+                <div className="image-overlay">
+                  <div className="zoom-btn">
+                    <ZoomIn size={24} />
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <button
-          className="nav-btn next-btn"
-          onClick={isAr ? handlePrev : handleNext}
-          aria-label="Next slide"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </div>
-
-      {/* Progress indicators / dots */}
-      <div className="carousel-dots">
-        {photos.map((_, idx) => (
-          <button
-            key={idx}
-            className={`dot ${currentIndex === idx ? "active" : ""}`}
-            onClick={() => setCurrentIndex(idx)}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
+              <div className="magic-tape" />
+            </div>
+          );
+        })}
       </div>
 
       {/* Lightbox Overlay */}
-      {lightboxIndex !== null && photos[lightboxIndex] && (
+      {lightboxIndex !== null && visiblePhotos[lightboxIndex] && (
         <div className="lightbox-overlay" onClick={closeLightbox} role="dialog" aria-modal="true">
           <button className="lightbox-close" onClick={closeLightbox} aria-label="Close lightbox">
-            <X size={28} />
+            <X size={32} />
           </button>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <Image
-              src={photos[lightboxIndex].src}
-              alt={photos[lightboxIndex].name}
+              src={visiblePhotos[lightboxIndex].src}
+              alt={visiblePhotos[lightboxIndex].name}
               width={1200}
               height={900}
-              style={{ objectFit: "contain", maxWidth: "100%", maxHeight: "90vh" }}
+              style={{ objectFit: "contain", maxWidth: "100%", maxHeight: "90vh", borderRadius: "12px" }}
             />
           </div>
         </div>
@@ -190,163 +199,173 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
 
       <style jsx global>{`
         .highlights-gallery-container {
-          margin: 4rem 0;
-          padding: 2rem;
-          background: rgba(13, 21, 32, 0.6);
-          border: 1px solid var(--border);
-          border-radius: 24px;
-          backdrop-filter: blur(12px);
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+          margin: 4rem auto;
+          padding: 3rem 1rem;
+          max-width: 1200px;
+          position: relative;
         }
+        
         .gallery-header {
           text-align: center;
-          margin-bottom: 2.5rem;
+          margin-bottom: 3.5rem;
+        }
+        .title-wrapper {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.5rem;
+        }
+        .sparkle-icon {
+          color: var(--primary);
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+          50% { transform: scale(1.2) rotate(15deg); opacity: 1; color: var(--teal); }
+          100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
         }
         .gallery-title {
           font-family: 'Space Grotesk', sans-serif;
-          font-size: 1.85rem;
+          font-size: 2.2rem;
           font-weight: 800;
-          background: linear-gradient(135deg, var(--teal) 0%, var(--blue) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          margin-bottom: 0.5rem;
+          color: var(--text);
+          margin: 0;
         }
         .gallery-subtitle {
-          color: var(--text-soft);
-          font-size: 0.95rem;
-          max-width: 600px;
-          margin: 0 auto;
+          color: var(--text-muted);
+          font-size: 1.1rem;
         }
-        .carousel-outer {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
+        
+        .magic-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.5rem;
+          padding: 1rem;
         }
-        .carousel-viewport {
-          width: 100%;
-          max-width: 800px;
-          height: 450px;
-          overflow: hidden;
+        
+        .magic-card {
+          background: var(--surface);
+          padding: 12px;
           border-radius: 16px;
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-        .carousel-track {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .carousel-slide {
-          flex: 0 0 100%;
-          width: 100%;
-          height: 100%;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+          transform: var(--base-rotation);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
+          cursor: pointer;
+          border: 1px solid var(--border);
         }
+        
+        .magic-card:hover {
+          transform: scale(1.05) rotate(0deg) translateY(-10px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+          z-index: 10;
+        }
+        
+        /* Colorful Accents */
+        .accent-blue { border-bottom: 6px solid #3b82f6; }
+        .accent-teal { border-bottom: 6px solid #14b8a6; }
+        .accent-purple { border-bottom: 6px solid #8b5cf6; }
+        .accent-orange { border-bottom: 6px solid #f97316; }
+        
+        /* Playful Tape */
+        .magic-tape {
+          position: absolute;
+          top: -10px;
+          left: 50%;
+          transform: translateX(-50%) rotate(-3deg);
+          width: 80px;
+          height: 24px;
+          background: rgba(255, 255, 255, 0.4);
+          backdrop-filter: blur(4px);
+          border-radius: 2px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          z-index: 2;
+          opacity: 0.8;
+        }
+        [data-theme="dark"] .magic-tape {
+          background: rgba(255, 255, 255, 0.1);
+        }
+        
         .image-wrapper {
           position: relative;
           width: 100%;
-          height: 100%;
-          cursor: pointer;
+          aspect-ratio: 4 / 3;
+          border-radius: 8px;
           overflow: hidden;
         }
         .gallery-img {
           object-fit: cover;
           transition: transform 0.5s ease;
         }
-        .image-wrapper:hover .gallery-img {
-          transform: scale(1.05);
+        .magic-card:hover .gallery-img {
+          transform: scale(1.1);
         }
+        
         .image-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(7, 13, 24, 0.4);
+          background: rgba(0, 0, 0, 0.2);
           opacity: 0;
           display: flex;
           align-items: center;
           justify-content: center;
           transition: opacity 0.3s ease;
         }
-        .image-wrapper:hover .image-overlay {
+        .magic-card:hover .image-overlay {
           opacity: 1;
         }
-        .zoom-icon {
-          color: var(--teal);
-          filter: drop-shadow(0 2px 8px rgba(0, 210, 210, 0.4));
-          transform: scale(0.8);
-          transition: transform 0.3s ease;
-        }
-        .image-wrapper:hover .zoom-icon {
-          transform: scale(1);
-        }
-        .nav-btn {
+        
+        .zoom-btn {
+          background: var(--surface);
+          color: var(--primary);
           width: 48px;
           height: 48px;
           border-radius: 50%;
-          background: rgba(13, 21, 32, 0.8);
-          border: 1px solid var(--border);
-          color: var(--text);
           display: flex;
           align-items: center;
           justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          z-index: 10;
+          transform: scale(0.5);
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        .nav-btn:hover {
-          background: var(--teal);
-          color: #070d18;
-          border-color: var(--teal);
-          box-shadow: 0 0 15px rgba(0, 210, 210, 0.4);
-        }
-        .carousel-dots {
-          display: flex;
-          justify-content: center;
-          gap: 0.5rem;
-          margin-top: 1.5rem;
-        }
-        .dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.2);
-          border: none;
-          padding: 0;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .dot.active {
-          background: var(--teal);
-          width: 24px;
-          border-radius: 100px;
-          box-shadow: 0 0 8px rgba(0, 210, 210, 0.6);
+        .magic-card:hover .zoom-btn {
+          transform: scale(1);
         }
         
         /* Lightbox styling */
         .lightbox-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(7, 13, 24, 0.95);
+          background: rgba(0, 0, 0, 0.9);
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 9999;
-          backdrop-filter: blur(8px);
+          z-index: 99999;
+          backdrop-filter: blur(12px);
+          cursor: zoom-out;
         }
         .lightbox-close {
           position: absolute;
           top: 2rem;
           right: 2rem;
-          background: none;
-          border: none;
-          color: var(--text-soft);
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          color: #ffffff;
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           cursor: pointer;
-          transition: color 0.2s;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 100000;
         }
         .lightbox-close:hover {
-          color: var(--teal);
+          background: var(--primary, #00d2d2);
+          color: #000000;
+          border-color: var(--primary, #00d2d2);
+          transform: rotate(90deg) scale(1.1);
         }
         .lightbox-content {
           position: relative;
@@ -355,19 +374,16 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
           display: flex;
           align-items: center;
           justify-content: center;
+          cursor: default;
         }
 
         @media (max-width: 768px) {
-          .highlights-gallery-container {
-            padding: 1rem;
-            margin: 2.5rem 0;
+          .magic-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
           }
-          .carousel-viewport {
-            height: 250px;
-          }
-          .nav-btn {
-            width: 38px;
-            height: 38px;
+          .gallery-title {
+            font-size: 1.8rem;
           }
         }
       `}</style>
