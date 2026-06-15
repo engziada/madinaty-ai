@@ -32,14 +32,14 @@ export function CourseLayout({ children, activeTab, locale }: CourseLayoutProps)
     categoryEn: "Madinaty Innovation Hub · Triple A East Hub",
     titleAr: "شات الذكاء الاصطناعي للأطفال (أعمار ٨-١٢)",
     titleEn: "AI Chatbots for Kids (Ages 8-12)",
-    badgeAr: "عرض محدود: ١٩٩٫٩٩ ج.م بدلاً من 569.99 ج.م",
-    badgeEn: "Limited Offer: 199.99 EGP instead of 569.99 EGP",
+    badgeAr: "عرض المونديال: ٤٤٩٫٩٩ ج.م (خصم ٢٠٪) 🏆⚽",
+    badgeEn: "World Cup Offer: 449.99 EGP (20% Off) 🏆⚽",
     descriptionAr: "ورشة عمل تفاعلية لبناء مهارات المستقبل، تعليم أدوات الشات والكتابة الآمنة للأوامر.",
     descriptionEn: "An interactive hands-on workshop to build future-ready skills, teaching chatbot tools, safe prompting, and critical thinking.",
     ctaAr: "سجل الآن مع أسترو 🐕",
     ctaEn: "Register Now with Astro 🐕",
-    noteAr: "خصم ٦٥٪ لـ سكان مدينتي فقط · متبقي عدد محدود من المقاعد المخفضة",
-    noteEn: "65% discount for Madinaty residents only · Limited seats available at promo price"
+    noteAr: "خصم المونديال ٢٠٪ مستمر لآخر يونيو · متاح للجميع ⚽",
+    noteEn: "20% World Cup discount ongoing through June · Available for everyone ⚽"
   };
 
   return (

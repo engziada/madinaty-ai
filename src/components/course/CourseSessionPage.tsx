@@ -40,23 +40,23 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
     soldOutEn: "🔴 Sold Out — All seats reserved",
     lastChanceAr: "🟢 مقاعد مخفضة متاحة — آخر فرصة!",
     lastChanceEn: "🟢 Discounted seats available — Last chance!",
-    hurryAr: "أسرع — هذا آخر موعد للحجز بالسعر المخفض ١٩٩٫٩٩ ج.م",
-    hurryEn: "Hurry up — this is your last chance to book at the discounted price of 199.99 EGP",
+    hurryAr: "أسرع واحجز مكانك الآن بخصم المونديال ٢٠٪ (٤٤٩٫٩٩ ج.م) 🏆⚽",
+    hurryEn: "Hurry up and book your seat now with our 20% World Cup discount (449.99 EGP) 🏆⚽",
     detailsTitleAr: "ما الذي يميز هذه الجلسة؟",
     detailsTitleEn: "What makes this session special?",
     announcementTitleAr: "📢 إعلان هام",
     announcementTitleEn: "📢 Important Announcement",
-    announcementBodyAr: "الموجتان الأولى والثانية (٦ و ١٣ يونيو) تمتا بنجاح كبير وكامل العدد. نفتح الآن باب الحجز للموجة الثالثة يوم السبت ٢٠ يونيو الساعة ١٢:٠٠ ظهراً — أسرع قبل نفاذ المقاعد!",
-    announcementBodyEn: "Waves 1 & 2 (June 6 & 13) were a huge success and fully reserved. We are now opening registration for Wave 3 on Saturday, June 20 at 12:00 PM — hurry before seats fill up!",
+    announcementBodyAr: "تخفيض الافتتاح للاسف خلص.. بس عشان حبايبنا، قررنا نعمل تخفيض ٢٠٪ مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال! 🇪🇬⚽ السعر الآن ٤٤٩٫٩٩ ج.م.",
+    announcementBodyEn: "Opening discount ended, but we're offering a 20% discount (449.99 EGP) valid through June and the World Cup period! 🇪🇬⚽",
     statsAr: [
       { icon: "🛡️", title: "بيئة تعليمية آمنة", text: "استخدام أدوات وحسابات تم التحقق منها وبإشراف مدربين متخصصين." },
       { icon: "👥", title: "مجموعات صغيرة جداً", text: "بحد أقصى ١٠ أطفال في القاعة لضمان جودة التفاعل والتعلم الفردي." },
-      { icon: "💰", title: "سعر مدعوم للمجتمع", text: "تخفيض ٦٥٪ لسكان مدينتي (١٩٩٫٩٩ ج.م بدلاً من 569.99 ج.م) — آخر فرصة!" }
+      { icon: "🏆", title: "خصم المونديال المستمر", text: "تخفيض ٢٠٪ للجميع (٤٤٩٫٩٩ ج.م) مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال! ⚽" }
     ],
     statsEn: [
       { icon: "🛡️", title: "100% Safe Environment", text: "Using verified AI tools and accounts supervised by experienced trainers." },
       { icon: "👥", title: "Ultra-small Groups", text: "Max 10 kids per room to ensure personalized attention and interactive learning." },
-      { icon: "💰", title: "Community Subsidized", text: "65% discount for Madinaty residents (199.99 EGP instead of 569.99 EGP) — last chance!" }
+      { icon: "🏆", title: "World Cup Discount", text: "20% discount for everyone (449.99 EGP) valid through June and the World Cup! ⚽" }
     ]
   };
 

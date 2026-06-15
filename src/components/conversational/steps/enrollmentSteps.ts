@@ -216,10 +216,10 @@ export const enrollmentSteps: ConversationStep<EnrollmentChatForm>[] = [
     options: (locale) =>
       locale === "ar"
         ? [
-            { value: "2026-06-20", label: "✅ السبت ٢٠ يونيو ٢٠٢٦ — الموجة الثالثة (مقاعد مخفضة متاحة)" },
+            { value: "2026-06-20", label: "✅ السبت ٢٠ يونيو ٢٠٢٦ — (خصم المونديال ٢٠٪ متاح) 🏆" },
           ]
         : [
-            { value: "2026-06-20", label: "✅ Saturday, June 20, 2026 — Wave 3 (Discounted seats available)" },
+            { value: "2026-06-20", label: "✅ Saturday, June 20, 2026 — (20% World Cup Discount available) 🏆" },
           ],
     validate: (v, locale) => {
       if (!v) {
