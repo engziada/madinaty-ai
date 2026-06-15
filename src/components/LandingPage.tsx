@@ -111,8 +111,8 @@ export function LandingPage({ locale }: LandingPageProps) {
                     <div className="hero-activity-icon" aria-hidden="true">📢</div>
                     <div className="hero-activity-text" style={{ color: "#856404", fontWeight: 500 }}>
                       {isAr
-                        ? "الجلسات الثلاثة الأولى (٦ يونيو) تم حجزها بالكامل. مقاعد مخفضة بـ ١٩٩٫٩٩ ج.م لا تزال متاحة لجلسة ١٣ يونيو — أسرع!"
-                        : "First 3 sessions (June 6) fully reserved. Discounted seats at 199.99 EGP still available for June 13 session — hurry!"}
+                        ? "الموجتان الأولى والثانية (٦ و ١٣ يونيو) تمتا بنجاح وكامل العدد. مقاعد مخفضة بـ ١٩٩٫٩٩ ج.م متاحة الآن للموجة الثالثة (٢٠ يونيو) — أسرع!"
+                        : "Waves 1 & 2 (June 6 & 13) were a huge success and fully reserved. Discounted seats at 199.99 EGP now available for Wave 3 (June 20) — hurry!"}
                       <small style={{ color: "#b38f00" }}>
                         {isAr ? "آخر فرصة · عرض محدود" : "Last chance · Limited offer"}
                       </small>

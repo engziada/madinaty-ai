@@ -30,6 +30,8 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
     june6En: "Saturday, June 6, 2026",
     june13Ar: "السبت ١٣ يونيو ٢٠٢٦",
     june13En: "Saturday, June 13, 2026",
+    june20Ar: "السبت ٢٠ يونيو ٢٠٢٦",
+    june20En: "Saturday, June 20, 2026",
     time12Ar: "١٢:٠٠ ظهراً – ٢:٠٠ ظهراً (ساعتان)",
     time12En: "12:00 PM – 2:00 PM (2 Hours)",
     time8Ar: "٨:٠٠ مساءً – ١٠:٠٠ مساءً (ساعتان)",
@@ -44,8 +46,8 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
     detailsTitleEn: "What makes this session special?",
     announcementTitleAr: "📢 إعلان هام",
     announcementTitleEn: "📢 Important Announcement",
-    announcementBodyAr: "الجلسات الثلاثة الأولى (٦ يونيو الساعة ١٢:٠٠ ظهراً و٨:٠٠ مساءً) تم حجزها بالكامل. لا تزال هناك مقاعد مخفضة في جلسة ١٣ يونيو — أسرع قبل فوات الأوان!",
-    announcementBodyEn: "The first 3 sessions (June 6 at 12:00 PM & 8:00 PM) are fully reserved. Discounted seats are still available for the June 13 session — hurry before it's too late!",
+    announcementBodyAr: "الموجتان الأولى والثانية (٦ و ١٣ يونيو) تمتا بنجاح كبير وكامل العدد. نفتح الآن باب الحجز للموجة الثالثة يوم السبت ٢٠ يونيو الساعة ١٢:٠٠ ظهراً — أسرع قبل نفاذ المقاعد!",
+    announcementBodyEn: "Waves 1 & 2 (June 6 & 13) were a huge success and fully reserved. We are now opening registration for Wave 3 on Saturday, June 20 at 12:00 PM — hurry before seats fill up!",
     statsAr: [
       { icon: "🛡️", title: "بيئة تعليمية آمنة", text: "استخدام أدوات وحسابات تم التحقق منها وبإشراف مدربين متخصصين." },
       { icon: "👥", title: "مجموعات صغيرة جداً", text: "بحد أقصى ١٠ أطفال في القاعة لضمان جودة التفاعل والتعلم الفردي." },
@@ -117,10 +119,26 @@ export function CourseSessionPage({ locale }: CourseSessionPageProps) {
             </button>
           </div>
 
-          {/* Slot 3: June 13 @ 8:00 PM — LAST CHANCE */}
+          {/* Slot 3: June 13 @ 8:00 PM — SOLD OUT */}
+          <div className="course-detail-card" style={{ border: "1px solid #e5e7eb", background: "rgba(0,0,0,0.03)", textAlign: "center", opacity: 0.7 }}>
+            <div className="course-card-icon" style={{ margin: "0 auto 1rem auto", filter: "grayscale(1)" }}>📅</div>
+            <h3>{isAr ? t.june13Ar : t.june13En}</h3>
+            <p style={{ fontWeight: "600", color: "var(--text-muted)", marginBottom: "0.5rem" }}>
+              {isAr ? t.time12Ar : t.time12En}
+            </p>
+            <p style={{ fontSize: "0.85rem", color: "#dc2626", fontWeight: "600" }}>
+              {isAr ? t.soldOutAr : t.soldOutEn}
+            </p>
+            <hr style={{ border: "0", borderTop: "1px solid var(--border)", margin: "1.5rem 0" }} />
+            <button className="btn" style={{ width: "100%", background: "#9ca3af", cursor: "not-allowed" }} disabled>
+              {isAr ? t.soldOutBtnAr : t.soldOutBtnEn}
+            </button>
+          </div>
+
+          {/* Slot 4: June 20 @ 12:00 PM — WAVE 3 */}
           <div className="course-detail-card" style={{ border: "2px solid var(--primary)", background: "rgba(99, 102, 241, 0.05)", textAlign: "center", boxShadow: "0 4px 20px rgba(99,102,241,0.12)" }}>
             <div className="course-card-icon" style={{ margin: "0 auto 1rem auto" }}>📅</div>
-            <h3>{isAr ? t.june13Ar : t.june13En}</h3>
+            <h3>{isAr ? t.june20Ar : t.june20En}</h3>
             <p style={{ fontWeight: "600", color: "var(--primary)", marginBottom: "0.5rem" }}>
               {isAr ? t.time12Ar : t.time12En}
             </p>

@@ -210,7 +210,7 @@ const contentEn: SiteContent = {
     messages: [
       { role: "ai", content: "Hello! I'm your Madinaty AI assistant. I can help with shuttle routes, workshops, community events, and live city updates across all 23 districts." },
       { role: "user", content: "Where is the next AI workshop for kids?" },
-      { role: "ai", content: "At Triple A Education Center (East Hub - 2nd Floor). June 6 sessions are fully reserved. Discounted seats at 199.99 EGP still available for June 13 at 8:00 PM. Want me to reserve a slot?" }
+      { role: "ai", content: "At Triple A Education Center (East Hub - 2nd Floor). June 6 & 13 sessions were a huge success and fully booked. We are now booking for the 3rd Wave on Saturday, June 20 at 12:00 PM. Want me to reserve a slot?" }
     ]
   },
   map: {
@@ -225,7 +225,7 @@ const contentEn: SiteContent = {
         longitude: 31.7018,
         category: "Innovation & Learning",
         status: "Live Workshops Today",
-        highlight: "Next AI for Kids session: Sat 13 June at 8:00 PM — last chance!"
+        highlight: "Next AI for Kids session: Sat 20 June at 12:00 PM — 3rd Wave!"
       },
       {
         id: "logistics",
@@ -288,7 +288,7 @@ const contentEn: SiteContent = {
     overline: "AI Labs in Madinaty",
     title: "AI for Kids Awareness Session — ",
     titleHighlight: "Safe, Smart, Fun",
-    subtitle: "Saturday, June 13, 2026 · 8:00 PM – 10:00 PM · Ages 8–12 — Last discounted seats!",
+    subtitle: "Saturday, June 20, 2026 · 12:00 PM – 2:00 PM · Ages 8–12 — 3rd Wave Now Open!",
     description:
       "An interactive session teaching kids chatbot tools and how to use them safely. Each session lasts 2 hours, with a maximum of 10 children per room. Special community price of 199.99 EGP/kid (65% off) for the first 20 signups.",
     descriptionExtra:
@@ -540,7 +540,7 @@ const contentAr: SiteContent = {
     messages: [
       { role: "ai", content: "مرحباً! أنا مساعد Madinaty AI. أستطيع مساعدتك في خطوط الحافلات والورش والفعاليات وتحديثات المدينة الحية عبر جميع الـ٢٣ حياً." },
       { role: "user", content: "أين تقام ورشة الذكاء الاصطناعي القادمة للأطفال؟" },
-      { role: "ai", content: "في مركز Triple A إيست هب - الدور الثاني. جلسات ٦ يونيو محجوزة بالكامل. مقاعد مخفضة بـ ١٩٩٫٩٩ ج.م متاحة لجلسة ١٣ يونيو الساعة ٨ مساءً. هل تريد حجز مقعد?" }
+      { role: "ai", content: "في مركز Triple A إيست هب - الدور الثاني. جلسات ٦ و ١٣ يونيو تمت بنجاح وكانت كاملة العدد. نفتح الآن باب الحجز للموجة الثالثة يوم السبت ٢٠ يونيو الساعة ١٢ ظهراً. هل تريد حجز مقعد؟" }
     ]
   },
   map: {
@@ -555,7 +555,7 @@ const contentAr: SiteContent = {
         longitude: 31.7018,
         category: "ابتكار وتعليم",
         status: "ورش حية اليوم",
-        highlight: "ورشة الأطفال القادمة: السبت ١٣ يونيو الساعة ٨ مساءً — آخر فرصة!"
+        highlight: "ورشة الأطفال القادمة: السبت ٢٠ يونيو الساعة ١٢ ظهراً — الموجة الثالثة!"
       },
       {
         id: "logistics",
@@ -618,7 +618,7 @@ const contentAr: SiteContent = {
     overline: "جلسة توعوية للأطفال عن الذكاء الاصطناعي و كيفية إستخدامه بشكل آمن",
     title: "شات الذكاء الاصطناعي للأطفال—",
     titleHighlight: "آمن وذكي وممتع",
-    subtitle: "السبت ١٣ يونيو ٢٠٢٦ · ٨:٠٠ م – ١٠:٠٠ م · أعمار ٨–١٢ — آخر مقاعد مخفضة!",
+    subtitle: "السبت ٢٠ يونيو ٢٠٢٦ · ١٢:٠٠ م – ٢:٠٠ م · أعمار ٨–١٢ — الموجة الثالثة متاحة الآن!",
     description:
       "جلسة تفاعلية لتعليم الأطفال أدوات الشات بالذكاء الاصطناعي وكيفية استخدامها بأمان. مدة كل جلسة ساعتان وبحد أقصى ١٠ أطفال فقط داخل القاعة لضمان جودة التفاعل.",
     descriptionExtra:
@@ -644,7 +644,7 @@ const contentAr: SiteContent = {
       { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B1%D9%8A%20%D9%84%D9%84%D8%A3%D8%B7%D9%81%D8%A7%D9%84%20%D9%8A%D9%88%D9%84%206%20%D9%8A%D9%88%D9%86%D9%8A%D9%88" }
     ],
     galleryTitle: "ألبوم الصور مع العباقرة الصغار",
-    gallerySubtitle: "صور من ورشة عمل التعلم التفاعلي للذكاء الاصطناعي التي أقيمت في ٦ يونيو. أطفالنا، برمجة حقيقية، ومتعة لا تنتهي!",
+    gallerySubtitle: "صور من ورش عمل التعلم التفاعلي للذكاء الاصطناعي (الموجة ١ و ٢). أطفالنا، برمجة حقيقية، ومتعة لا تنتهي!",
     galleryViewAll: "عرض جميع الصور",
     galleryLoading: "جاري تحميل معرض الصور...",
     galleryEmpty: "لا توجد صور مرفوعة لهذه الجلسة بعد."
