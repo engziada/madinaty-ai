@@ -105,6 +105,9 @@ export function Footer({ content, locale }: FooterProps) {
             {locale === "ar" ? "روابط سريعة" : "Quick Links"}
           </h4>
           <div className="footer-links">
+            <Link href={locale === "ar" ? "/ar/course" : "/en/course"}>
+              Madinaty AI Lab
+            </Link>
             <Link href={locale === "ar" ? "/ar/founders"       : "/founders"}>
               {locale === "ar" ? "المؤسسون" : "Founders"}
             </Link>

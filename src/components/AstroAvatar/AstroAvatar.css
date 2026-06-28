@@ -161,3 +161,26 @@
   .astro-avatar--lg { width: 80px; height: 80px; }
   .astro-avatar--xl { width: 140px; height: 140px; }
 }
+
+/* ---- Reduced Motion ------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .astro-glow { animation: none; opacity: 0.3; }
+  .astro-mood--idle .astro-tail,
+  .astro-mood--idle .astro-eyes,
+  .astro-mood--talking .astro-mouth,
+  .astro-mood--talking .astro-head,
+  .astro-mood--listening .astro-ear--left,
+  .astro-mood--listening .astro-ear--right,
+  .astro-mood--celebrating .astro-svg,
+  .astro-mood--celebrating .astro-tail,
+  .astro-mood--thinking .astro-badge,
+  .astro-mood--error .astro-head,
+  .astro-mood--waving .astro-paw--right {
+    animation: none;
+  }
+  .astro-confetti-piece {
+    animation: none;
+    opacity: 0;
+  }
+}

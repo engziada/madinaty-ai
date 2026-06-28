@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChatPanel } from "./ChatPanel";
 import { AstroAvatar } from "./AstroAvatar";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import type { LocaleCode, SiteContent } from "@/types/site";
 
 interface ChatFabProps {
@@ -24,6 +25,9 @@ export function ChatFab({ content, locale }: ChatFabProps) {
   const isAr = locale === "ar";
   const label = isAr ? "مدينتي شات" : "Madinaty Chatbot";
 
+  // Focus trap: active only when the modal is open
+  useFocusTrap(modalRef, { active: open, onEscape: () => setOpen(false) });
+
   /* Periodic playful wiggle to catch attention */
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,7 +45,7 @@ export function ChatFab({ content, locale }: ChatFabProps) {
     return () => window.removeEventListener("open-madinaty-chat", handler);
   }, []);
 
-  /* Close on Escape */
+  /* Body scroll lock + Escape key */
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
@@ -82,11 +86,15 @@ export function ChatFab({ content, locale }: ChatFabProps) {
         <div
           className="chat-fab-modal-overlay"
           onClick={handleOverlayClick}
-          role="dialog"
-          aria-modal="true"
-          aria-label={label}
+          aria-hidden="true"
         >
-          <div className="chat-fab-modal" ref={modalRef}>
+          <div
+            className="chat-fab-modal"
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={label}
+          >
             <div className="chat-fab-modal-header">
               <div className="chat-fab-modal-title">
                 <AstroAvatar mood="talking" size="sm" />
@@ -109,6 +117,8 @@ export function ChatFab({ content, locale }: ChatFabProps) {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
                 >
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />

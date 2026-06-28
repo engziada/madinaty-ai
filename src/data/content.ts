@@ -369,7 +369,7 @@ const contentAr: SiteContent = {
     text: "مدينتي — أكبر مدينة متكاملة في مصر بأكثر من ٧٠٠ ألف ساكن في ٢٣ حياً — تحصل على بُعدها الذكي. بناها المجتمع، وللمجتمع.",
     primaryAction: "مدينتي بوت",
     secondaryAction: "أحدث العروض",
-    dashboardTitle: "مدينتي AI · لوحة التحكم المباشرة",
+    dashboardTitle: "مدينتي AI · حاجات يهمنا تعرفها",
     dashboardStats: [
       { value: "٤٫٢ ألف", label: "عضو" },
       { value: "٧", label: "خدمة ذكية" },

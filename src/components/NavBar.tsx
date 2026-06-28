@@ -173,6 +173,7 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
         >
           <span />
           <span />
+          <span />
         </button>
 
         <nav
@@ -200,14 +201,14 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             ))}
           </NavDropdown>
 
-          {/* AI Bot - Opens Course Session */}
+          {/* AI Lab - Courses Index */}
           <Link
-            href={locale === "ar" ? "/ar/course/session" : "/course/session"}
+            href={locale === "ar" ? "/ar/course" : "/en/course"}
             className="nav-ai-bot"
             onClick={closeMenu}
           >
             <Bot size={16} />
-            {locale === "ar" ? "مختبر AI للأطفال" : "Kids AI Lab"}
+            Madinaty AI Lab
           </Link>
 
           {/* AI Tools */}

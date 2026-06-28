@@ -216,7 +216,7 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
           margin-bottom: 0.5rem;
         }
         .sparkle-icon {
-          color: var(--primary);
+          color: var(--teal);
           animation: pulse 2s infinite;
         }
         @keyframes pulse {
@@ -317,7 +317,7 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
         
         .zoom-btn {
           background: var(--surface);
-          color: var(--primary);
+          color: var(--blue);
           width: 48px;
           height: 48px;
           border-radius: 50%;
@@ -362,9 +362,9 @@ export function HighlightsGallery({ locale }: HighlightsGalleryProps) {
           z-index: 100000;
         }
         .lightbox-close:hover {
-          background: var(--primary, #00d2d2);
-          color: #000000;
-          border-color: var(--primary, #00d2d2);
+          background: var(--teal);
+          color: #ffffff;
+          border-color: var(--teal);
           transform: rotate(90deg) scale(1.1);
         }
         .lightbox-content {

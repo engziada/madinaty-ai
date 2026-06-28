@@ -73,6 +73,24 @@ const nextConfig: NextConfig = {
         ]
       }
     ];
+  },
+
+  /**
+   * Redirects from old flat course URLs to the new slugged routes.
+   * Note: Next.js redirects cannot include URL hashes (#registration, #overview, etc.),
+   * so we redirect to the course page root. The component defaults to the Registration tab.
+   */
+  async redirects() {
+    const oldTabs = ["session", "details", "trainers", "faq"] as const;
+    const locales = ["ar", "en"] as const;
+
+    return locales.flatMap((locale) =>
+      oldTabs.map((tab) => ({
+        source: `/${locale}/course/${tab}`,
+        destination: `/${locale}/course/kids-ai-chatbots`,
+        permanent: true,
+      }))
+    );
   }
 };
 

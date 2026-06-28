@@ -47,6 +47,7 @@
   --r-full: 999px;
 
   /* Shadows — soft, light */
+  --shadow-sm:   0 4px 12px rgba(20, 60, 140, 0.07), 0 1px 3px rgba(20, 60, 140, 0.05);
   --shadow-card: 0 14px 42px rgba(20, 60, 140, 0.10), 0 2px 6px rgba(20, 60, 140, 0.06);
   --shadow-glow: 0 14px 50px rgba(11, 184, 199, 0.20);
   --shadow-coral: 0 12px 34px rgba(255, 107, 91, 0.22);
@@ -985,6 +986,63 @@ p {
   font-style: italic;
 }
 
+/* Feed Container & Items (Markdown Driven) */
+.hero-feed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.hero-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  background: var(--surface-mid);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  padding: 0.9rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-feed-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Old Announcement banner inside the hero dashboard panel */
+.hero-announcement {
+  background: var(--sun-soft);
+  border-inline-start: 3px solid var(--sun);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+[dir="rtl"] .hero-announcement {
+  border-inline-start: 3px solid var(--sun);
+  border-radius: var(--r-sm) 0 0 var(--r-sm);
+}
+
+.hero-announcement-text {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.hero-announcement-text small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+[data-theme="dark"] .hero-announcement {
+  background: var(--gold-dim);
+  border-inline-start-color: var(--sun);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-activity-skeleton .skeleton-line {
     animation: none;
@@ -1565,9 +1623,9 @@ p {
 }
 
 .badge-live {
-  background: rgba(0, 210, 150, 0.15);
-  color: #00c889;
-  border: 1px solid rgba(0, 200, 137, 0.3);
+  background: var(--mint-soft);
+  color: var(--mint);
+  border: 1px solid rgba(34, 201, 147, 0.3);
 }
 
 .badge-soon {
@@ -1577,9 +1635,9 @@ p {
 }
 
 .badge-beta {
-  background: rgba(255, 170, 0, 0.12);
-  color: #e6a800;
-  border: 1px solid rgba(255, 170, 0, 0.25);
+  background: var(--gold-dim);
+  color: var(--sun);
+  border: 1px solid rgba(255, 201, 74, 0.35);
 }
 
 .svc-card h4 {
@@ -1645,7 +1703,7 @@ p {
   gap: 0.75rem;
   padding: 0.9rem 1.25rem;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, #f3f7ff 0%, #eaf1ff 100%);
+  background: linear-gradient(180deg, var(--surface-mid) 0%, var(--bg-alt) 100%);
 }
 
 .chat-top-left {
@@ -1712,7 +1770,7 @@ p {
   gap: 0.75rem;
   padding: 1rem 1.25rem;
   border-top: 1px solid var(--border);
-  background: #f9fbff;
+  background: var(--surface-mid);
 }
 
 .chat-input input {
@@ -1738,7 +1796,7 @@ p {
 
 .chat-error {
   margin: 0 1.25rem 0;
-  color: #d93b3b;
+  color: var(--coral);
   font-size: 0.85rem;
 }
 
@@ -1747,7 +1805,7 @@ p {
 .ad-shell {
   position: relative;
   border-radius: var(--r-xl);
-  background: #ffffff;
+  background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
   scroll-margin-top: 88px;
@@ -1826,7 +1884,7 @@ p {
   border-radius: var(--r-lg);
   overflow: hidden;
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--surface);
   box-shadow: 0 10px 24px rgba(20, 60, 140, 0.08);
 }
 
@@ -1848,7 +1906,7 @@ p {
   padding: 0.65rem 0.8rem;
   font-size: 0.8rem;
   color: var(--text-soft);
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .upcoming-description,
@@ -1903,7 +1961,7 @@ p {
   gap: 0.45rem;
   padding: 0.4rem 0.85rem;
   border-radius: var(--r-full);
-  background: #ffffff;
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
   font-size: 0.78rem;
@@ -1920,7 +1978,7 @@ p {
   border-radius: var(--r-lg);
   padding: 0.95rem 1rem;
   border: 1px solid rgba(255, 107, 91, 0.22);
-  background: #fff9f5;
+  background: var(--sun-soft);
 }
 
 .promo-box small {
@@ -1972,7 +2030,7 @@ p {
 }
 
 .upcoming-stats-panel {
-  background: #fbfdff;
+  background: var(--surface-mid);
   border: 1px solid var(--border);
   border-radius: var(--r-xl);
   padding: 1rem;
@@ -1991,7 +2049,7 @@ p {
   padding: 0.75rem 0.5rem;
   text-align: center;
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .event-stats div:nth-child(1) { border-color: rgba(11, 184, 199, 0.30); }
@@ -2000,7 +2058,7 @@ p {
 
 .event-stats div:nth-child(1) strong { color: var(--teal); }
 .event-stats div:nth-child(2) strong { color: var(--coral); }
-.event-stats div:nth-child(3) strong { color: #e0a700; }
+.event-stats div:nth-child(3) strong { color: var(--sun); }
 
 .event-stats strong {
   display: block;
@@ -2115,7 +2173,7 @@ p {
   border-radius: var(--r-lg);
   padding: 0.95rem 1rem;
   border: 1px solid rgba(255, 107, 91, 0.22);
-  background: #fff9f5;
+  background: var(--sun-soft);
 }
 
 .erp-promo-launch p {
@@ -2157,7 +2215,7 @@ p {
   width: 100%;
   max-height: calc(100vh - 6rem);
   border-radius: var(--r-xl);
-  background: #ffffff;
+  background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: 0 30px 60px rgba(20, 60, 140, 0.18);
   margin: auto;
@@ -2237,11 +2295,11 @@ p {
 }
 
 .registration-number-box {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--blue) 100%);
   border-radius: var(--r-lg);
   padding: 1.25rem;
   margin: 1.25rem 0;
-  color: white;
+  color: #fff;
 }
 
 .reg-label {
@@ -2340,29 +2398,29 @@ p {
 }
 
 .enrollment-form .enrollment-field input:invalid {
-  border-color: #ef4444;
+  border-color: var(--coral);
 }
 
 /* Required field indicator */
 .required-field::after {
   content: " *";
-  color: #dc2626;
+  color: var(--coral);
   font-weight: 700;
 }
 
 /* Validation state indicators */
 .field-error {
-  border-color: #dc2626 !important;
-  background-color: #fef2f2;
+  border-color: var(--coral) !important;
+  background-color: var(--coral-soft);
 }
 
 .field-valid {
-  border-color: #16a34a !important;
+  border-color: var(--mint) !important;
 }
 
 .validation-hint {
   font-size: 0.75rem;
-  color: #dc2626;
+  color: var(--coral);
   margin-top: 0.25rem;
 }
 
@@ -2370,10 +2428,10 @@ p {
 .enrollment-field select {
   border-radius: var(--r-md);
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--surface);
   padding: 0.75rem 1rem;
   font-size: 0.9rem;
-  color: #111;
+  color: var(--text);
   color-scheme: light;
   forced-color-adjust: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
@@ -2393,7 +2451,7 @@ p {
 }
 
 .enrollment-field input::placeholder {
-  color: #4b5563;
+  color: var(--text-muted);
 }
 
 .enrollment-checkbox-grid {
@@ -2409,15 +2467,15 @@ p {
   padding: 0.55rem 0.7rem;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  background: #ffffff;
-  color: #111 !important;
+  background: var(--surface);
+  color: var(--text);
   font-size: 0.83rem;
   font-weight: 500;
   forced-color-adjust: none;
 }
 
 .enrollment-checkbox-item span {
-  color: #111;
+  color: var(--text);
 }
 
 .enrollment-checkbox-item input {
@@ -2426,20 +2484,24 @@ p {
   color-scheme: light;
 }
 
+/* Dark mode: keep color-scheme light on inputs so native widgets render
+   correctly, but use a light-on-dark surface rather than full white. */
 [data-theme="dark"] .enrollment-field input,
 [data-theme="dark"] .enrollment-field select {
+  background: #eef3ff;
   color: #111;
-  background: #ffffff;
+  border-color: rgba(20, 60, 140, 0.22);
 }
 
 [data-theme="dark"] .enrollment-field select option {
   color: #111;
-  background: #ffffff;
+  background: #eef3ff;
 }
 
 [data-theme="dark"] .enrollment-checkbox-item {
-  color: #111 !important;
-  background: #ffffff;
+  background: #eef3ff;
+  color: #111;
+  border-color: rgba(20, 60, 140, 0.18);
 }
 
 [data-theme="dark"] .enrollment-checkbox-item span {
@@ -2448,7 +2510,7 @@ p {
 
 .enrollment-hint {
   font-size: 0.75rem;
-  color: #4b5563;
+  color: var(--text-muted);
 }
 
 .enrollment-field input:focus,
@@ -2474,13 +2536,13 @@ p {
 }
 
 .form-status.success {
-  color: #0a6f68;
+  color: var(--teal);
   background: rgba(11, 184, 199, 0.12);
   border-color: rgba(11, 184, 199, 0.28);
 }
 
 .form-status.error {
-  color: #b03a2e;
+  color: var(--coral);
   background: rgba(255, 107, 91, 0.12);
   border-color: rgba(255, 107, 91, 0.28);
 }
@@ -4697,6 +4759,7 @@ body:has(.cursor-arrow) {
   --text-soft:    #9fb5d0;
   --text-muted:   #6b84a3;
 
+  --shadow-sm:   0 4px 12px rgba(0, 0, 0, 0.30), 0 1px 3px rgba(0, 0, 0, 0.20);
   --shadow-card:  0 10px 34px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.30);
   --shadow-glow:  0 0 40px rgba(0, 210, 210, 0.22);
   --shadow-coral: 0 12px 32px rgba(255, 138, 116, 0.28);
@@ -5469,13 +5532,13 @@ summary:focus-visible,
    ============================================================ */
 
 .promo-box small {
-  color: #c2412b; /* ~4.6:1 on #ffe7d6 bg */
+  color: var(--coral); /* ~4.6:1 on sun-soft bg */
   font-weight: 800;
   letter-spacing: 0.1em;
 }
 
 [data-theme="dark"] .promo-box small {
-  color: #ffb8a3;
+  color: var(--coral-soft);
 }
 
 /* ============================================================

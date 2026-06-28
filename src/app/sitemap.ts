@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { courses } from "@/data/courseData";
 
 /** Canonical site URL. Override in production via `NEXT_PUBLIC_SITE_URL`. */
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.madinatyai.com";
@@ -11,7 +12,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.madinatyai.com"
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  return [
+  // Core Static Routes
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/ar`,
       lastModified: now,
@@ -97,6 +99,64 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.5
+    },
+    {
+      url: `${siteUrl}/ar/course`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+      alternates: {
+        languages: {
+          ar: `${siteUrl}/ar/course`,
+          en: `${siteUrl}/en/course`,
+          "x-default": `${siteUrl}/ar/course`
+        }
+      }
+    },
+    {
+      url: `${siteUrl}/en/course`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+      alternates: {
+        languages: {
+          ar: `${siteUrl}/ar/course`,
+          en: `${siteUrl}/en/course`,
+          "x-default": `${siteUrl}/ar/course`
+        }
+      }
     }
   ];
+
+  // Dynamic Course Routes
+  const courseRoutes: MetadataRoute.Sitemap = courses.flatMap((course) => [
+    {
+      url: `${siteUrl}/ar/course/${course.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+      alternates: {
+        languages: {
+          ar: `${siteUrl}/ar/course/${course.slug}`,
+          en: `${siteUrl}/en/course/${course.slug}`,
+          "x-default": `${siteUrl}/ar/course/${course.slug}`
+        }
+      }
+    },
+    {
+      url: `${siteUrl}/en/course/${course.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+      alternates: {
+        languages: {
+          ar: `${siteUrl}/ar/course/${course.slug}`,
+          en: `${siteUrl}/en/course/${course.slug}`,
+          "x-default": `${siteUrl}/ar/course/${course.slug}`
+        }
+      }
+    }
+  ]);
+
+  return [...staticRoutes, ...courseRoutes];
 }
