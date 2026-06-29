@@ -19,7 +19,7 @@ import {
   formatAnswer,
 } from "./ConversationEngine";
 import {
-  enrollmentSteps,
+  getEnrollmentSteps,
   type EnrollmentChatForm,
 } from "./steps/enrollmentSteps";
 import { AstroAvatar, type AstroMood } from "@/components/AstroAvatar/index";
@@ -40,6 +40,7 @@ interface AstroChatEnrollmentProps {
   locale: LocaleCode;
   open: boolean;
   onClose: () => void;
+  courseSlug?: string;
 }
 
 /* ------------------------------------------------------------------ */
@@ -50,6 +51,7 @@ export function AstroChatEnrollment({
   locale,
   open,
   onClose,
+  courseSlug = "kids-session",
 }: AstroChatEnrollmentProps) {
   const isAr = locale === "ar";
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -65,9 +67,9 @@ export function AstroChatEnrollment({
   const [mood, setMood] = useState<AstroMood>("idle");
   const [errorBubble, setErrorBubble] = useState<string | null>(null);
   const [registrationNumber, setRegistrationNumber] = useState<string | null>(null);
+  const [steps] = useState(() => getEnrollmentSteps(courseSlug));
   const [editingStepIndex, setEditingStepIndex] = useState<number | null>(null);
 
-  const steps = enrollmentSteps;
   const currentStep = steps[conv.currentStep] as
     | ConversationStep<EnrollmentChatForm>
     | undefined;
@@ -235,22 +237,10 @@ export function AstroChatEnrollment({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          childName: form.childName,
-          childAge: form.childAge,
-          childGender: form.childGender,
-          childGrade: form.childGrade,
-          schoolName: form.schoolName,
-          parentName: form.parentName,
-          parentNationalId: form.parentNationalId,
-          phone: form.phone,
-          email: form.email,
-          madinatyAddress: composedAddress,
-          addressType: form.addressType,
-          addressArea: form.addressArea,
-          interests: form.interests,
-          hobbies: form.hobbies,
-          preferredDate: form.preferredDate,
+          courseSlug,
           locale,
+          madinatyAddress: composedAddress,
+          ...form
         }),
       });
 
@@ -471,19 +461,21 @@ export function AstroChatEnrollment({
                       return (
                         <div key={step.id} className="astro-review-row">
                           <span className="astro-review-label">
-                            {step.id === "childName" ? (isAr ? "الاسم" : "Name")
-                              : step.id === "childAge" ? (isAr ? "العمر" : "Age")
-                              : step.id === "childGender" ? (isAr ? "النوع" : "Gender")
-                              : step.id === "childGrade" ? (isAr ? "الصف" : "Grade")
+                            {step.id === "childName" || step.id === "participantName" ? (isAr ? "الاسم" : "Name")
+                              : step.id === "childAge" || step.id === "participantAge" ? (isAr ? "العمر" : "Age")
+                              : step.id === "childGender" || step.id === "participantGender" ? (isAr ? "النوع" : "Gender")
+                              : step.id === "childGrade" || step.id === "participantEducation" ? (isAr ? "التعليم" : "Education")
                               : step.id === "schoolName" ? (isAr ? "المدرسة" : "School")
+                              : step.id === "companyName" ? (isAr ? "الشركة" : "Company")
+                              : step.id === "jobTitle" ? (isAr ? "المسمى الوظيفي" : "Job Title")
                               : step.id === "interests" ? (isAr ? "المواضيع" : "Topics")
                               : step.id === "hobbies" ? (isAr ? "الهوايات" : "Hobbies")
                               : step.id === "preferredDate" ? (isAr ? "تاريخ الجلسة" : "Session Date")
                               : step.id === "parentName" ? (isAr ? "ولي الأمر" : "Parent")
-                              : step.id === "parentNationalId" ? (isAr ? "الرقم القومي" : "National ID")
+                              : step.id === "parentNationalId" || step.id === "participantNationalId" ? (isAr ? "الرقم القومي" : "National ID")
                               : step.id === "phone" ? (isAr ? "الموبايل" : "Phone")
                               : step.id === "email" ? (isAr ? "الإيميل" : "Email")
-                              : step.id === "address" ? (isAr ? "العنوان" : "Address")
+                              : step.id === "addressType" || step.id === "addressArea" ? (isAr ? "العنوان" : "Address")
                               : step.id}
                           </span>
                           <span className="astro-review-value">

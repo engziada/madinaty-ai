@@ -94,10 +94,10 @@ const contentEn: SiteContent = {
       category: "core",
     },
     {
-      icon: "🎓",
-      title: "Innovation Hub",
-      text: "Certified courses for ages 6–8, 9–12, and 13–15. Let's learn AI basics, prompt writing, safe tool usage, digital critical thinking, programming and more at Madinaty's Innovation Hub.",
-      badge: "449.99 EGP · World Cup Offer 🏆",
+      icon: "🤖",
+      title: "AI For Kids",
+      text: "Interactive 2-hour workshops in District B5 where kids 8–12 learn AI basics, safe prompt engineering, and critical thinking with Cairo Uni experts.",
+      badge: "450 EGP · World Cup Offer 🏆",
       badgeType: "live",
       category: "education",
     },
@@ -210,7 +210,7 @@ const contentEn: SiteContent = {
     messages: [
       { role: "ai", content: "Hello! I'm your Madinaty AI assistant. I can help with shuttle routes, workshops, community events, and live city updates across all 23 districts." },
       { role: "user", content: "Where is the next AI workshop for kids?" },
-      { role: "ai", content: "At Triple A Education Center (East Hub - 2nd Floor). We are now booking for the next session on Saturday, June 20 at 12:00 PM with our special 20% World Cup discount (449.99 EGP). Want me to reserve a slot?" }
+      { role: "ai", content: "At Triple A Education Center (East Hub - 2nd Floor). We are now booking for the next session on Saturday, June 20 at 12:00 PM with our special 21% World Cup discount (450 EGP). Want me to reserve a slot?" }
     ]
   },
   map: {
@@ -290,27 +290,27 @@ const contentEn: SiteContent = {
     titleHighlight: "Safe, Smart, Fun",
     subtitle: "Saturday, June 20, 2026 · 12:00 PM – 2:00 PM · Ages 8–12 — 3rd Wave Now Open!",
     description:
-      "The opening discount has ended, but for our neighbors and residents, we're offering a 20% ongoing discount (449.99 EGP) valid until the end of June and as long as Egypt is playing in the World Cup! 🇪🇬⚽ Each session lasts 2 hours, with a maximum of 10 children per room.",
+      "The opening discount has ended, but for our neighbors and residents, we're offering a 21% ongoing discount (450 EGP) valid until the end of June and as long as Egypt is playing in the World Cup! 🇪🇬⚽ Each session lasts 2 hours, with a maximum of 10 children per room.",
     descriptionExtra:
       "The course is supervised by:\nEngineering & Computer Science professors from Cairo University\n\nPrepared & delivered by:\nSoftware engineers & IT professionals\nExperienced educators ensuring every child receives information in a safe and engaging way\n\n🎮 This isn't just a lecture…\nIt's a hands-on experience where kids build and experiment themselves\n\n💡 Why this course matters:\n✔️ Develops logical thinking and creativity\n✔️ Introduces children to the foundations of the future (AI & Machine Learning)\n✔️ Makes learning fun and easy",
-    promoLabel: "World Cup Offer: 449.99 EGP/kid (20% off) 🏆⚽",
+    promoLabel: "World Cup Offer: 450 EGP/kid (21% off) 🏆⚽",
     promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
-      "Available for everyone! Pre-registration is mandatory. Fee is 449.99 EGP per child (20% discount) valid through June and the World Cup period. ⚽🏆",
+      "Available for everyone! Pre-registration is mandatory. Fee is 450 EGP per child (21% discount) valid through June and the World Cup period. ⚽🏆",
     labTitle: "Small Cohort Format",
     labSubtitle: "10 kids per session · no parents in class",
     cta: "Register Now",
     stats: [
       { value: "2H", label: "Session Length" },
       { value: "10", label: "Kids / Session" },
-      { value: "449.99 EGP", label: "World Cup Offer 🏆" }
+      { value: "450 EGP", label: "World Cup Offer 🏆" }
     ],
     safetyBadges: [
       { icon: "🛡️", label: "Safe AI Usage" },
       { icon: "🎓", label: "Expert Community Instructors" },
       { icon: "👦", label: "Ages 8–12" },
-      { icon: "🏆", label: "449.99 EGP/kid (World Cup Discount) ⚽" },
+      { icon: "🏆", label: "450 EGP/kid (World Cup Discount) ⚽" },
       { icon: "📞", label: "For inquiries: +201026655008", url: "https://wa.me/201026655008?text=Hello%2C%20I%20want%20to%20inquire%20about%20the%20kids%20AI%20session" }
     ],
     galleryTitle: "Photo Album with the Little Geniuses",
@@ -620,27 +620,27 @@ const contentAr: SiteContent = {
     titleHighlight: "آمن وذكي وممتع",
     subtitle: "السبت ٢٠ يونيو ٢٠٢٦ · ١٢:٠٠ م – ٢:٠٠ م · أعمار ٨–١٢ — الموجة الثالثة متاحة الآن!",
     description:
-      "تخفيض الافتتاح للاسف خلص.. بس عشان حبايبنا وجيراننا اللي بره مدينتي وأهلنا في مدينتي، قررنا نعمل تخفيض ٢٠٪ مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال! 🇪🇬⚽ السعر الآن ٤٤٩٫٩٩ ج.م بدلاً من السعر الكامل.",
+      "تخفيض الافتتاح للاسف خلص.. بس عشان حبايبنا وجيراننا اللي بره مدينتي وأهلنا في مدينتي، قررنا نعمل تخفيض ٢١٪ مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال! 🇪🇬⚽ السعر الآن ٤٥٠ ج.م بدلاً من السعر الكامل.",
     descriptionExtra:
       "الكورس تحت إشراف:\nأساتذة هندسة و حاسبات من جامعة القاهرة\n\nو إعداد و تنفيذ:\nمهندسين برمجيات و تكنولوجيا معلومات\nأساتذة محترفين لضمان وصول المعلومة للطفل بشكل آمن و مشوق\n\n🎮 الكورس مش مجرد شرح…\nده تجربة عملية يخلي الطفل فيها \"يبني ويجرب بنفسه\"\n\n💡 ليه الكورس مهم؟\n✔️ ينمّي التفكير المنطقي والإبداع\n✔️ يعرّف الأطفال بأساسيات المستقبل (AI & Machine Learning)\n✔️ يخلّي التعلم ممتع وسهل",
-    promoLabel: "عرض المونديال: ٤٤٩٫٩٩ ج.م للطفل (خصم ٢٠٪) 🏆⚽",
+    promoLabel: "عرض المونديال: ٤٥٠ ج.م للطفل (خصم ٢١٪) 🏆⚽",
     promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
-      "متاح للجميع! تخفيض ٢٠٪ مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال. ⚽🏆",
+      "متاح للجميع! تخفيض ٢١٪ مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال. ⚽🏆",
     labTitle: "نظام مجموعات صغيرة",
-    labSubtitle: "١٠ أطفال في الجلسة · ٤٤٩٫٩٩ ج.م للطفل · بدون حضور أولياء الأمور ⚽🏆",
+    labSubtitle: "١٠ أطفال في الجلسة · ٤٥٠ ج.م للطفل · بدون حضور أولياء الأمور ⚽🏆",
     cta: "سجل الآن",
     stats: [
       { value: "١٢٠ ", label: "دقيقة" },
       { value: "١٠", label: "أطفال / جلسة" },
-      { value: "٤٤٩٫٩٩", label: "ج.م / عرض المونديال 🏆" }
+      { value: "٤٥٠", label: "ج.م / عرض المونديال 🏆" }
     ],
     safetyBadges: [
       { icon: "🛡️", label: "استخدام آمن للذكاء الاصطناعي" },
       { icon: "🎓", label: "مدربون محترفون من المجتمع" },
       { icon: "👦", label: "للأعمار ٨–١٢" },
-      { icon: "🏆", label: "٤٤٩٫٩٩ ج.م للطفل (خصم المونديال المستمر) ⚽" },
+      { icon: "🏆", label: "٤٥٠ ج.م للطفل (خصم المونديال المستمر) ⚽" },
       { icon: "📞", label: "للإستفسارات يرجى التواصل على: +201026655008", url: "https://wa.me/201026655008?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AC%D9%84%D8%B3%D8%A9%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B1%D9%8A%20%D9%84%D9%84%D8%A3%D8%B7%D9%81%D8%A7%D9%84%20%D9%8A%D9%88%D9%84%206%20%D9%8A%D9%88%D9%86%D9%8A%D9%88" }
     ],
     galleryTitle: "ألبوم الصور مع العباقرة الصغار",

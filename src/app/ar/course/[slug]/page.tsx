@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return courses.filter((c) => c.status === "active").map((c) => ({ slug: c.slug }));
+  return courses.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   const course = getCourseBySlug(slug);
-  if (!course || course.status !== "active") return notFound();
+  if (!course) return notFound();
 
   return <CourseTabsPage course={course} locale="ar" />;
 }

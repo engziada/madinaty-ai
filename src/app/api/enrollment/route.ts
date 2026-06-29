@@ -6,20 +6,31 @@ import { sendEnrollmentConfirmation } from "@/lib/resend";
 const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SHEETS_SCRIPT_URL?.trim() ?? "";
 
 interface EnrollmentPayload {
-  childName: string;
-  childAge: string;
-  childGender: string;
-  childGrade: string;
-  schoolName: string;
-  parentName: string;
-  parentNationalId: string;
+  childName?: string;
+  childAge?: string;
+  childGender?: string;
+  childGrade?: string;
+  schoolName?: string;
+  parentName?: string;
+  parentNationalId?: string;
+
+  participantName?: string;
+  participantAge?: string;
+  participantEducation?: string;
+  companyName?: string;
+  jobTitle?: string;
+  participantNationalId?: string;
+
   phone: string;
   email: string;
   madinatyAddress: string;
-  interests: string[];
-  hobbies: string;
-  preferredDate: string;
+  addressType?: string;
+  addressArea?: string;
+  interests?: string[];
+  hobbies?: string;
+  preferredDate?: string;
   locale: "en" | "ar";
+  courseSlug: string;
 }
 
 function isValidPayload(payload: unknown): payload is EnrollmentPayload {
@@ -29,23 +40,13 @@ function isValidPayload(payload: unknown): payload is EnrollmentPayload {
   }
 
   const data = payload as Partial<EnrollmentPayload>;
-  const age = Number(data.childAge);
 
   const validations = [
-    { name: "childName", valid: typeof data.childName === "string" && data.childName.trim().length > 1, value: data.childName },
-    { name: "childAge", valid: Number.isFinite(age) && age >= 7 && age <= 10, value: data.childAge },
-    { name: "childGender", valid: typeof data.childGender === "string" && data.childGender.trim().length > 0, value: data.childGender },
-    { name: "childGrade", valid: typeof data.childGrade === "string" && data.childGrade.trim().length > 0, value: data.childGrade },
-    { name: "schoolName", valid: typeof data.schoolName === "string" && data.schoolName.trim().length > 1, value: data.schoolName },
-    { name: "parentName", valid: typeof data.parentName === "string" && data.parentName.trim().length > 1, value: data.parentName },
-    { name: "parentNationalId", valid: typeof data.parentNationalId === "string" && /^\d{14}$/.test(data.parentNationalId), value: data.parentNationalId },
+    { name: "courseSlug", valid: typeof data.courseSlug === "string" && data.courseSlug.trim().length > 0, value: data.courseSlug },
+    { name: "locale", valid: data.locale === "en" || data.locale === "ar", value: data.locale },
     { name: "phone", valid: typeof data.phone === "string" && /^\+?[0-9\s-]{7,15}$/.test(data.phone), value: data.phone },
     { name: "email", valid: typeof data.email === "string" && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email), value: data.email },
     { name: "madinatyAddress", valid: typeof data.madinatyAddress === "string" && data.madinatyAddress.trim().length > 2, value: data.madinatyAddress },
-    { name: "interests", valid: Array.isArray(data.interests) && data.interests.length > 0, value: data.interests },
-    { name: "hobbies", valid: typeof data.hobbies === "string" && data.hobbies.trim().length > 1, value: data.hobbies },
-    { name: "preferredDate", valid: typeof data.preferredDate === "string" && (data.preferredDate === "2026-06-06" || data.preferredDate === "2026-06-13"), value: data.preferredDate },
-    { name: "locale", valid: data.locale === "en" || data.locale === "ar", value: data.locale }
   ];
 
   const failed = validations.filter(v => !v.valid);
@@ -173,12 +174,13 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email (non-blocking - don't wait for it)
     sendEnrollmentConfirmation({
-      parentName: payload.parentName,
-      childName: payload.childName,
+      parentName: payload.parentName ?? payload.participantName ?? "Participant",
+      childName: payload.childName ?? payload.participantName ?? "Student",
       email: payload.email,
       registrationNumber: regNumber,
       locale: payload.locale,
-      preferredDate: payload.preferredDate
+      preferredDate: payload.preferredDate,
+      courseSlug: payload.courseSlug
     }).catch((err) => console.error("Email send failed:", err));
 
     console.log("[Enrollment] Success - returning reg number:", regNumber);

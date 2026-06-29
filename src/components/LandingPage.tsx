@@ -10,10 +10,7 @@ import { AiArticleWidget } from "@/components/AiArticleWidget";
 import { RecentActivitiesFeed } from "@/components/RecentActivitiesFeed";
 
 const ChatFab = dynamic(() => import("@/components/ChatFab").then((m) => m.ChatFab), { ssr: false });
-const AstroChatEnrollment = dynamic(
-  () => import("@/components/conversational/AstroChatEnrollment").then((m) => m.AstroChatEnrollment),
-  { ssr: false }
-);
+
 
 interface LandingPageProps {
   locale: LocaleCode;
@@ -24,7 +21,6 @@ interface LandingPageProps {
  */
 export function LandingPage({ locale }: LandingPageProps) {
   const content = getSiteContent(locale);
-  const [isEnrollmentOpen, setEnrollmentOpen] = useState(false);
 
   const isAr = locale === "ar";
 
@@ -169,9 +165,9 @@ export function LandingPage({ locale }: LandingPageProps) {
                   )}
 
                   <div className="upcoming-actions">
-                    <button className="btn btn-primary" type="button" onClick={() => setEnrollmentOpen(true)}>
+                    <a className="btn btn-primary" href={`/${locale}/course/kids-session`}>
                       {content.event.cta}
-                    </button>
+                    </a>
                     <p className="upcoming-cta-note">{content.event.promoLabel}</p>
                   </div>
                 </div>
@@ -457,8 +453,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         */}
       </main>
 
-      {/* AI-driven conversational enrollment (replaces EnrollmentModal) */}
-      <AstroChatEnrollment locale={locale} open={isEnrollmentOpen} onClose={() => setEnrollmentOpen(false)} />
+
 
       {/* Floating AI chatbot */}
       <ChatFab content={content} locale={locale} />

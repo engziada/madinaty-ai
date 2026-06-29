@@ -1,60 +1,42 @@
 // Google Apps Script for Enrollment Form
-// 1. Go to https://script.google.com
-// 2. Create new project
-// 3. Paste this code
-// 4. Deploy as Web App (Execute as: Me, Access: Anyone)
-// 5. Copy the Web App URL and set as GOOGLE_SHEETS_SCRIPT_URL in .env.local
-
-const SHEET_NAME = "Registrations";
+// IMPORTANT: You MUST create this script from INSIDE your Google Sheet!
+// 1. Open your Google Sheet workbook.
+// 2. Click "Extensions" > "Apps Script" in the top menu.
+// 3. Paste this code, replacing everything.
+// 4. Click "Deploy" > "New deployment"
+// 5. Select type "Web App" (Execute as: Me, Access: Anyone)
+// 6. Copy the Web App URL and set as GOOGLE_SHEETS_SCRIPT_URL in .env.local
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
 
+    const sheetName = data.courseSlug ? data.courseSlug : "Registrations";
+
     // Get or create sheet
     const ss = SpreadsheetApp.getActiveSpreadsheet();
-    let sheet = ss.getSheetByName(SHEET_NAME);
+    let sheet = ss.getSheetByName(sheetName);
+
+    const ignoreKeys = []; // Don't ignore any keys so we capture courseSlug
 
     if (!sheet) {
-      sheet = ss.insertSheet(SHEET_NAME);
-      // Add headers
-      sheet.appendRow([
-        "Registration Number",
-        "Child Name",
-        "Child Age",
-        "Child Gender",
-        "Child Grade",
-        "School Name",
-        "Parent Name",
-        "Parent National ID",
-        "Phone",
-        "Email",
-        "Madinaty Address",
-        "Interests",
-        "Hobbies",
-        "Locale",
-        "Submitted At"
-      ]);
+      sheet = ss.insertSheet(sheetName);
+      
+      // Generate headers from the keys of the JSON payload
+      const headers = Object.keys(data).filter(k => !ignoreKeys.includes(k));
+      sheet.appendRow(headers);
     }
 
-    // Append row
-    sheet.appendRow([
-      data.registrationNumber,
-      data.childName,
-      data.childAge,
-      data.childGender,
-      data.childGrade,
-      data.schoolName,
-      data.parentName,
-      data.parentNationalId,
-      data.phone,
-      data.email,
-      data.madinatyAddress,
-      data.interests?.join(", "),
-      data.hobbies,
-      data.locale,
-      new Date().toISOString()
-    ]);
+    // Get existing headers to map the data correctly
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    
+    const row = headers.map(header => {
+      let val = data[header];
+      if (Array.isArray(val)) return val.join(", ");
+      return val === undefined ? "" : val;
+    });
+
+    sheet.appendRow(row);
 
     return ContentService.createTextOutput(
       JSON.stringify({ success: true })

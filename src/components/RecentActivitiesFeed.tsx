@@ -61,15 +61,42 @@ export function RecentActivitiesFeed({ locale }: { locale: LocaleCode }) {
   }
 
   if (state.status === "error" || !state.content) {
-    const msg =
-      locale === "ar"
-        ? "لا توجد أنشطة مجتمعية حديثة."
-        : "No recent community activities.";
-    return (
-      <div className="hero-activity hero-activity-empty" role="status" aria-live="polite">
-        <span>{msg}</span>
-      </div>
-    );
+    const fallbackContentAr = `
+[🤖 **شات الذكاء الاصطناعي للأطفال (أعمار ٨-١٢)**
+ورشة عمل تفاعلية لبناء مهارات المستقبل.](/ar/course/kids-session)
+
+[🎮 **مبادئ البرمجة وتصميم الألعاب للأطفال**
+تعلم أساسيات البرمجة من خلال تصميم الألعاب.](/ar/course/kids-ai-dev)
+
+[🐍 **بايثون وذكاء اصطناعي**
+كورس شامل لتعلم بايثون وتطوير نماذج الذكاء.](/ar/course/python-ai-programming)
+
+[⚙️ **الروبوتات والأنظمة الذكية**
+رحلة عملية في عالم الإلكترونيات وبرمجة الأردوينو.](/ar/course/robotics-smart-systems)
+
+[🚀 **القيادة بالذكاء الاصطناعي**
+برنامج تدريبي مكثف ليوم واحد مخصص للقادة والمديرين.](/ar/course/ai-pilot-day)
+    `.trim();
+
+    const fallbackContentEn = `
+[🤖 **AI Chatbots for Kids (Ages 8-12)**
+Interactive hands-on workshop to build future-ready skills.](/en/course/kids-session)
+
+[🎮 **Coding Principles & Game Design for Kids**
+Learn the basics of coding through game design.](/en/course/kids-ai-dev)
+
+[🐍 **Python & AI Prodigy**
+Comprehensive Python and AI models development course.](/en/course/python-ai-programming)
+
+[⚙️ **RoboCraft & Smart Systems**
+Hands-on journey into electronics and Arduino.](/en/course/robotics-smart-systems)
+
+[🚀 **AI Executive Pilot**
+Intensive one-day training program for leaders and managers.](/en/course/ai-pilot-day)
+    `.trim();
+
+    state.content = locale === "ar" ? fallbackContentAr : fallbackContentEn;
+    state.status = "ready";
   }
 
   return (

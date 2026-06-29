@@ -605,20 +605,7 @@ export function CourseTabsPage({ course, locale }: CourseTabsPageProps) {
           {activeTab === "faq" && (
             <FaqPanel course={course} locale={locale} isAr={isAr} />
           )}
-
-          {/* CTA Banner (on all tabs except FAQ) */}
-          {activeTab !== "faq" && (
-            <div className="ct-cta-banner reveal">
-              <h2>{isAr ? "جاهز للمستقبل؟ 🚀" : "Ready for the Future? 🚀"}</h2>
-              <p>{isAr ? "احجز مكان طفلك الآن في الجلسة التفاعلية العملية" : "Book your child's seat now in the interactive hands-on session."}</p>
-              <button className="btn btn-primary ct-cta-btn" onClick={() => setEnrollOpen(true)}>
-                {isAr ? course.ctaAr : course.ctaEn}
-              </button>
-              <span className="ct-cta-note">
-                ⚠️ {isAr ? course.discountNoteAr : course.discountNoteEn}
-              </span>
-            </div>
-          )}
+          {/* CTA Banner was moved to RegistrationPanel */}
         </div>
       </section>
 
@@ -628,6 +615,7 @@ export function CourseTabsPage({ course, locale }: CourseTabsPageProps) {
           open={enrollOpen}
           onClose={() => setEnrollOpen(false)}
           locale={locale}
+          courseSlug={course.slug}
         />
       </Suspense>
     </main>
@@ -648,6 +636,18 @@ interface PanelProps {
 function RegistrationPanel({ course, locale, isAr, onEnroll }: PanelProps & { onEnroll: () => void }) {
   return (
     <div className="reveal" role="tabpanel" id="panel-registration" aria-labelledby="tab-registration">
+      {/* Astro CTA Banner */}
+      <div className="ct-cta-banner" style={{ marginBottom: "2rem" }}>
+        <h2>{isAr ? course.ctaBannerTitleAr : course.ctaBannerTitleEn}</h2>
+        <p>{isAr ? course.ctaBannerDescAr : course.ctaBannerDescEn}</p>
+        <button className="btn btn-primary ct-cta-btn" onClick={onEnroll}>
+          {isAr ? course.ctaAr : course.ctaEn}
+        </button>
+        <span className="ct-cta-note">
+          ⚠️ {isAr ? course.discountNoteAr : course.discountNoteEn}
+        </span>
+      </div>
+
       <h2 style={{ textAlign: "center", marginBottom: "2rem", fontSize: "1.75rem", fontWeight: "700" }}>
         {isAr ? "التواريخ المتاحة للجلسات القادمة 📅" : "Available Dates for Upcoming Sessions 📅"}
       </h2>
@@ -665,44 +665,57 @@ function RegistrationPanel({ course, locale, isAr, onEnroll }: PanelProps & { on
       )}
 
       {/* Slot Cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}>
-        {course.slots.map((slot) => {
-          const isSoldOut = slot.status === "sold-out";
-          return (
-            <div
-              key={slot.id}
-              className={`ct-card ${isSoldOut ? "ct-slot-soldout" : "ct-slot-available"}`}
-              style={{ textAlign: "center" }}
-            >
-              <div className="ct-card-icon" style={{ margin: "0 auto 1rem auto", ...(isSoldOut ? { filter: "grayscale(1)" } : {}) }}>📅</div>
-              <h3>{isAr ? slot.dateAr : slot.dateEn}</h3>
-              <p style={{ fontWeight: "600", color: isSoldOut ? "var(--text-muted)" : "var(--blue)", marginBottom: "0.5rem" }}>
-                {isAr ? slot.timeAr : slot.timeEn}
-              </p>
-              {slot.urgencyAr && (
-                <p className={isSoldOut ? "ct-slot-soldout-text" : "ct-slot-lastchance-text"}>
-                  {isAr ? slot.urgencyAr : slot.urgencyEn}
+      {course.slots.length > 0 ? (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}>
+          {course.slots.map((slot) => {
+            const isSoldOut = slot.status === "sold-out";
+            return (
+              <div
+                key={slot.id}
+                className={`ct-card ${isSoldOut ? "ct-slot-soldout" : "ct-slot-available"}`}
+                style={{ textAlign: "center" }}
+              >
+                <div className="ct-card-icon" style={{ margin: "0 auto 1rem auto", ...(isSoldOut ? { filter: "grayscale(1)" } : {}) }}>📅</div>
+                <h3>{isAr ? slot.dateAr : slot.dateEn}</h3>
+                <p style={{ fontWeight: "600", color: isSoldOut ? "var(--text-muted)" : "var(--blue)", marginBottom: "0.5rem" }}>
+                  {isAr ? slot.timeAr : slot.timeEn}
                 </p>
-              )}
-              {slot.noteAr && (
-                <p style={{ fontSize: "0.8rem", color: "var(--blue)", marginTop: "0.5rem", fontWeight: "500" }}>
-                  {isAr ? slot.noteAr : slot.noteEn}
-                </p>
-              )}
-              <hr style={{ border: "0", borderTop: "1px solid var(--border)", margin: "1.5rem 0" }} />
-              {isSoldOut ? (
-                <button className="btn ct-btn-disabled" disabled>
-                  {isAr ? "كامل العدد" : "Sold Out"}
-                </button>
-              ) : (
-                <button className="btn btn-primary" style={{ width: "100%" }} onClick={onEnroll}>
-                  {isAr ? "سجل الآن" : "Register Now"}
-                </button>
-              )}
-            </div>
-          );
-        })}
-      </div>
+                {slot.urgencyAr && (
+                  <p className={isSoldOut ? "ct-slot-soldout-text" : "ct-slot-lastchance-text"}>
+                    {isAr ? slot.urgencyAr : slot.urgencyEn}
+                  </p>
+                )}
+                {slot.noteAr && (
+                  <p style={{ fontSize: "0.8rem", color: "var(--blue)", marginTop: "0.5rem", fontWeight: "500" }}>
+                    {isAr ? slot.noteAr : slot.noteEn}
+                  </p>
+                )}
+                <hr style={{ border: "0", borderTop: "1px solid var(--border)", margin: "1.5rem 0" }} />
+                {isSoldOut ? (
+                  <button className="btn ct-btn-disabled" disabled>
+                    {isAr ? "كامل العدد" : "Sold Out"}
+                  </button>
+                ) : (
+                  <button className="btn btn-primary" style={{ width: "100%" }} onClick={onEnroll}>
+                    {isAr ? "سجل الآن" : "Register Now"}
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="ct-card ct-slot-available" style={{ textAlign: "center", maxWidth: "500px", margin: "0 auto" }}>
+          <div className="ct-card-icon" style={{ margin: "0 auto 1rem auto" }}>💬</div>
+          <h3>{isAr ? "مفتوح للتسجيل" : "Open for Registration"}</h3>
+          <p style={{ fontWeight: "600", color: "var(--blue)", marginBottom: "0.5rem" }}>
+            {course.priceDiscounted} {isAr ? "ج.م" : course.currency}
+          </p>
+          <p style={{ fontSize: "0.95rem", color: "var(--text-muted)", marginBottom: "1.5rem" }}>
+            {isAr ? "لم يتم تحديد تواريخ ثابتة للجلسات القادمة حتى الآن. بادر بالتسجيل لضمان مقعدك." : "Upcoming session dates haven't been scheduled yet. Register now to secure your seat."}
+          </p>
+        </div>
+      )}
 
       {/* Requirements */}
       {course.requirements.length > 0 && (
@@ -740,6 +753,23 @@ function RegistrationPanel({ course, locale, isAr, onEnroll }: PanelProps & { on
             </div>
           ))}
         </div>
+      </div>
+
+      {/* WhatsApp Fallback CTA (moved to bottom of registration tab) */}
+      <div style={{ marginTop: "4rem", textAlign: "center" }}>
+        <hr style={{ border: "0", borderTop: "1px solid var(--border)", margin: "1.5rem 0" }} />
+        <p style={{ fontSize: "0.95rem", color: "var(--text-muted)", marginBottom: "1rem" }}>
+          {isAr ? "لديك أي استفسار أو تواجه مشكلة في التسجيل؟" : "Have any questions or facing issues with registration?"}
+        </p>
+        <a
+          href="https://wa.me/201026655008"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline"
+          style={{ display: "inline-block", textDecoration: "none" }}
+        >
+          {isAr ? "تواصل معنا عبر واتساب" : "Contact us on WhatsApp"}
+        </a>
       </div>
     </div>
   );

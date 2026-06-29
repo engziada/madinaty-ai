@@ -1,38 +1,34 @@
 /**
- * enrollmentSteps — Conversation step definitions for the Kids' Session
- * enrollment flow (Typeform Chat with Astro).
- *
- * 13 steps total, mapping 1:1 to the fields in the existing
- * EnrollmentFormState / POST /api/enrollment payload.
+ * enrollmentSteps — Conversation step definitions
  */
 
 import type { ConversationStep, SelectOption, CascadingSelectConfig } from "../ConversationEngine";
 import type { LocaleCode } from "@/types/site";
 
-/* ------------------------------------------------------------------ */
-/*  Form state shape (mirrors existing EnrollmentModal)                */
-/* ------------------------------------------------------------------ */
-
 export interface EnrollmentChatForm {
-  childName: string;
-  childAge: string;
-  childGender: string;
-  childGrade: string;
-  schoolName: string;
-  interests: string[];
-  hobbies: string;
-  preferredDate: string;
-  parentName: string;
-  parentNationalId: string;
-  phone: string;
-  email: string;
-  addressType: string;
-  addressArea: string;
-}
+  childName?: string;
+  childAge?: string;
+  childGender?: string;
+  childGrade?: string;
+  schoolName?: string;
+  interests?: string[];
+  hobbies?: string;
+  parentName?: string;
+  parentNationalId?: string;
 
-/* ------------------------------------------------------------------ */
-/*  Reusable option builders (same data as EnrollmentModal)            */
-/* ------------------------------------------------------------------ */
+  participantName?: string;
+  participantAge?: string;
+  participantEducation?: string;
+  companyName?: string;
+  jobTitle?: string;
+  participantNationalId?: string;
+
+  phone?: string;
+  email?: string;
+  addressType?: string;
+  addressArea?: string;
+  preferredDate?: string;
+}
 
 function genderOptions(locale: LocaleCode): SelectOption[] {
   return locale === "ar"
@@ -47,10 +43,10 @@ function genderOptions(locale: LocaleCode): SelectOption[] {
 }
 
 function gradeOptions(locale: LocaleCode): SelectOption[] {
-  const grades = [1, 2, 3, 4, 5];
+  const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return grades.map((n) =>
     locale === "ar"
-      ? { value: `grade-${n}`, label: `الصف ${n === 1 ? "الأول" : n === 2 ? "الثاني" : n === 3 ? "الثالث" : n === 4 ? "الرابع" : "الخامس"}` }
+      ? { value: `grade-${n}`, label: `الصف ${n}` }
       : { value: `grade-${n}`, label: `Grade ${n}` }
   );
 }
@@ -85,262 +81,234 @@ function addressTypeOptions(locale: LocaleCode): SelectOption[] {
       ];
 }
 
-/* ------------------------------------------------------------------ */
-/*  Step definitions                                                   */
-/* ------------------------------------------------------------------ */
+export function getEnrollmentSteps(courseSlug: string): ConversationStep<EnrollmentChatForm>[] {
+  const profile = (courseSlug === "ai-pilot-day") ? "executive" : (courseSlug === "python-ai-programming" || courseSlug === "robotics-smart-systems") ? "general" : "kids";
 
-export const enrollmentSteps: ConversationStep<EnrollmentChatForm>[] = [
-  /* 0 — Child name */
-  {
-    id: "childName",
-    field: "childName",
-    botMessage: (_ctx, locale) =>
-      locale === "ar"
-        ? "هاو! 🐕 أنا أسترو، صديقك الذكي! خلينا نسجلك في أروع مغامرة AI! إيه اسم الطالب؟"
-        : "Woof! 🐕 I'm Astro, your AI buddy! Let's sign you up for an awesome AI adventure! What's the student's name?",
-    inputType: "text",
-    inputProps: { maxLength: 60 },
-    validate: (v, locale) => {
-      const s = String(v ?? "").trim();
-      if (s.length < 2) {
-        return { valid: false, error: locale === "ar" ? "الاسم لازم يكون حرفين على الأقل" : "Name must be at least 2 characters" };
+  const addressSteps: ConversationStep<EnrollmentChatForm>[] = [
+    {
+      id: "addressType",
+      field: "addressType",
+      botMessage: (_ctx, locale) => locale === "ar" ? "فين ساكن في مدينتي؟ 🏠" : "Where do you live in Madinaty? 🏠",
+      inputType: "select",
+      options: addressTypeOptions,
+      validate: (v, locale) => (!v ? { valid: false, error: locale === "ar" ? "اختار نوع السكن" : "Please select your address type" } : { valid: true }),
+    },
+    {
+      id: "addressArea",
+      field: "addressArea",
+      botMessage: (ctx, locale) => {
+        const isGroup = ctx.addressType === "group";
+        return locale === "ar"
+          ? `رقم الـ ${isGroup ? "مجموعة (Group)" : "مجموعة الفيلات (Villa Group)"} كام؟ 🔢`
+          : `What is the ${isGroup ? "Group" : "Villa Group"} number? 🔢`;
+      },
+      inputType: "text",
+      inputProps: { inputMode: "numeric" },
+      validate: (v, locale) => (!v || String(v).trim().length === 0 ? { valid: false, error: locale === "ar" ? "اكتب الرقم" : "Please enter the number" } : { valid: true }),
+    }
+  ];
+
+  const contactSteps: ConversationStep<EnrollmentChatForm>[] = [
+    {
+      id: "phone",
+      field: "phone",
+      botMessage: (_ctx, locale) => locale === "ar" ? "رقم الموبايل؟ 📱" : "Phone number? 📱",
+      inputType: "tel",
+      validate: (v, locale) => (!/^\+?[0-9\s-]{7,15}$/.test(String(v ?? "")) ? { valid: false, error: locale === "ar" ? "رقم الموبايل مش صحيح" : "Please enter a valid phone number" } : { valid: true }),
+    },
+    {
+      id: "email",
+      field: "email",
+      botMessage: (_ctx, locale) => locale === "ar" ? "البريد الإلكتروني؟ 📧" : "Email address? 📧",
+      inputType: "email",
+      validate: (v, locale) => (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(v ?? "")) ? { valid: false, error: locale === "ar" ? "البريد الإلكتروني مش صحيح" : "Please enter a valid email" } : { valid: true }),
+    }
+  ];
+
+  if (profile === "executive") {
+    return [
+      {
+        id: "participantName",
+        field: "participantName",
+        botMessage: (_ctx, locale) => locale === "ar" ? "أهلاً بك في القيادة بالذكاء الاصطناعي 🚀. ما هو اسمك الكريم؟" : "Welcome to AI Executive Pilot 🚀. What is your name?",
+        inputType: "text",
+        inputProps: { maxLength: 60 },
+        validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "الاسم يجب أن يكون حرفين على الأقل" : "Name must be at least 2 characters" } : { valid: true }),
+      },
+      {
+        id: "companyName",
+        field: "companyName",
+        botMessage: (_ctx, locale) => locale === "ar" ? "ما هو اسم شركتك؟ 🏢" : "What is your company name? 🏢",
+        inputType: "text",
+        validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب اسم الشركة" : "Please enter company name" } : { valid: true }),
+      },
+      {
+        id: "jobTitle",
+        field: "jobTitle",
+        botMessage: (_ctx, locale) => locale === "ar" ? "ما هو المسمى الوظيفي الخاص بك؟ 💼" : "What is your job title? 💼",
+        inputType: "text",
+        validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب المسمى الوظيفي" : "Please enter job title" } : { valid: true }),
+      },
+      {
+        id: "participantNationalId",
+        field: "participantNationalId",
+        botMessage: (_ctx, locale) => locale === "ar" ? "الرقم القومي؟ (١٤ رقم) 🪪" : "National ID? (14 digits) 🪪",
+        inputType: "text",
+        inputProps: { inputMode: "numeric", maxLength: 14 },
+        validate: (v, locale) => (!/^\d{14}$/.test(String(v ?? "").replace(/\D/g, "")) ? { valid: false, error: locale === "ar" ? "الرقم القومي لازم يكون ١٤ رقم" : "National ID must be exactly 14 digits" } : { valid: true }),
+        transform: (v) => String(v ?? "").replace(/\D/g, ""),
+      },
+      ...contactSteps,
+      ...addressSteps,
+      {
+        id: "review",
+        field: "",
+        botMessage: (ctx, locale) => locale === "ar" ? `تمام يا ${ctx.participantName}! خلينا نراجع البيانات قبل ما نبعتها 🚀` : `Alright ${ctx.participantName}! Let's review everything before blastoff! 🚀`,
+        inputType: "review",
+        validate: () => ({ valid: true }),
       }
-      return { valid: true };
-    },
-  },
+    ];
+  }
 
-  /* 1 — Child age */
-  {
-    id: "childAge",
-    field: "childAge",
-    botMessage: (ctx, locale) =>
-      locale === "ar"
-        ? `أهلاً يا ${ctx.childName}! 🎉 عندك كام سنة؟`
-        : `Nice to meet you, ${ctx.childName}! 🎉 How old are you?`,
-    inputType: "number",
-    inputProps: { min: 7, max: 10 },
-    validate: (v, locale) => {
-      const n = Number(v);
-      if (!Number.isFinite(n) || n < 7 || n > 10) {
-        return { valid: false, error: locale === "ar" ? "العمر لازم يكون بين ٧ و ١٠" : "Age must be between 7 and 10" };
+  if (profile === "general") {
+    return [
+      {
+        id: "participantName",
+        field: "participantName",
+        botMessage: (_ctx, locale) => locale === "ar" ? "هاو! 🐕 أنا أسترو. إيه اسمك؟" : "Woof! 🐕 I'm Astro. What's your name?",
+        inputType: "text",
+        inputProps: { maxLength: 60 },
+        validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "الاسم لازم يكون حرفين على الأقل" : "Name must be at least 2 characters" } : { valid: true }),
+      },
+      {
+        id: "participantAge",
+        field: "participantAge",
+        botMessage: (ctx, locale) => locale === "ar" ? `أهلاً يا ${ctx.participantName}! 🎉 عندك كام سنة؟` : `Nice to meet you, ${ctx.participantName}! 🎉 How old are you?`,
+        inputType: "number",
+        inputProps: { min: 12, max: 99 },
+        validate: (v, locale) => {
+          const n = Number(v);
+          return (!Number.isFinite(n) || n < 12 || n > 99) ? { valid: false, error: locale === "ar" ? "العمر لازم يكون بين ١٢ و ٩٩" : "Age must be between 12 and 99" } : { valid: true };
+        },
+      },
+      {
+        id: "participantEducation",
+        field: "participantEducation",
+        botMessage: (_ctx, locale) => locale === "ar" ? "إيه هي جامعتك أو مدرستك؟ 🏫" : "What is your university or school? 🏫",
+        inputType: "text",
+        validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب اسم الجهة التعليمية" : "Please enter your school/university" } : { valid: true }),
+      },
+      {
+        id: "hobbies",
+        field: "hobbies",
+        botMessage: (_ctx, locale) => locale === "ar" ? "بتحب تعمل إيه وقت الفراغ؟ ⚽🎨🎮" : "What do you like doing for fun? ⚽🎨🎮",
+        inputType: "text",
+        validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب هواية واحدة على الأقل" : "Tell us at least one hobby" } : { valid: true }),
+      },
+      {
+        id: "participantNationalId",
+        field: "participantNationalId",
+        botMessage: (_ctx, locale) => locale === "ar" ? "الرقم القومي؟ (١٤ رقم) 🪪" : "National ID? (14 digits) 🪪",
+        inputType: "text",
+        inputProps: { inputMode: "numeric", maxLength: 14 },
+        validate: (v, locale) => (!/^\d{14}$/.test(String(v ?? "").replace(/\D/g, "")) ? { valid: false, error: locale === "ar" ? "الرقم القومي لازم يكون ١٤ رقم" : "National ID must be exactly 14 digits" } : { valid: true }),
+        transform: (v) => String(v ?? "").replace(/\D/g, ""),
+      },
+      ...contactSteps,
+      ...addressSteps,
+      {
+        id: "review",
+        field: "",
+        botMessage: (ctx, locale) => locale === "ar" ? `تمام يا ${ctx.participantName}! خلينا نراجع البيانات قبل ما نبعتها 🚀` : `Alright ${ctx.participantName}! Let's review everything before blastoff! 🚀`,
+        inputType: "review",
+        validate: () => ({ valid: true }),
       }
-      return { valid: true };
+    ];
+  }
+
+  // Kids profile
+  return [
+    {
+      id: "childName",
+      field: "childName",
+      botMessage: (_ctx, locale) => locale === "ar" ? "هاو! 🐕 أنا أسترو، صديقك الذكي! خلينا نسجلك في أروع مغامرة AI! إيه اسم الطالب؟" : "Woof! 🐕 I'm Astro, your AI buddy! Let's sign you up for an awesome AI adventure! What's the student's name?",
+      inputType: "text",
+      inputProps: { maxLength: 60 },
+      validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "الاسم لازم يكون حرفين على الأقل" : "Name must be at least 2 characters" } : { valid: true }),
     },
-  },
-
-  /* 2 — Gender */
-  {
-    id: "childGender",
-    field: "childGender",
-    botMessage: (_ctx, locale) =>
-      locale === "ar" ? "ممتاز! أنت... 🤔" : "Awesome! Are you a... 🤔",
-    inputType: "select",
-    options: genderOptions,
-    validate: (v) => ({ valid: Boolean(v) }),
-  },
-
-  /* 3 — Grade */
-  {
-    id: "childGrade",
-    field: "childGrade",
-    botMessage: (_ctx, locale) =>
-      locale === "ar" ? "في أنهي صف دراسي؟ 📖" : "What grade are you in? 📖",
-    inputType: "select",
-    options: gradeOptions,
-    validate: (v) => ({ valid: Boolean(v) }),
-  },
-
-  /* 4 — School */
-  {
-    id: "schoolName",
-    field: "schoolName",
-    botMessage: (_ctx, locale) =>
-      locale === "ar" ? "وبتروح مدرسة إيه؟ 🏫" : "What school do you go to? 🏫",
-    inputType: "text",
-    inputProps: { maxLength: 80 },
-    validate: (v, locale) => {
-      const val = String(v ?? "").trim();
-      if (val.length === 0) return { valid: true }; // Optional
-      if (val.length < 2) {
-        return { valid: false, error: locale === "ar" ? "اكتب اسم المدرسة" : "Please enter the school name" };
-      }
-      return { valid: true };
+    {
+      id: "childAge",
+      field: "childAge",
+      botMessage: (ctx, locale) => locale === "ar" ? `أهلاً يا ${ctx.childName}! 🎉 عندك كام سنة؟` : `Nice to meet you, ${ctx.childName}! 🎉 How old are you?`,
+      inputType: "number",
+      inputProps: { min: 7, max: 12 },
+      validate: (v, locale) => {
+        const n = Number(v);
+        return (!Number.isFinite(n) || n < 7 || n > 12) ? { valid: false, error: locale === "ar" ? "العمر لازم يكون بين ٧ و ١٢" : "Age must be between 7 and 12" } : { valid: true };
+      },
     },
-  },
-
-  /* 5 — Interests */
-  {
-    id: "interests",
-    field: "interests",
-    botMessage: (_ctx, locale) =>
-      locale === "ar"
-        ? "إيه المواضيع اللي تحب تتعلمها؟ اختار اللي يعجبك! 🤖"
-        : "What AI topics sound cool? Pick as many as you want! 🤖",
-    inputType: "multi-select",
-    options: interestOptions,
-    validate: (v, _locale) => {
-      // Optional, so an empty array is fine
-      return { valid: true };
+    {
+      id: "childGender",
+      field: "childGender",
+      botMessage: (_ctx, locale) => locale === "ar" ? "ممتاز! أنت... 🤔" : "Awesome! Are you a... 🤔",
+      inputType: "select",
+      options: genderOptions,
+      validate: (v) => ({ valid: Boolean(v) }),
     },
-  },
-
-  /* 6 — Hobbies */
-  {
-    id: "hobbies",
-    field: "hobbies",
-    botMessage: (_ctx, locale) =>
-      locale === "ar"
-        ? "بتحب تعمل إيه وقت الفراغ؟ ⚽🎨🎮"
-        : "What do you like doing for fun? ⚽🎨🎮",
-    inputType: "text",
-    inputProps: { placeholder: undefined }, // dynamic below
-    validate: (v, locale) => {
-      const val = String(v ?? "").trim();
-      if (val.length === 0) return { valid: true }; // Optional
-      if (val.length < 2) {
-        return { valid: false, error: locale === "ar" ? "اكتب هواية واحدة على الأقل" : "Tell us at least one hobby" };
-      }
-      return { valid: true };
+    {
+      id: "childGrade",
+      field: "childGrade",
+      botMessage: (_ctx, locale) => locale === "ar" ? "في أنهي صف دراسي؟ 📖" : "What grade are you in? 📖",
+      inputType: "select",
+      options: gradeOptions,
+      validate: (v) => ({ valid: Boolean(v) }),
     },
-  },
-
-  /* 6.5 — Preferred Date */
-  {
-    id: "preferredDate",
-    field: "preferredDate",
-    botMessage: (_ctx, locale) =>
-      locale === "ar"
-        ? "تحب تحجز أنهي تاريخ للجلسة؟ 📅"
-        : "Which session date would you like to book? 📅",
-    inputType: "select",
-    options: (locale) =>
-      locale === "ar"
-        ? [
-            { value: "2026-06-20", label: "✅ السبت ٢٠ يونيو ٢٠٢٦ — (خصم المونديال ٢٠٪ متاح) 🏆" },
-          ]
-        : [
-            { value: "2026-06-20", label: "✅ Saturday, June 20, 2026 — (20% World Cup Discount available) 🏆" },
-          ],
-    validate: (v, locale) => {
-      if (!v) {
-        return { valid: false, error: locale === "ar" ? "برجاء اختيار تاريخ الجلسة" : "Please select a session date" };
-      }
-      return { valid: true };
+    {
+      id: "schoolName",
+      field: "schoolName",
+      botMessage: (_ctx, locale) => locale === "ar" ? "وبتروح مدرسة إيه؟ 🏫" : "What school do you go to? 🏫",
+      inputType: "text",
+      validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب اسم المدرسة" : "Please enter the school name" } : { valid: true }),
     },
-  },
-
-  /* 7 — Parent name (transition message) */
-  {
-    id: "parentName",
-    field: "parentName",
-    botMessage: (ctx, locale) =>
-      locale === "ar"
-        ? `اختيارات ممتازة يا ${ctx.childName}! 🌟 دلوقتي محتاج أتكلم مع ولي الأمر. إيه اسم ولي الأمر؟`
-        : `Great choices, ${ctx.childName}! 🌟 Now I need to chat with your parent. What's their name?`,
-    inputType: "text",
-    validate: (v, locale) => {
-      if (String(v ?? "").trim().length < 2) {
-        return { valid: false, error: locale === "ar" ? "اكتب الاسم الكامل" : "Please enter full name" };
-      }
-      return { valid: true };
+    {
+      id: "interests",
+      field: "interests",
+      botMessage: (_ctx, locale) => locale === "ar" ? "إيه المواضيع اللي تحب تتعلمها؟ اختار اللي يعجبك! 🤖" : "What AI topics sound cool? Pick as many as you want! 🤖",
+      inputType: "multi-select",
+      options: interestOptions,
+      validate: () => ({ valid: true }), // Optional
     },
-  },
-
-  /* 8 — National ID */
-  {
-    id: "parentNationalId",
-    field: "parentNationalId",
-    botMessage: (_ctx, locale) =>
-      locale === "ar"
-        ? "الرقم القومي لولي الأمر؟ (١٤ رقم) 🪪"
-        : "Parent's national ID? (14 digits) 🪪",
-    inputType: "text",
-    inputProps: { inputMode: "numeric", maxLength: 14 },
-    validate: (v, locale) => {
-      const s = String(v ?? "").replace(/\D/g, "");
-      if (!/^\d{14}$/.test(s)) {
-        return { valid: false, error: locale === "ar" ? "الرقم القومي لازم يكون ١٤ رقم" : "National ID must be exactly 14 digits" };
-      }
-      return { valid: true };
+    {
+      id: "hobbies",
+      field: "hobbies",
+      botMessage: (_ctx, locale) => locale === "ar" ? "بتحب تعمل إيه وقت الفراغ؟ ⚽🎨🎮" : "What do you like doing for fun? ⚽🎨🎮",
+      inputType: "text",
+      validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب هواية واحدة على الأقل" : "Tell us at least one hobby" } : { valid: true }),
     },
-    transform: (v) => String(v ?? "").replace(/\D/g, ""),
-  },
-
-  /* 9 — Phone */
-  {
-    id: "phone",
-    field: "phone",
-    botMessage: (_ctx, locale) =>
-      locale === "ar" ? "رقم الموبايل؟ 📱" : "Phone number? 📱",
-    inputType: "tel",
-    validate: (v, locale) => {
-      if (!/^\+?[0-9\s-]{7,15}$/.test(String(v ?? ""))) {
-        return { valid: false, error: locale === "ar" ? "رقم الموبايل مش صحيح" : "Please enter a valid phone number" };
-      }
-      return { valid: true };
+    {
+      id: "parentName",
+      field: "parentName",
+      botMessage: (ctx, locale) => locale === "ar" ? `اختيارات ممتازة يا ${ctx.childName}! 🌟 دلوقتي محتاج أتكلم مع ولي الأمر. إيه اسم ولي الأمر؟` : `Great choices, ${ctx.childName}! 🌟 Now I need to chat with your parent. What's their name?`,
+      inputType: "text",
+      validate: (v, locale) => (String(v ?? "").trim().length < 2 ? { valid: false, error: locale === "ar" ? "اكتب الاسم الكامل" : "Please enter full name" } : { valid: true }),
     },
-  },
-
-  /* 10 — Email */
-  {
-    id: "email",
-    field: "email",
-    botMessage: (_ctx, locale) =>
-      locale === "ar" ? "البريد الإلكتروني لولي الأمر؟ 📧" : "Parent's email address? 📧",
-    inputType: "email",
-    validate: (v, locale) => {
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(v ?? ""))) {
-        return { valid: false, error: locale === "ar" ? "البريد الإلكتروني مش صحيح" : "Please enter a valid email" };
-      }
-      return { valid: true };
+    {
+      id: "parentNationalId",
+      field: "parentNationalId",
+      botMessage: (_ctx, locale) => locale === "ar" ? "الرقم القومي لولي الأمر؟ (١٤ رقم) 🪪" : "Parent's national ID? (14 digits) 🪪",
+      inputType: "text",
+      inputProps: { inputMode: "numeric", maxLength: 14 },
+      validate: (v, locale) => (!/^\d{14}$/.test(String(v ?? "").replace(/\D/g, "")) ? { valid: false, error: locale === "ar" ? "الرقم القومي لازم يكون ١٤ رقم" : "National ID must be exactly 14 digits" } : { valid: true }),
+      transform: (v) => String(v ?? "").replace(/\D/g, ""),
     },
-  },
-
-  /* 11 — Address Type */
-  {
-    id: "addressType",
-    field: "addressType",
-    botMessage: (_ctx, locale) =>
-      locale === "ar"
-        ? "فين ساكنين في مدينتي؟ 🏠"
-        : "Where do you live in Madinaty? 🏠",
-    inputType: "select",
-    options: addressTypeOptions,
-    validate: (v, locale) => {
-      if (!v) return { valid: false, error: locale === "ar" ? "اختار نوع السكن" : "Please select your address type" };
-      return { valid: true };
-    },
-  },
-
-  /* 11.5 — Address Area (Number) */
-  {
-    id: "addressArea",
-    field: "addressArea",
-    botMessage: (ctx, locale) => {
-      const isGroup = ctx.addressType === "group";
-      return locale === "ar"
-        ? `رقم الـ ${isGroup ? "مجموعة (Group)" : "مجموعة الفيلات (Villa Group)"} كام؟ 🔢`
-        : `What is the ${isGroup ? "Group" : "Villa Group"} number? 🔢`;
-    },
-    inputType: "text",
-    inputProps: { inputMode: "numeric" },
-    validate: (v, locale) => {
-      if (!v || String(v).trim().length === 0) {
-        return { valid: false, error: locale === "ar" ? "اكتب الرقم" : "Please enter the number" };
-      }
-      return { valid: true };
-    },
-  },
-
-  /* 12 — Review */
-  {
-    id: "review",
-    field: "",
-    botMessage: (ctx, locale) =>
-      locale === "ar"
-        ? `تمام يا ${ctx.childName}! خلينا نراجع البيانات قبل ما نبعتها 🚀`
-        : `Alright ${ctx.childName}! Let's review everything before blastoff! 🚀`,
-    inputType: "review",
-    validate: () => ({ valid: true }),
-  },
-];
+    ...contactSteps,
+    ...addressSteps,
+    {
+      id: "review",
+      field: "",
+      botMessage: (ctx, locale) => locale === "ar" ? `تمام يا ${ctx.childName}! خلينا نراجع البيانات قبل ما نبعتها 🚀` : `Alright ${ctx.childName}! Let's review everything before blastoff! 🚀`,
+      inputType: "review",
+      validate: () => ({ valid: true }),
+    }
+  ];
+}
