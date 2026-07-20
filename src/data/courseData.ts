@@ -84,6 +84,8 @@ export interface Course {
   slug: string;
   icon: string;
   status: "active" | "coming-soon";
+  /** Target audience for filtering */
+  audience: "kids" | "professional" | "general";
   /** Category / venue */
   categoryAr: string;
   categoryEn: string;
@@ -157,8 +159,9 @@ export const courses: Course[] = [
     slug: "kids-session",
     icon: "🤖",
     status: "active",
-    categoryAr: "مركز الابتكار بمدينتي · Triple A إيست هب",
-    categoryEn: "Madinaty Innovation Hub · Triple A East Hub",
+    audience: "kids",
+    categoryAr: "مركز الإبتكار · مدينتي",
+    categoryEn: "AI Innovation Lab · Madinaty, New Cairo",
     titleAr: "شات الذكاء الاصطناعي للأطفال (أعمار ٨-١٢)",
     titleEn: "AI Chatbots for Kids (Ages 8-12)",
     descriptionAr: "ورشة عمل تفاعلية لبناء مهارات المستقبل، تعليم أدوات الشات والكتابة الآمنة للأوامر.",
@@ -228,7 +231,7 @@ export const courses: Course[] = [
     specs: [
       { labelAr: "الفئة العمرية", labelEn: "Target Age", valueAr: "٨ إلى ١٢ سنة", valueEn: "8 to 12 years old" },
       { labelAr: "مدة الجلسة", labelEn: "Session Duration", valueAr: "ساعتان كاملتان (١٢٠ دقيقة)", valueEn: "2 full hours (120 minutes)" },
-      { labelAr: "المكان", labelEn: "Location", valueAr: "مركز Triple A التعليمي، الدور الثاني، إيست هب، مدينتي", valueEn: "Triple A Education Center, 2nd Floor, East Hub, Madinaty" },
+      { labelAr: "المكان", labelEn: "Location", valueAr: "مركز الإبتكار، مدينتي، القاهرة الجديدة", valueEn: "AI Innovation Lab, Madinaty, New Cairo" },
       { labelAr: "الحد الأقصى", labelEn: "Room Capacity", valueAr: "١٠ طلاب فقط لكل جلسة لضمان جودة الاستيعاب", valueEn: "Strictly max 10 students for quality interaction" },
     ],
 
@@ -256,7 +259,7 @@ export const courses: Course[] = [
     faqs: [
       { qAr: "كم سعر الجلسة؟", qEn: "How much does the session cost?", aAr: "سعر الجلسة ٤٥٠ ج.م للطفل (خصم ٢١٪ من السعر الأصلي البالغ ٥٧٠ ج.م).", aEn: "The session costs 450 EGP per child (21% off the standard fee of 569.99 EGP)." },
       { qAr: "ما هي الفئة العمرية المستهدفة؟", qEn: "What is the target age group?", aAr: "الورشة مصممة خصيصاً للأطفال من عمر ٨ إلى ١٢ سنة. المنهج والألعاب التعليمية والتطبيقات العملية مناسبة تماماً لهذه الفئة العمرية.", aEn: "The workshop is tailored for children aged 8 to 12. The exercises, interactive storytelling, prompting games, and safety principles are specially designed for this cognitive stage." },
-      { qAr: "أين تقع القاعة المخصصة للورشة؟", qEn: "Where is the session located?", aAr: "تقام الورشة في مركز Triple A التعليمي (East Hub - الدور الثاني)، القاهرة الجديدة. الموقع مجهز بالكامل بأجهزة الكمبيوتر وشبكة إنترنت سريعة وبيئة مكيفة وآمنة للأطفال.", aEn: "Sessions take place at the Triple A Education Center, 2nd Floor, East Hub, Madinaty. The lab is equipped with high-speed computers, safe internet filters, and a comfortable, secure environment." },
+      { qAr: "أين تقع القاعة المخصصة للورشة؟", qEn: "Where is the session located?", aAr: "تقام الورشة في مركز الإبتكار بمدينتي، القاهرة الجديدة. الموقع مجهز بالكامل بأجهزة الكمبيوتر وشبكة إنترنت سريعة وبيئة مكيفة وآمنة للأطفال.", aEn: "Sessions take place at the AI Innovation Lab in Madinaty, New Cairo. The lab is equipped with high-speed computers, safe internet filters, and a comfortable, secure environment." },
       { qAr: "هل يمكن لأولياء الأمور حضور الورشة مع الأطفال؟", qEn: "Can parents attend the classroom session?", aAr: "نعم، يمكن لأولياء الأمور الحضور مع أطفالهم للمراقبة، ويمكنهم أيضاً المشاركة في بعض الأنشطة التفاعلية خلال الجلسة.", aEn: "Yes, parents may attend with their kids to monitor and may even contribute to some of the activities during the session." },
       { qAr: "ما هي الأدوات المطلوبة من الطفل؟", qEn: "Do children need to bring their own laptops?", aAr: "لا يحتاج الطفل لإحضار أي أجهزة معه. المركز يوفر أجهزة كمبيوتر وشاشات وحسابات تعليمية آمنة ومجهزة لكل طفل لتطبيق الأنشطة عملياً.", aEn: "No, everything is provided! Every child will have access to a computer with pre-configured, safe educational AI sandboxes and tools." },
     ],
@@ -290,6 +293,7 @@ export const courses: Course[] = [
     slug: "kids-ai-dev",
     icon: "🎮",
     status: "active",
+    audience: "kids",
     categoryAr: "برمجة الأطفال · للمبتدئين",
     categoryEn: "Kids Coding · Beginners",
     titleAr: "مبادئ البرمجة وتصميم الألعاب للأطفال",
@@ -324,7 +328,7 @@ export const courses: Course[] = [
       { labelAr: "الفئة العمرية", labelEn: "Target Age", valueAr: "٨ إلى ١٢ سنة", valueEn: "8 to 12 years old" },
       { labelAr: "المدة الزمنية", labelEn: "Duration", valueAr: "٦ أسابيع (١٢ ساعة)", valueEn: "6 Weeks (12 Hours)" },
       { labelAr: "مدة الجلسة", labelEn: "Session Duration", valueAr: "ساعتان كاملتان", valueEn: "2 full hours" },
-      { labelAr: "المكان", labelEn: "Location", valueAr: "مركز Triple A التعليمي", valueEn: "Triple A Education Center" },
+      { labelAr: "المكان", labelEn: "Location", valueAr: "مركز الإبتكار، مدينتي", valueEn: "AI Innovation Lab, Madinaty" },
     ],
 
     pillars: [
@@ -381,6 +385,7 @@ export const courses: Course[] = [
     slug: "python-ai-programming",
     icon: "🐍",
     status: "active",
+    audience: "general",
     categoryAr: "برمجة وذكاء اصطناعي · متقدم",
     categoryEn: "Programming & AI · Advanced",
     titleAr: "بايثون وذكاء اصطناعي",
@@ -468,6 +473,7 @@ export const courses: Course[] = [
     slug: "robotics-smart-systems",
     icon: "⚙️",
     status: "active",
+    audience: "general",
     categoryAr: "روبوتات وأنظمة ذكية · عملي",
     categoryEn: "Robotics & Smart Systems · Hands-on",
     titleAr: "الروبوتات والأنظمة الذكية",
@@ -552,6 +558,7 @@ export const courses: Course[] = [
     slug: "ai-pilot-day",
     icon: "🚀",
     status: "active",
+    audience: "professional",
     categoryAr: "الذكاء الاصطناعي التنفيذي · مكثف",
     categoryEn: "Executive AI · Intensive",
     titleAr: "القيادة بالذكاء الاصطناعي",

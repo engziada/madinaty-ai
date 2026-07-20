@@ -177,7 +177,7 @@ const contentEn: SiteContent = {
     // ── LOCAL ECONOMY ──
     {
       icon: "🛍️",
-      title: "ElSouk",
+      title: "ElKanto",
       text: "A hyper-local buy, sell, and swap platform exclusively for Madinaty residents — fast, trusted, and no platform fees for community members.",
       badge: "Coming Soon",
       badgeType: "soon",
@@ -192,12 +192,11 @@ const contentEn: SiteContent = {
       category: "economy",
     },
     {
-      icon: "🚀",
-      title: "Business Booster",
-      text: "Give any Madinaty business an online presence in under 48 hours — starting with a free landing page, then a full e-commerce store, CRM, and ERP system as they grow.",
-      badge: "Coming Soon",
-      badgeType: "soon",
-      size: "wide",
+      icon: "⚙️",
+      title: "AZHA ERP System",
+      text: "Integrated AZHA ERP to manage your business — POS, sales, inventory, accounting, taxes, and HR in one cloud platform.",
+      badge: "Live",
+      badgeType: "live",
       category: "core",
     },
   ],
@@ -210,7 +209,7 @@ const contentEn: SiteContent = {
     messages: [
       { role: "ai", content: "Hello! I'm your Madinaty AI assistant. I can help with shuttle routes, workshops, community events, and live city updates across all 23 districts." },
       { role: "user", content: "Where is the next AI workshop for kids?" },
-      { role: "ai", content: "At Triple A Education Center (East Hub - 2nd Floor). We are now booking for the next session on Saturday, June 20 at 12:00 PM with our special 21% World Cup discount (450 EGP). Want me to reserve a slot?" }
+      { role: "ai", content: "At AI Innovation Lab (Madinaty, New Cairo). We are now booking for the next session on Saturday, June 20 at 12:00 PM with our special 21% World Cup discount (450 EGP). Want me to reserve a slot?" }
     ]
   },
   map: {
@@ -294,7 +293,7 @@ const contentEn: SiteContent = {
     descriptionExtra:
       "The course is supervised by:\nEngineering & Computer Science professors from Cairo University\n\nPrepared & delivered by:\nSoftware engineers & IT professionals\nExperienced educators ensuring every child receives information in a safe and engaging way\n\n🎮 This isn't just a lecture…\nIt's a hands-on experience where kids build and experiment themselves\n\n💡 Why this course matters:\n✔️ Develops logical thinking and creativity\n✔️ Introduces children to the foundations of the future (AI & Machine Learning)\n✔️ Makes learning fun and easy",
     promoLabel: "World Cup Offer: 450 EGP/kid (21% off) 🏆⚽",
-    promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
+    promoTitle: "AI Innovation Lab · Madinaty, New Cairo",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
       "Available for everyone! Pre-registration is mandatory. Fee is 450 EGP per child (21% discount) valid through June and the World Cup period. ⚽🏆",
@@ -330,7 +329,7 @@ const contentEn: SiteContent = {
       { icon: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/company/112226033/" }
     ],
     whatsappNumber: "+201026655008",
-    adminEmail: "engziada@gmail.com"
+    adminEmail: "info@madinatyai.com"
   },
   vision: {
     overline: "Vision & Future",
@@ -507,7 +506,7 @@ const contentAr: SiteContent = {
     // ── الاقتصاد المحلي ──
     {
       icon: "🛍️",
-      title: "سوق مدينتي",
+      title: "الكانتو",
       text: "منصة بيع وشراء ومقايضة حصرية لسكان مدينتي — سريعة وموثوقة وبدون رسوم للأعضاء.",
       badge: "قادم قريباً",
       badgeType: "soon",
@@ -522,12 +521,11 @@ const contentAr: SiteContent = {
       category: "economy",
     },
     {
-      icon: "🚀",
-      title: "معزز الأعمال",
-      text: "أعطِ أي نشاط تجاري في مدينتي حضوراً رقمياً في أقل من ٤٨ ساعة — يبدأ بصفحة هبوط مجانية ويتطور إلى متجر إلكتروني متكامل مع CRM وERP.",
-      badge: "قادم قريباً",
-      badgeType: "soon",
-      size: "wide",
+      icon: "⚙️",
+      title: "نظام إدارة الأعمال",
+      text: "نظام AZHA ERP متكامل لإدارة أعمالك — نقطة بيع، مشتريات ومبيعات، مخزون، وموارد بشرية في منصة سحابية واحدة.",
+      badge: "متاح الآن",
+      badgeType: "live",
       category: "core",
     },
   ],
@@ -540,7 +538,7 @@ const contentAr: SiteContent = {
     messages: [
       { role: "ai", content: "مرحباً! أنا مساعد Madinaty AI. أستطيع مساعدتك في خطوط الحافلات والورش والفعاليات وتحديثات المدينة الحية عبر جميع الـ٢٣ حياً." },
       { role: "user", content: "أين تقام ورشة الذكاء الاصطناعي القادمة للأطفال؟" },
-      { role: "ai", content: "في مركز Triple A إيست هب - الدور الثاني. نفتح الآن باب الحجز للجلسة القادمة يوم السبت ٢٠ يونيو الساعة ١٢ ظهراً مع خصم المونديال الخاص ٢٠٪ (٤٤٩٫٩٩ ج.م). هل تريد حجز مقعد؟" }
+      { role: "ai", content: "في مركز الإبتكار (مدينتي، القاهرة الجديدة). نفتح الآن باب الحجز للجلسة القادمة يوم السبت ٢٠ يونيو الساعة ١٢ ظهراً مع خصم المونديال الخاص ٢٠٪ (٤٤٩٫٩٩ ج.م). هل تريد حجز مقعد؟" }
     ]
   },
   map: {
@@ -624,7 +622,7 @@ const contentAr: SiteContent = {
     descriptionExtra:
       "الكورس تحت إشراف:\nأساتذة هندسة و حاسبات من جامعة القاهرة\n\nو إعداد و تنفيذ:\nمهندسين برمجيات و تكنولوجيا معلومات\nأساتذة محترفين لضمان وصول المعلومة للطفل بشكل آمن و مشوق\n\n🎮 الكورس مش مجرد شرح…\nده تجربة عملية يخلي الطفل فيها \"يبني ويجرب بنفسه\"\n\n💡 ليه الكورس مهم؟\n✔️ ينمّي التفكير المنطقي والإبداع\n✔️ يعرّف الأطفال بأساسيات المستقبل (AI & Machine Learning)\n✔️ يخلّي التعلم ممتع وسهل",
     promoLabel: "عرض المونديال: ٤٥٠ ج.م للطفل (خصم ٢١٪) 🏆⚽",
-    promoTitle: "Triple A Education Center - 2nd Floor - East Hub",
+    promoTitle: "AI Innovation Lab · Madinaty, New Cairo",
     promoLocationUrl: "https://share.google/0DL8Xtn3VX5N4RLba",
     promoDescription:
       "متاح للجميع! تخفيض ٢١٪ مستمر لآخر يونيو وطول ما مصر بتلعب في المونديال. ⚽🏆",
@@ -660,7 +658,7 @@ const contentAr: SiteContent = {
       { icon: "linkedin", label: "لينكدإن", url: "https://www.linkedin.com/company/112226033/" }
     ],
     whatsappNumber: "+201026655008",
-    adminEmail: "engziada@gmail.com"
+    adminEmail: "info@madinatyai.com"
   },
   vision: {
     overline: "الرؤية والمستقبل",

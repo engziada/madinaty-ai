@@ -98,7 +98,7 @@ function getAddressAreaOptions(
     { value: "open-air", label: "Open Air Mall" },
     { value: "first-season", label: "First Season" },
     { value: "craft-zone", label: "Craft Zone" },
-    { value: "east-hub", label: "East Hub" },
+    { value: "madinaty-ai-lab", label: "AI Innovation Lab" },
     { value: "strip", label: "The Strip" }
   ];
 }

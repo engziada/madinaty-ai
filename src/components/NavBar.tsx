@@ -11,17 +11,6 @@ import { ChevronDown, MapPin, Bot } from "lucide-react";
 import { cities } from "@/data/cities";
 import { toggleLocalePath } from "@/lib/locale";
 
-// Services for submenu (only visible/non-hidden services, ready ones first)
-const getServices = (locale: LocaleCode) => [
-  // ── Ready / Live ──
-  { id: "kids-lab", label: locale === "ar" ? "مختبر AI للأطفال" : "AI Kids Lab", live: true },
-  { id: "business", label: locale === "ar" ? "معزز الأعمال" : "Business Enhancer", live: true },
-  // ── Coming Soon ──
-  { id: "summer", label: locale === "ar" ? "تدريب صيفي" : "Summer Training" },
-  { id: "skills", label: locale === "ar" ? "تبادل المهارات" : "Skill Exchange" },
-  { id: "marketplace", label: locale === "ar" ? "سوق مدينتي" : "Marketplace" },
-  { id: "kitchen", label: locale === "ar" ? "المطابخ المنزلية" : "Ghost Kitchen" },
-];
 
 interface DropdownProps {
   label: string;
@@ -84,48 +73,13 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
   const comingSoonHref = locale === "ar" ? "/ar/coming-soon" : "/coming-soon";
   const homeHref = locale === "ar" ? "/ar" : "/en";
   const logoSrc = theme === "light" ? "/madinaty_logo-lite.svg" : "/madinaty_logo_dark.svg";
-  const services = useMemo(() => getServices(locale), [locale]);
 
-  // When a user is on a non-home route (e.g. /coming-soon, /gallery, /founders),
-  // bare `#services` / `#chat` / `#events` anchors have no target on the current
-  // page and simply do nothing. Prefix them with the locale home so the router
-  // navigates home AND the browser scrolls to the anchor on arrival.
-  // On the home route itself we keep bare anchors so we don't needlessly
-  // re-navigate (preserves smooth in-page scroll behavior).
   const isHome = pathname === homeHref || pathname === "/";
   const anchorBase = isHome ? "" : homeHref;
 
   const menuLabel = locale === "ar" ? "القائمة" : "Menu";
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
-
-  // Scroll to service anchor.
-  //
-  // The services list lives inside `.service-bento-wrap`, which is itself a
-  // scrollable container (`overflow-y: auto`, `max-height: 75vh`). A plain
-  // `window.scrollTo` would only move the outer page and leave the target
-  // item scrolled out of view INSIDE the inner container. `scrollIntoView`
-  // walks the ancestor chain and scrolls every scrollable parent, so the
-  // inner list and the window are both adjusted in one call.
-  //
-  // The fixed-header clearance is handled via `scroll-margin-top` on the
-  // `.svc-card` targets (see globals.css) — the native scroller subtracts
-  // that margin automatically, no manual offset math required.
-  const scrollToService = useCallback((serviceId: string, isLive?: boolean) => {
-    // Live services jump to their ad card; others jump to the service card.
-    const targetId = isLive ? `ad-${serviceId}` : `service-${serviceId}`;
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (!isLive) {
-        element.classList.add("svc-card-highlight");
-        window.setTimeout(() => {
-          element.classList.remove("svc-card-highlight");
-        }, 1600);
-      }
-    }
-    closeMenu();
-  }, [closeMenu]);
 
   // Close on Escape
   useEffect(() => {
@@ -186,20 +140,10 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             {locale === "ar" ? "الرئيسية" : "Home"}
           </Link>
 
-          {/* Services Dropdown */}
-          <NavDropdown label="Services" labelAr="الخدمات" locale={locale}>
-            {services.map((service) => (
-              <button
-                key={service.id}
-                className={`nav-dropdown-item${service.live ? " nav-svc-live" : ""}`}
-                onClick={() => scrollToService(service.id, service.live)}
-                type="button"
-              >
-                {service.live && <span className="nav-live-dot" />}
-                {service.label}
-              </button>
-            ))}
-          </NavDropdown>
+          {/* Services Link */}
+          <Link href={`${anchorBase}#services`} onClick={closeMenu}>
+            {locale === "ar" ? "الخدمات" : "Services"}
+          </Link>
 
           {/* AI Lab - Courses Index */}
           <Link
@@ -208,12 +152,12 @@ export function NavBar({ locale, content, onOpenJoin }: NavBarProps) {
             onClick={closeMenu}
           >
             <Bot size={16} />
-            Madinaty AI Lab
+            {locale === "ar" ? "مركز الإبتكار و التطوير" : "AI Innovation Lab"}
           </Link>
 
           {/* AI Tools */}
           <Link href={locale === "ar" ? "/ar/ai-tools" : "/ai-tools"} onClick={closeMenu}>
-            {locale === "ar" ? "أدوات AI" : "AI Tools"}
+            {locale === "ar" ? "أدوات إحترافية" : "AI Tools"}
           </Link>
 
           {/* City Selector */}

@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import type { LocaleCode } from "@/types/site";
 import { courses } from "@/data/courseData";
+import type { Course } from "@/data/courseData";
 import { AstroAvatar } from "@/components/AstroAvatar";
 
 interface CoursesIndexPageProps {
@@ -17,8 +19,8 @@ export function CoursesIndexPage({ locale }: CoursesIndexPageProps) {
   const isAr = locale === "ar";
 
   const t = {
-    heroTitleAr: "مختبر Madinaty AI",
-    heroTitleEn: "Madinaty AI Lab",
+    heroTitleAr: "مركز الإبتكار",
+    heroTitleEn: "AI Innovation Lab",
     heroSubAr: "اكتشف الورش والدورات التدريبية المتاحة في مركز الابتكار بمدينتي",
     heroSubEn: "Discover workshops and training courses at Madinaty Innovation Hub",
     astroGreetAr: "أهلاً! أنا أسترو 🐕 مرشدك الذكي. اختر الكورس اللي يناسبك!",
@@ -31,7 +33,24 @@ export function CoursesIndexPage({ locale }: CoursesIndexPageProps) {
     viewCourseEn: "View Details",
     fromAr: "من",
     fromEn: "From",
+    filterAllAr: "الكل",
+    filterAllEn: "All Courses",
+    filterKidsAr: "للأطفال والأهل",
+    filterKidsEn: "For Kids & Parents",
+    filterProAr: "للمحترفين",
+    filterProEn: "For Professionals",
+    brandLabel: "AI Innovation Lab",
   };
+
+  type FilterKey = "all" | "kids" | "professional";
+  const [filter, setFilter] = useState<FilterKey>("all");
+
+  const filteredCourses = courses.filter((c: Course) => {
+    if (filter === "all") return true;
+    if (filter === "kids") return c.audience === "kids" || c.audience === "general";
+    if (filter === "professional") return c.audience === "professional" || c.audience === "general";
+    return true;
+  });
 
   return (
     <main id="main-content" className="courses-index-wrapper" tabIndex={-1}>
@@ -305,6 +324,50 @@ export function CoursesIndexPage({ locale }: CoursesIndexPageProps) {
             font-size: 0.85rem;
             margin: 0 1rem;
           }
+          .courses-filter-tabs {
+            flex-wrap: wrap;
+          }
+        }
+
+        /* ── Filter Tabs ── */
+        .courses-filter-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 2rem 1rem 0;
+        }
+        .courses-filter-tab {
+          padding: 0.55rem 1.25rem;
+          border-radius: 100px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          border: 1px solid var(--border);
+          background: transparent;
+          color: var(--text-muted);
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+        .courses-filter-tab:hover {
+          border-color: var(--teal);
+          color: var(--teal);
+        }
+        .courses-filter-tab--active {
+          background: var(--teal);
+          border-color: var(--teal);
+          color: #000;
+          font-weight: 700;
+        }
+
+        /* ── Brand Label ── */
+        .course-card-brand {
+          display: inline-block;
+          font-size: 0.7rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: var(--teal);
+          opacity: 0.8;
+          margin-bottom: 0.25rem;
         }
       `}</style>
 
@@ -333,10 +396,31 @@ export function CoursesIndexPage({ locale }: CoursesIndexPageProps) {
         </div>
       </section>
 
+      {/* ── Audience Filter Tabs ── */}
+      <div className="courses-filter-tabs">
+        {(["all", "kids", "professional"] as FilterKey[]).map((key) => {
+          const labels: Record<FilterKey, string> = {
+            all: isAr ? t.filterAllAr : t.filterAllEn,
+            kids: isAr ? t.filterKidsAr : t.filterKidsEn,
+            professional: isAr ? t.filterProAr : t.filterProEn,
+          };
+          return (
+            <button
+              key={key}
+              className={`courses-filter-tab ${filter === key ? "courses-filter-tab--active" : ""}`}
+              onClick={() => setFilter(key)}
+              aria-pressed={filter === key}
+            >
+              {labels[key]}
+            </button>
+          );
+        })}
+      </div>
+
       {/* ── Courses Grid ── */}
       <section className="container">
         <div className="courses-grid">
-          {courses.map((course) => {
+          {filteredCourses.map((course: Course) => {
             const isActive = course.status === "active";
             const href = `/${locale}/course/${course.slug}`;
 
@@ -355,6 +439,8 @@ export function CoursesIndexPage({ locale }: CoursesIndexPageProps) {
                     : (isAr ? t.comingSoonAr : t.comingSoonEn)
                   }
                 </span>
+
+                <span className="course-card-brand">{t.brandLabel}</span>
 
                 <span className="course-card-icon" aria-hidden="true">{course.icon}</span>
 

@@ -3,6 +3,7 @@
 import { Fragment, Suspense, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import type { LocaleCode } from "@/types/site";
 import { getSiteContent } from "@/data/content";
 import { ValueStrip } from "@/components/ValueStrip";
@@ -10,6 +11,7 @@ import { AiArticleWidget } from "@/components/AiArticleWidget";
 import { RecentActivitiesFeed } from "@/components/RecentActivitiesFeed";
 
 const ChatFab = dynamic(() => import("@/components/ChatFab").then((m) => m.ChatFab), { ssr: false });
+const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection").then((m) => m.TestimonialsSection), { ssr: false });
 
 
 interface LandingPageProps {
@@ -37,6 +39,23 @@ export function LandingPage({ locale }: LandingPageProps) {
     { rawValue: 100, suffix: "%", label: "مجتمعي بالكامل" }
   ];
   const stats = isAr ? statsAr : statsEn;
+
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const categoryLabels: Record<string, string> = {
+    core: locale === "ar" ? "الخدمات الأساسية" : "Core",
+    community: locale === "ar" ? "المجتمع" : "Community",
+    economy: locale === "ar" ? "الاقتصاد" : "Economy",
+    education: locale === "ar" ? "التعليم" : "Education",
+    lifestyle: locale === "ar" ? "الحياة" : "Lifestyle",
+  };
+
+  const visibleServices = content.services.filter((s) => !s.hidden);
+  const uniqueCategories = Array.from(new Set(visibleServices.map(s => s.category).filter(Boolean))) as string[];
+
+  const filteredServices = activeCategory === "all" 
+    ? visibleServices 
+    : visibleServices.filter(s => s.category === activeCategory);
 
   return (
     <>
@@ -68,9 +87,6 @@ export function LandingPage({ locale }: LandingPageProps) {
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#services">
                   {content.hero.primaryAction}
-                </a>
-                <a className="btn btn-outline" href="#events">
-                  {content.hero.secondaryAction}
                 </a>
               </div>
 
@@ -114,228 +130,6 @@ export function LandingPage({ locale }: LandingPageProps) {
         {/* ── VALUE STRIP ───────────────────────────────────── */}
         <ValueStrip items={stats} />
 
-        {/* ── UPCOMING EVENT ────────────────────────────────── */}
-        <section className="section section-alt" id="events">
-          <div className="container reveal">
-            <div className="upcoming-shell ad-shell" id="ad-kids-lab" style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-              <div className="upcoming-content">
-                <div className="upcoming-main">
-                  <p className="overline overline-light">{content.event.overline}</p>
-                  <div className="upcoming-pill">{content.event.subtitle}</div>
-                  <h2 className="upcoming-title">
-                    {content.event.title}
-                    {content.event.titleHighlight && (
-                      <span className="highlight">{content.event.titleHighlight}</span>
-                    )}
-                  </h2>
-                  <p className="upcoming-description">{content.event.description}</p>
-
-                  {content.event.descriptionExtra && (
-                    <p className="upcoming-description-extra" style={{ whiteSpace: "pre-line" }}>
-                      {content.event.descriptionExtra}
-                    </p>
-                  )}
-
-                  {content.event.safetyBadges && content.event.safetyBadges.length > 0 && (
-                    <div className="safety-badges" aria-label="Safety commitments">
-                      {content.event.safetyBadges.map((badge) => {
-                        const badgeContent = (
-                          <>
-                            <span className="safety-badge-icon" aria-hidden="true">{badge.icon}</span>
-                            {badge.label}
-                          </>
-                        );
-                        return badge.url ? (
-                          <a
-                            key={badge.label}
-                            href={badge.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="safety-badge safety-badge-link"
-                          >
-                            {badgeContent}
-                          </a>
-                        ) : (
-                          <span key={badge.label} className="safety-badge">
-                            {badgeContent}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  <div className="upcoming-actions">
-                    <a className="btn btn-primary" href={`/${locale}/course/kids-session`}>
-                      {content.event.cta}
-                    </a>
-                    <p className="upcoming-cta-note">{content.event.promoLabel}</p>
-                  </div>
-                </div>
-
-                <div className="upcoming-side">
-                  <figure className="upcoming-image-card" style={{ borderRadius: '16px', overflow: 'hidden' }}>
-                    <Image
-                      src="/ad-1.webp"
-                      alt={locale === "ar" ? "أطفال يتعلمون أدوات الذكاء الاصطناعي بأمان" : "Kids learning AI chat tools in a safe and guided environment"}
-                      className="upcoming-image"
-                      width={480}
-                      height={320}
-                      loading="lazy"
-                    />
-                    <figcaption>
-                      {locale === "ar" ? "جلسة تفاعلية آمنة وممتعة" : "Interactive, safe, and fun learning session"}
-                    </figcaption>
-                  </figure>
-
-                  <div className="promo-box" style={{ borderRadius: '16px' }}>
-                    <small>{content.event.promoLabel}</small>
-                    <h3>
-                      {content.event.promoTitle}
-                      {content.event.promoLocationUrl && (
-                        <a
-                          href={content.event.promoLocationUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="promo-location-link"
-                          aria-label={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
-                          title={locale === "ar" ? "عرض الموقع على الخريطة" : "View location on map"}
-                        >
-                          <span aria-hidden="true">📍</span>
-                        </a>
-                      )}
-                    </h3>
-                    <p>{content.event.promoDescription}</p>
-                  </div>
-
-                  <div className="upcoming-stats-panel" style={{ borderRadius: '16px' }}>
-                  <div className="event-stats">
-                    {content.event.stats.map((stat) => (
-                      <div key={`${stat.value}-${stat.label}`}>
-                        <strong>{stat.value}</strong>
-                        <small>{stat.label}</small>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="upcoming-lab-tile">
-                    <div>
-                      <strong>{content.event.labTitle}</strong>
-                      <small>{content.event.labSubtitle}</small>
-                    </div>
-                    <span>⚙️</span>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── ERP PROMO ─────────────────────────────────────── */}
-        <section className="section section-alt" id="erp-promo">
-          <div className="container">
-            <div className="erp-promo-shell ad-shell reveal" id="ad-business" style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-              <div className="erp-promo-content">
-                <p className="overline">{locale === "ar" ? "معزز الأعمال" : "Business Enhancer"}</p>
-                <div className="erp-promo-pill">{locale === "ar" ? "للأعمال" : "For Business"}</div>
-                <h2 className="upcoming-title">
-                  {locale === "ar" ? "نظام ERP " : "Smart ERP "}
-                  <span className="highlight">{locale === "ar" ? "الذكي" : "System"}</span>
-                </h2>
-                <p className="erp-promo-description">
-                  {locale === "ar"
-                    ? "نظام AZHA ERP متكامل لإدارة أعمالك — نقطة بيع، مشتريات ومبيعات، مخزون، محاسبة، ضرائب، وموارد بشرية في منصة سحابية واحدة."
-                    : "All-in-one AZHA ERP system — POS, sales & purchases, inventory, accounting, taxes, HR, and CRM in one cloud platform."}
-                </p>
-                <div className="safety-badges" aria-label="ERP features">
-                  {locale === "ar"
-                    ? [
-                        { icon: "🛒", label: "نقطة بيع" },
-                        { icon: "📦", label: "إدارة المخزون" },
-                        { icon: "💰", label: "المحاسبة" },
-                        { icon: "📊", label: "التقارير" },
-                        { icon: "👥", label: "الموارد البشرية" },
-                        { icon: "🧾", label: "الضرائب والزكاة" },
-                        { icon: "🏪", label: "متجر إلكتروني خلال أسبوع" },
-                        { icon: "🚀", label: "صفحة هبوط خلال ٤٨ ساعة" },
-                      ].map((b) => (
-                        <span key={b.label} className="safety-badge">
-                          <span className="safety-badge-icon" aria-hidden="true">{b.icon}</span>
-                          {b.label}
-                        </span>
-                      ))
-                    : [
-                        { icon: "🛒", label: "POS" },
-                        { icon: "📦", label: "Inventory" },
-                        { icon: "💰", label: "Accounting" },
-                        { icon: "📊", label: "Reports" },
-                        { icon: "👥", label: "HR" },
-                        { icon: "🧾", label: "Tax & Zakat" },
-                        { icon: "🏪", label: "eCommerce in 1 Week" },
-                        { icon: "🚀", label: "Landing Page in 48H" },
-                      ].map((b) => (
-                        <span key={b.label} className="safety-badge">
-                          <span className="safety-badge-icon" aria-hidden="true">{b.icon}</span>
-                          {b.label}
-                        </span>
-                      ))
-                  }
-                </div>
-                <div className="erp-promo-launch">
-                  <p>
-                    {locale === "ar"
-                      ? "سرّع نمو أعمالك وحقق تواجدك الرقمي فورًا — متجرك الإلكتروني جاهز خلال أسبوع، وصفحة الهبوط خلال ٤٨ ساعة."
-                      : "Accelerate your business and establish your online presence instantly — your custom eCommerce store in 1 week, and your landing page in just 48 hours."}
-                  </p>
-                  <small>
-                    {locale === "ar"
-                      ? "🎁 صفحة الهبوط مجانية لأول ١٠ عملاء!"
-                      : "🎁 Landing page is completely FREE for the first 10 customers!"}
-                  </small>
-                </div>
-                <a
-                  className="promo-box promo-box-link"
-                  href="https://wa.me/201026655008"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={locale === "ar" ? "تواصل عبر واتساب" : "Chat on WhatsApp"}
-                  style={{ borderRadius: '16px' }}
-                >
-                  <small>{locale === "ar" ? "عرض محدود" : "Limited Offer"}</small>
-                  <h3>
-                    {locale === "ar" ? "تواصل معنا الآن" : "Contact Us Now"}
-                    <span aria-hidden="true">💬</span>
-                  </h3>
-                  <p>
-                    {locale === "ar"
-                      ? "للإستفسارات والحجز، تواصل معنا عبر واتساب على +201026655008"
-                      : "For inquiries and booking, reach us on WhatsApp at +201026655008"}
-                  </p>
-                </a>
-                <a
-                  className="btn btn-primary"
-                  href="https://smart.azhasoft.com/login_demo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {locale === "ar" ? "ابدأ تجربتك الآن" : "Start Your Demo Now"}
-                </a>
-              </div>
-              <figure className="upcoming-image-card" style={{ borderRadius: '16px', overflow: 'hidden' }}>
-                <Image
-                  src="/erp-promo.webp"
-                  alt={locale === "ar" ? "نظام ERP الذكي - معزز الأعمال" : "Smart ERP System - Business Enhancer"}
-                  className="upcoming-image"
-                  width={520}
-                  height={380}
-                  loading="lazy"
-                />
-                <figcaption>
-                  {locale === "ar" ? "منصة إدارة أعمال متكاملة" : "All-in-one business management platform"}
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
 
 
         {/* ── OUR PLATFORM ────────────────────────────────── */}
@@ -377,17 +171,27 @@ export function LandingPage({ locale }: LandingPageProps) {
               <p className="overline">{locale === "ar" ? "خدماتنا" : "Our Services"}</p>
               <h2>{content.sections.servicesTitle}</h2>
             </div>
+
+            <div className="services-filter reveal">
+              <button 
+                className={`filter-pill ${activeCategory === "all" ? "active" : ""}`}
+                onClick={() => setActiveCategory("all")}
+              >
+                {locale === "ar" ? "الكل" : "All"}
+              </button>
+              {uniqueCategories.map(cat => (
+                <button 
+                  key={cat}
+                  className={`filter-pill ${activeCategory === cat ? "active" : ""}`}
+                  onClick={() => setActiveCategory(cat)}
+                >
+                  {categoryLabels[cat] ?? cat}
+                </button>
+              ))}
+            </div>
+
             <div className="service-bento reveal">
-              {content.services.filter((s) => !s.hidden).map((svc, idx, arr) => {
-                const prevCategory = idx > 0 ? arr[idx - 1].category : null;
-                const showGroupLabel = svc.category && svc.category !== prevCategory;
-                const categoryLabels: Record<string, string> = {
-                  core: locale === "ar" ? "الخدمات الأساسية" : "Core Platform",
-                  community: locale === "ar" ? "المجتمع" : "Community",
-                  economy: locale === "ar" ? "الاقتصاد المحلي" : "Local Economy",
-                  education: locale === "ar" ? "التعليم" : "Education",
-                  lifestyle: locale === "ar" ? "الحياة اليومية" : "Lifestyle",
-                };
+              {filteredServices.map((svc, idx) => {
                 const serviceIdMap: Record<string, string> = {
                   "AI Flash Courses for Kids": "kids-lab",
                   "كورسات ذكاء اصطناعي للأطفال": "kids-lab",
@@ -408,32 +212,60 @@ export function LandingPage({ locale }: LandingPageProps) {
                   "Activity Finder": "activities",
                   "مكتشف الأنشطة": "activities",
                   "Madinaty Marketplace": "marketplace",
-                  "سوق مدينتي": "marketplace",
+                  "الكانتو": "marketplace",
                   "Ghost Kitchen Incubator": "kitchen",
                   "حاضنة المطابخ المنزلية": "kitchen",
                   "Local Business Booster": "business",
                   "معزز الأعمال المحلية": "business",
                 };
                 const serviceId = serviceIdMap[svc.title];
-                return (
-                  <Fragment key={`svc-fragment-${idx}`}>
-                    {showGroupLabel && (
-                      <div key={`label-${svc.category}`} className="svc-group-label">
-                        {categoryLabels[svc.category!] ?? svc.category}
-                      </div>
-                    )}
-                    <article
-                      key={`svc-${idx}`}
-                      id={serviceId ? `service-${serviceId}` : undefined}
-                      className={`svc-card svc-${svc.size ?? "normal"}`}
-                    >
-                      <div className="svc-header">
-                        <span className="svc-icon" aria-hidden="true">{svc.icon}</span>
-                      </div>
+                
+                const isErp = svc.title === "AZHA ERP System" || svc.title === "نظام إدارة الأعمال";
+                const href = isErp ? (locale === "ar" ? "/ar/erp" : "/en/erp") : undefined;
+
+                const cardInner = (
+                  <>
+                    <div className="svc-header">
+                      <span className="svc-icon" aria-hidden="true">{svc.icon}</span>
+                      <span className="svc-explore-btn" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          {isAr ? (
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                          ) : (
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                          )}
+                        </svg>
+                      </span>
+                    </div>
+                    <div className="svc-content">
                       <h4>{svc.title}</h4>
                       <p>{svc.text}</p>
-                    </article>
-                  </Fragment>
+                    </div>
+                  </>
+                );
+
+                if (href) {
+                  return (
+                    <Link
+                      key={`svc-${idx}-${activeCategory}`}
+                      href={href}
+                      id={serviceId ? `service-${serviceId}` : undefined}
+                      className={`svc-card svc-${svc.size ?? "normal"} svc-animate`}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      {cardInner}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <article
+                    key={`svc-${idx}-${activeCategory}`}
+                    id={serviceId ? `service-${serviceId}` : undefined}
+                    className={`svc-card svc-${svc.size ?? "normal"} svc-animate`}
+                  >
+                    {cardInner}
+                  </article>
                 );
               })}
             </div>
@@ -451,6 +283,9 @@ export function LandingPage({ locale }: LandingPageProps) {
           <MapPanel content={content} />
         </section>
         */}
+
+        {/* ── TESTIMONIALS ── */}
+        <TestimonialsSection locale={locale} />
       </main>
 
 

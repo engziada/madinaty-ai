@@ -14,7 +14,7 @@ const SOCIAL_URLS: Record<string, string> = {
 };
 
 const WHATSAPP_NUMBER = "+201026655008";
-const ADMIN_EMAIL     = "engziada@gmail.com";
+const ADMIN_EMAIL     = "info@madinatyai.com";
 
 interface FooterProps {
   content: SiteContent;
@@ -106,7 +106,7 @@ export function Footer({ content, locale }: FooterProps) {
           </h4>
           <div className="footer-links">
             <Link href={locale === "ar" ? "/ar/course" : "/en/course"}>
-              Madinaty AI Lab
+              AI Innovation Lab
             </Link>
             <Link href={locale === "ar" ? "/ar/founders"       : "/founders"}>
               {locale === "ar" ? "المؤسسون" : "Founders"}

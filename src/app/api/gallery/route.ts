@@ -1,39 +1,68 @@
 import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 
 /**
  * GET /api/gallery
  *
- * Returns lightweight placeholder photos from an online service.
- * Previously scanned local `/public` for `imgi_*` files; now uses
- * curated Unsplash source images via picsum.photos for instant
- * loading and zero local storage cost.
+ * Dynamically scans `/public/images/gallery/` for image files.
+ * Drop your workshop photos (jpg, jpeg, png, webp) into that folder
+ * and they'll appear on the gallery page automatically — no code changes needed.
+ *
+ * Falls back to Unsplash placeholders when the folder is empty.
  *
  * Response shape: { photos: Array<{ src: string; name: string }> }
  */
 export const dynamic = "force-dynamic";
 
-const PLACEHOLDER_IDS = [
-  { id: 1060, name: "city-park.webp" },
-  { id: 164, name: "residential-street.webp" },
-  { id: 329, name: "community-gathering.webp" },
-  { id: 558, name: "green-space.webp" },
-  { id: 593, name: "smart-city.webp" },
-  { id: 648, name: "family-event.webp" },
-  { id: 823, name: "sunset-view.webp" },
-  { id: 902, name: "modern-architecture.webp" },
+const GALLERY_DIR = path.join(process.cwd(), "public", "images", "gallery");
+
+const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
+
+/** Curated fallback images shown when the gallery folder is empty */
+const FALLBACK_PHOTOS = [
+  { src: "https://picsum.photos/id/1060/400/300.webp", name: "city-park.webp" },
+  { src: "https://picsum.photos/id/164/400/300.webp", name: "residential-street.webp" },
+  { src: "https://picsum.photos/id/329/400/300.webp", name: "community-gathering.webp" },
+  { src: "https://picsum.photos/id/558/400/300.webp", name: "green-space.webp" },
+  { src: "https://picsum.photos/id/593/400/300.webp", name: "smart-city.webp" },
+  { src: "https://picsum.photos/id/648/400/300.webp", name: "family-event.webp" },
+  { src: "https://picsum.photos/id/823/400/300.webp", name: "sunset-view.webp" },
+  { src: "https://picsum.photos/id/902/400/300.webp", name: "modern-architecture.webp" },
 ];
 
 export async function GET() {
-  const photos = PLACEHOLDER_IDS.map((p) => ({
-    src: `https://picsum.photos/id/${p.id}/400/300.webp`,
-    name: p.name,
-  }));
+  let photos: { src: string; name: string }[] = [];
+
+  try {
+    if (fs.existsSync(GALLERY_DIR)) {
+      const files = fs.readdirSync(GALLERY_DIR).filter((f) => {
+        const ext = path.extname(f).toLowerCase();
+        return IMAGE_EXTENSIONS.has(ext);
+      });
+
+      // Sort by name so newest photos (e.g. timestamped) appear first
+      files.sort((a, b) => b.localeCompare(a));
+
+      photos = files.map((f) => ({
+        src: `/images/gallery/${f}`,
+        name: f,
+      }));
+    }
+  } catch {
+    // If anything goes wrong reading the filesystem, fall through to fallbacks
+  }
+
+  // Use fallback placeholders when no real photos exist
+  if (photos.length === 0) {
+    photos = FALLBACK_PHOTOS;
+  }
 
   return NextResponse.json(
     { photos },
     {
       headers: {
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     }
   );
